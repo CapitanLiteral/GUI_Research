@@ -11,6 +11,7 @@ class GUIButton;
 class GUILabel;
 class GUIImage;
 class GUIMouse;
+class CBeizier;
 
 class M_GUI : public Module
 {
@@ -81,6 +82,8 @@ public:
 	std::list<GUIElement*> guiList;
 	std::list<GUIElement*> debugGuiList;
 	std::list<GUIElement*> editorGuiList;
+
+	CBeizier* cBeizier = nullptr;
 
 private:
 

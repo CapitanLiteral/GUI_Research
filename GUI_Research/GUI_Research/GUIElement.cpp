@@ -3,6 +3,7 @@
 #include "M_Render.h"
 
 #include "M_Window.h"
+#include "M_GUI.h"
 
 GUIElement::GUIElement(int flags) : rect(0,0,0,0), drawRect(0.f, 0.f, 0.f, 0.f)
 {
@@ -108,6 +109,7 @@ void GUIElement::OnGuiEvent(gui_events eventToReact)
 			else if (tmp > SAT_SEPARATOR)
 			{
 				currentTransition = tmp;
+				doingTransition = false;
 				//Will asume all transitions enable/disable.
 				if (status.active) mustDisable = true;
 			}
@@ -549,7 +551,15 @@ void GUIElement::DropT(float dt)
 {
 	float speed = 0.f;
 
-	if (mustDisable)
+	if (!doingTransition)
+	{
+		destination.create(rect.w * 0.2, rect.h*0.2);
+		transTimer.Start();
+		currentTime = 0;
+		doingTransition = true;
+	}
+
+	/*if (mustDisable)
 	{
 		//Lets reduce its size
 		if (drawRect.w <= rect.w*0.2f || drawRect.h <= rect.h*0.2f)
@@ -575,10 +585,28 @@ void GUIElement::DropT(float dt)
 			drawRect.Set(rect.x, rect.y, rect.w, rect.h);
 			return;
 		}
+	}*/
+
+	currentTime = transTimer.Read();
+	if (currentTime <= 1000 && drawRect.h > 0.f)
+	{
+		drawRect.h = rect.h + app->gui->cBeizier->GetActualPoint(iPoint(rect.w, rect.h), destination, 1000, currentTime, CB_SLOW_MIDDLE);
+	}
+	else
+	{
+		currentTime = 0;
+		//drawRect.Set(rect.x, rect.y, rect.w, rect.h);
+		currentTransition = SAT_NONE;
+		if (mustDisable)
+		{
+			status.active = false;
+			mustDisable = false;
+		}
+		return;
 	}
 
-	drawRect.w += speed;
-	drawRect.h += speed;
+	/*drawRect.w += speed;
+	drawRect.h += speed;*/
 }
 void GUIElement::FlyT(float dt)
 {
@@ -592,35 +620,29 @@ void GUIElement::MoveToRightT(float dt)
 {
 	static int screenRXBorderPos = app->win->GetWindowSize().x;
 
-	float speed;
-
-	if (mustDisable)
+	if (!doingTransition)
 	{
-		int dif = screenRXBorderPos - (drawRect.x + rect.w);
+		destination.create(screenRXBorderPos - rect.w, rect.y);
+		transTimer.Start();
+		currentTime = 0;
+		doingTransition = true;
+	}
 
-		if (dif <= 0)
-		{
-			currentTransition = SAT_NONE;
-			status.active = false;
-			mustDisable = false;
-			return;
-		}
-
-		speed = 600 * dt;
+	currentTime = transTimer.Read();
+	if (currentTime <= 1000)
+	{
+		SetDrawPosition(rect.x - app->gui->cBeizier->GetActualPoint(iPoint(rect.x, rect.y), destination, 1000, currentTime, curveType), drawRect.y);
 	}
 	else
 	{
-		int dif = rect.x - drawRect.x;
-
-		if (dif >= 0)
+		currentTime = 0;
+		//drawRect.Set(rect.x, rect.y, rect.w, rect.h);
+		currentTransition = SAT_NONE;
+		if (mustDisable)
 		{
-			currentTransition = SAT_NONE;
-			drawRect.Set(rect.x, rect.y, rect.w, rect.h);
-			return;
+			status.active = false;
+			mustDisable = false;
 		}
-
-		speed = -600 * dt;
+		return;
 	}
-		
-	SetDrawPosition(drawRect.x += speed, drawRect.y);
 }

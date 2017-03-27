@@ -10,6 +10,8 @@
 #include <iostream> 
 #include <sstream> 
 
+#include "Bezier.h"
+
 // GUI includes
 #include "GUIElement.h"
 #include "GUIImage.h"
@@ -33,7 +35,7 @@ M_GUI::~M_GUI()
 
 bool M_GUI::Awake(pugi::xml_node &)
 {
-	
+	cBeizier = new CBeizier();
 	
 	return true;
 }
@@ -81,9 +83,10 @@ bool M_GUI::Start()
 	img2->SetCanFocus(true);
 	img2->SetDraggable(false);
 	guiList.push_back(img2);
-	img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_SCALE);
-	//img2->AddAnimationOrTransition(MOUSE_ENTERS, T_MOVE_TO_RIGHT);
-	img2->AddAnimationOrTransition(ENABLE, T_SCALE);
+	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_SCALE);
+	img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_DROP);
+	img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, T_MOVE_TO_RIGHT);
+	//img2->AddAnimationOrTransition(ENABLE, T_SCALE);
 
 
 #pragma region UI Comented

@@ -6,7 +6,7 @@
 #include "GB_Rectangle.h"
 #include "App.h"
 #include <map>
-
+#include "Bezier.h"
 
 class Module;
 
@@ -195,14 +195,22 @@ private:
 	fPoint scale = fPoint(1.f, 1.f);
 	ElementStatus status;
 
+	std::string presetName;
+
 	staticAnim_or_transition currentStaticAnimation = SAT_NONE;
 	staticAnim_or_transition currentTransition = SAT_NONE;
 	std::map<gui_events, staticAnim_or_transition> transAndAnimations;
-	std::string presetName;
 	gui_events eventsToReact = EVENT_NONE;
 	GB_Rectangle<float> drawRect;
 
+	cbezier_type curveType = cbezier_type::CB_EASE_INOUT_BACK;
+
 	bool mustDisable = false;
+	bool doingTransition = false;
+
+	Timer transTimer;
+	iPoint destination;
+	int currentTime = 0;
 
 protected:
 	std::list<Module*> listeners;
