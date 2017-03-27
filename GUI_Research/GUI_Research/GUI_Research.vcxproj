@@ -122,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Bezier.cpp" />
     <ClCompile Include="Defs.cpp" />
     <ClCompile Include="GB_Rectangle.cpp" />
     <ClCompile Include="GUIAutoLabel.cpp" />
@@ -148,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="Bezier.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="GB_Rectangle.h" />
     <ClInclude Include="GUIAutoLabel.h" />
