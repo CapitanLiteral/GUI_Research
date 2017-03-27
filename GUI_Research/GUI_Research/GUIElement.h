@@ -211,6 +211,7 @@ private:
 	Timer transTimer;
 	iPoint destination;
 	int currentTime = 0;
+	int animTime = 1000;
 
 protected:
 	std::list<Module*> listeners;

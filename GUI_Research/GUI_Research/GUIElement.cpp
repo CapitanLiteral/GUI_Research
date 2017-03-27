@@ -109,10 +109,10 @@ void GUIElement::OnGuiEvent(gui_events eventToReact)
 			else if (tmp > SAT_SEPARATOR)
 			{
 				currentTransition = tmp;
-				doingTransition = false;
 				//Will asume all transitions enable/disable.
 				if (status.active) mustDisable = true;
 			}
+			doingTransition = false;
 		}
 	}
 }
@@ -505,7 +505,32 @@ void GUIElement::ShakeSA(float dt)
 }
 void GUIElement::PulseSA(float dt)
 {
-	currentStaticAnimation = SAT_NONE;
+	if (!doingTransition)
+	{
+		transTimer.Start();
+		currentTime = 0;
+		doingTransition = true;
+	}
+	currentTime = transTimer.Read();
+
+	float time = (float)currentTime / animTime;
+	float change_alpha = app->gui->cBeizier->GetActualX(animTime, currentTime, CB_SLOW_MIDDLE);
+
+	change_alpha = CLAMP01(change_alpha);
+
+	if (time <= 0.5)
+	{
+		app->render->DrawQuad({ 500,500,50,50 }, 255, 150, 150, 255 * (1 - change_alpha));
+	}
+	else if (time < 1)
+	{
+		app->render->DrawQuad({ 500,500,50,50 }, 255, 150, 150, 255 * (change_alpha));
+	}
+	else
+	{
+		currentStaticAnimation = SAT_NONE;
+		doingTransition = false;
+	}
 }
 void GUIElement::BounceSA(float dt)
 {
