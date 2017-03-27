@@ -788,6 +788,10 @@ void M_GUI::DrawDebug()
 		if ((*it)->GetActive())
 			(*it)->Draw();
 	}
+
+	cBeizier->DrawBezierCurve(CB_EASE_INOUT_BACK, {800, 200});
+	cBeizier->DrawBezierCurve(CB_SLOW_MIDDLE, { 800, 200 });
+	cBeizier->DrawBezierCurve(CB_LINEAL, { 800, 200 });
 }
 SDL_Texture* M_GUI::GetAtlas() const
 {

@@ -46,7 +46,7 @@ CBeizier::~CBeizier()
 	temp.clear();
 }
 
-void CBeizier::DrawBezierCurve(cbezier_type type)
+void CBeizier::DrawBezierCurve(cbezier_type type, iPoint position)
 {
 	int size = 0;
 	switch (type)
@@ -60,7 +60,7 @@ void CBeizier::DrawBezierCurve(cbezier_type type)
 		size = easeInoutBack.size();
 		for (int i = 0; i + 1 < size; i++)
 		{
-			app->render->DrawLine((i * 2) + 300, -(easeInoutBack[i] * 100) + 400, (i * 2) + 300, -(easeInoutBack[i + 1] * 100) + 400, 255, 150, 0, 255);
+			app->render->DrawLine((i * 2) + position.x, -(easeInoutBack[i] * 100) + position.y, (i * 2) + position.x, -(easeInoutBack[i + 1] * 100) + position.y, 255, 150, 0, 255);
 		}
 	}
 	break;
@@ -69,7 +69,7 @@ void CBeizier::DrawBezierCurve(cbezier_type type)
 		size = slowMiddle.size();
 		for (int i = 0; i + 1 < size; i++)
 		{
-			app->render->DrawLine((i * 2) + 300, -(slowMiddle[i] * 100) + 400, (i * 2) + 300, -(slowMiddle[i + 1] * 100) + 400, 255, 150, 0, 255);
+			app->render->DrawLine((i * 2) + position.x, -(slowMiddle[i] * 100) + position.y, (i * 2) + position.x, -(slowMiddle[i + 1] * 100) + position.y, 255, 150, 0, 255);
 		}
 	}
 	break;
@@ -78,7 +78,7 @@ void CBeizier::DrawBezierCurve(cbezier_type type)
 		size = bLineal.size();
 		for (int i = 0; i + 1 < size; i++)
 		{
-			app->render->DrawLine((i * 2) + 300, -(bLineal[i] * 100) + 400, (i * 2) + 300, -(bLineal[i + 1] * 100) + 400, 255, 150, 0, 255);
+			app->render->DrawLine((i * 2) + position.x, -(bLineal[i] * 100) + position.y, (i * 2) + position.x, -(bLineal[i + 1] * 100) + position.y, 255, 150, 0, 255);
 		}
 	}
 	break;

@@ -25,7 +25,7 @@ public:
 	CBeizier();
 	virtual ~CBeizier();
 
-	void DrawBezierCurve(cbezier_type type);
+	void DrawBezierCurve(cbezier_type type, iPoint position);
 
 	float GetActualPoint(const iPoint origin, const iPoint destination, int ms, int currentMs, cbezier_type type);
 	float GetActualX(int ms, int currentMs, cbezier_type type);
