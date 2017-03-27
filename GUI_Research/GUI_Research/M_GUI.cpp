@@ -87,6 +87,7 @@ bool M_GUI::Start()
 	img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_DROP);
 	img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, T_MOVE_TO_RIGHT);
 	//img2->AddAnimationOrTransition(ENABLE, T_SCALE);
+	//img2->AddAnimationOrTransition(MOUSE_ENTERS, SA_PULSE);
 
 
 #pragma region UI Comented
