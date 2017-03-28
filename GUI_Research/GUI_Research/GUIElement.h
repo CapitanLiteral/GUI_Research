@@ -122,6 +122,7 @@ public:
 	GB_Rectangle<int> GetLocalRect() const;
 	iPoint GetScreenPos() const;
 	iPoint GetLocalPos() const;
+	iPoint GetGlobalPos() const;
 	iPoint GetSize() const;
 	bool GetDraggable() const;
 	bool GetInteractive() const;
@@ -141,7 +142,8 @@ public:
 	std::string GetPresetType() const;
 	std::string GetName() const;
 
-	void SetLocalPos(int x, int y);
+	virtual void SetLocalPos(int x, int y);
+	virtual void SetGlobalPos(int x, int y);
 	void SetSize(int w, int h);
 	void SetDraggable(bool _draggable);
 	void SetInteractive(bool _interactive);
@@ -197,6 +199,7 @@ private:
 	gui_types type = gui_types::GUI_UNKNOWN; // Gui Type	
 	GB_Rectangle<int> rect;
 	fPoint scale = fPoint(1.f, 1.f);
+	iPoint localPosition = iPoint(0, 0);
 	ElementStatus status;
 
 	std::string presetName;

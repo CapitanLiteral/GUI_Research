@@ -58,22 +58,25 @@ bool GUIElement::CheckMouseOver() const
 }
 void GUIElement::Center()
 {
-	int frame_w = (parent) ? parent->GetLocalRect().w : app->render->camera.w - (GetLocalRect().w / 2);
-	int frame_h = (parent) ? parent->GetLocalRect().h : app->render->camera.h - (GetLocalRect().h / 2);
+	int frame_w = (parent) ? parent->GetLocalRect().w/2 - (GetLocalRect().w / 2) : app->render->camera.w/2 - (GetLocalRect().w / 2);
+	int frame_h = (parent) ? parent->GetLocalRect().h/2 - (GetLocalRect().h / 2) : app->render->camera.h/2 - (GetLocalRect().h / 2);
 
-	SetLocalPos(frame_w / 2 - rect.w / 2, frame_h / 2 - rect.h / 2);
+	SetLocalPos(frame_w, frame_h);
+	SetGlobalPos(0, 0);
 }
 void GUIElement::CenterX()
 {
 	int frame_w = (parent) ? parent->GetLocalRect().w : app->render->camera.w;
 
 	SetLocalPos(frame_w / 2 - rect.w / 2, rect.h);
+	SetGlobalPos(frame_w / 2 - rect.w / 2, rect.h);
 }
 void GUIElement::CenterY()
 {
 	int frame_h = (parent) ? parent->GetLocalRect().h : app->render->camera.h;
 
 	SetLocalPos(rect.w, frame_h / 2 - rect.h / 2);
+	SetGlobalPos(rect.w, frame_h / 2 - rect.h / 2);
 }
 void GUIElement::AddListener(Module * moduleToAdd)
 {
@@ -139,6 +142,10 @@ iPoint GUIElement::GetScreenPos() const
 		return iPoint(rect.x, rect.y);
 }
 iPoint GUIElement::GetLocalPos() const
+{
+	return localPosition;
+}
+iPoint GUIElement::GetGlobalPos() const
 {
 	return iPoint(rect.x, rect.y);
 }
@@ -219,23 +226,44 @@ std::string GUIElement::GetName() const
 
 void GUIElement::SetLocalPos(int x, int y)
 {
+	localPosition.create(x, y);
+	//Changes this item position and its childs.
+	//if (parent)
+	//{
+	//	rect.x = x + parent->GetLocalPos().x;
+	//	rect.y = y + parent->GetLocalPos().y;
+	//}
+	//else
+	//{
+	//	rect.x = x;
+	//	rect.y = y;
+	//}
+	//drawRect.x = rect.x;
+	//drawRect.y = rect.y;
+	
+	//for (std::list<GUIElement*>::iterator it = childs.begin(); it != childs.end(); ++it)
+	//	if ((*it)) (*it)->SetLocalPos((*it)->GetLocalPos().x + x, (*it)->GetLocalPos().y + y);
+			
+}
+void GUIElement::SetGlobalPos(int x, int y)
+{
 	//Changes this item position and its childs.
 	if (parent)
 	{
-		rect.x = parent->GetLocalPos().x;
-		rect.y = parent->GetLocalPos().y;
+		rect.x = parent->GetGlobalPos().x + localPosition.x;
+		rect.y = parent->GetGlobalPos().y + localPosition.y;
 	}
 	else
 	{
-		rect.x = x;
-		rect.y = y;
+		rect.x = x + localPosition.x;
+		rect.y = y + localPosition.y;
 	}
 	drawRect.x = rect.x;
 	drawRect.y = rect.y;
-	
+
 	for (std::list<GUIElement*>::iterator it = childs.begin(); it != childs.end(); ++it)
-		if ((*it)) (*it)->SetLocalPos((*it)->GetLocalPos().x + x, (*it)->GetLocalPos().y + y);
-			
+		if ((*it)) (*it)->SetGlobalPos(x, y);
+
 }
 void GUIElement::SetDraggable(bool _draggable) 
 {
@@ -517,7 +545,7 @@ void GUIElement::Update(const GUIElement* mouseHover, const GUIElement* focus, f
 	{
 		iPoint p;
 		app->input->GetMousePosition(p.x, p.y);
-		SetLocalPos(p.x, p.y);
+		SetGlobalPos(p.x, p.y);
 	}
 
 }

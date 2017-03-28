@@ -42,11 +42,11 @@ bool M_GUI::Start()
 	bool ret = true;
 	//TODO 1: Load atlas
 	atlas = app->tex->Load("gui/atlas2.png");
-	
+
 	//This goes the first
 	ret = LoadLayout();
-	
-	
+
+
 
 	//GUIImage* img = CreateImage({ 0, 100, 328, 103 }, { 485, 829, 328, 103 });
 	//guiList.push_back(img);
@@ -65,14 +65,14 @@ bool M_GUI::Start()
 	debugGuiList.push_back(CreateLabel({ 30,0,30,30 }, MEDIUM, "ms"));
 	debugGuiList.push_back(CreateLabel({ 30,30,30,30 }, MEDIUM, "fps"));
 
-	xMouse = new GUILabel("", SMALL);
-	yMouse = new GUILabel("", SMALL);
+	xMouse = new GUILabel("", SMALL, "mousex");
+	yMouse = new GUILabel("", SMALL, "mousey");
 
 	debugGuiList.push_back(xMouse);
 	debugGuiList.push_back(yMouse);
 
 
-	
+
 	img2 = CreateImageFromPreset({ 100, 100, 484, 512 }, "window", "image_test_animation_transition");
 	//img->SetRectangle(100, 500, 231, 71);
 	//img->SetSection(0, 110, 231, 71);
@@ -88,6 +88,9 @@ bool M_GUI::Start()
 	//img2->AddAnimationOrTransition(ENABLE, T_SCALE);
 	//img2->AddAnimationOrTransition(MOUSE_ENTERS, SA_PULSE);
 
+	GUILabel* label_center = CreateLabel({ 0, 0, 0, 0 }, DEFAULT, "label_center", "label_center");
+	label_center->Center();
+	guiList.push_back(label_center);
 	return ret;
 }
 update_status M_GUI::PreUpdate(float dt)
@@ -248,9 +251,9 @@ bool M_GUI::LoadLayout()
 			//		only 3 Gui items are implemented Label, Image and Button...
 			// bla bla some preset SLIDER
 			// bla bla some preset LIFEBAR
-			// NEWER PRESETS go here
+			// NEWER PRESETS go up this comments
 
-			//TODO 3: Load UI layout
+			//Load UI layout
 			root = data.child("gui").child("layout");
 			pugi::xml_object_range<pugi::xml_node_iterator> elements = root.children();
 			for (pugi::xml_node_iterator it_elements = elements.begin();
@@ -263,14 +266,18 @@ bool M_GUI::LoadLayout()
 					std::map<std::string, GUIElement*>::iterator node = GuiPresets.find(preset);
 					std::string name = it_elements->attribute("name").as_string("");
 					GUIElement* tmpElement = FindElement(guiList, name);
-					if (node != GuiPresets.end() && tmpElement == nullptr && name != "")
+					// If name is "" or another element with same name exists does not load the element, 
+					// same if not preset found in presets list
+					if (node != GuiPresets.end() && tmpElement == nullptr && name != "") 
 					{
+						std::string text = it_elements->attribute("text").as_string("");
 						GB_Rectangle<int> rect;						
 						rect.x = it_elements->child("position").attribute("x").as_int();
 						rect.y = it_elements->child("position").attribute("y").as_int();
 						rect.w = it_elements->child("size").attribute("w").as_int();
 						rect.h = it_elements->child("size").attribute("h").as_int();
-						GUIButton* btn = CreateButtonFromPreset(rect, preset, name);
+						GUIButton* btn = CreateButtonFromPreset(rect, preset, name, text.c_str());
+						//btn->SetText(text);
 						guiList.push_back(btn);
 						LOG("Item %s created", (*it_elements).name());
 					}
@@ -294,6 +301,8 @@ bool M_GUI::LoadLayout()
 					std::map<std::string, GUIElement*>::iterator node = GuiPresets.find(preset);
 					std::string name = it_elements->attribute("name").as_string("");
 					GUIElement* tmpElement = FindElement(guiList, name);
+					// If name is "" or another element with same name exists does not load the element, 
+					// same if not preset found in presets list
 					if (node != GuiPresets.end() && tmpElement == nullptr && name != "")
 					{
 						std::string name = it_elements->attribute("name").as_string();
@@ -395,103 +404,109 @@ bool M_GUI::SaveLayout()
 
 			child = next;
 		}
-
+		std::list<std::string> names;
+		std::list<std::string>::iterator name_found;
 		for (std::list<GUIElement*>::iterator it = guiList.begin(); it != guiList.end(); it++)
 		{
-			GB_Rectangle<int> rect = (*it)->GetLocalRect();
-			pugi::xml_node element;
-			pugi::xml_attribute atr;
-			pugi::xml_node position;
-			pugi::xml_node size;
-			GUILabel* lb = nullptr;
-			if ((*it)->GetType() == GUI_LABEL)
+			name_found = std::find(names.begin(), names.end(), (*it)->GetName());
+			if (name_found == names.end())
 			{
-				lb = (GUILabel*)(*it);
-			}
-			switch ((*it)->GetType())
-			{
-				case GUI_UNKNOWN:
-					break;
-				case GUI_IMAGE:
-					//Create node img
-					element = root.append_child("img");
-					//Create atributes in img
-					atr = element.append_attribute("type");
-					atr.set_value((*it)->GetPresetType().c_str());
-					atr = element.append_attribute("name");
-					atr.set_value((*it)->GetName().c_str());
-					//Create node img/position
-					position = element.append_child("position");
-					//Create atributes in img/position
-					atr = position.append_attribute("x");
-					atr.set_value(rect.x);
-					atr = position.append_attribute("y");
-					atr.set_value(rect.y);
-					//Create node img/size
-					size = element.append_child("size");
-					//Create atributes in img/size
-					atr = size.append_attribute("w");
-					atr.set_value(rect.w);
-					atr = size.append_attribute("h");
-					atr.set_value(rect.h);
-					break;
-				case GUI_LABEL:
-					//Create node label
-					element = root.append_child("label");
-					//Create atributes in label
-					atr = element.append_attribute("size");
-					atr.set_value(lb->GetLabelSize());
-					atr = element.append_attribute("name");
-					atr.set_value((*it)->GetName().c_str());
-					atr = element.append_attribute("text");
-					atr.set_value(lb->GetText().c_str());
-					//Create node label/position
-					position = element.append_child("position");
-					//Create atributes in label/position
-					atr = position.append_attribute("x");
-					atr.set_value(rect.x);
-					atr = position.append_attribute("y");
-					atr.set_value(rect.y);
-					break;
-				case GUI_BUTTON:
-					//Create node button
-					element = root.append_child("button");
-					//Create atributes in button
-					atr = element.append_attribute("type");
-					atr.set_value((*it)->GetPresetType().c_str());
-					atr = element.append_attribute("name");
-					atr.set_value((*it)->GetName().c_str());
-					//Create node button/position
-					position = element.append_child("position");
-					//Create atributes in button/position
-					atr = position.append_attribute("x");
-					atr.set_value(rect.x);
-					atr = position.append_attribute("y");
-					atr.set_value(rect.y);
-					//Create node button/size
-					size = element.append_child("size");
-					//Create atributes in button/size
-					atr = size.append_attribute("w");
-					atr.set_value(rect.w);
-					atr = size.append_attribute("h");
-					atr.set_value(rect.h);
-					break;
-				case GUI_INPUT_TEXT:
-					break;
-				case GUI_LOAD_BAR:
-					break;
-				case GUI_H_SLIDER:
-					break;
-				case GUI_V_SLIDER:
-					break;
-				case GUI_MOUSE_CURSOR:
-					break;
-				case GUI_RECT:
-					break;
-				default:
-					LOG("Something went wrong when serializing");
-					ret = false;
-					break;
+				names.push_back((*it)->GetName());
+				GB_Rectangle<int> rect = (*it)->GetLocalRect();
+				pugi::xml_node element;
+				pugi::xml_attribute atr;
+				pugi::xml_node position;
+				pugi::xml_node size;
+				GUILabel* lb = nullptr;
+				if ((*it)->GetType() == GUI_LABEL)
+				{
+					lb = (GUILabel*)(*it);
+				}
+				switch ((*it)->GetType())
+				{
+					case GUI_UNKNOWN:
+						break;
+					case GUI_IMAGE:
+						//Create node img
+						element = root.append_child("img");
+						//Create atributes in img
+						atr = element.append_attribute("type");
+						atr.set_value((*it)->GetPresetType().c_str());
+						atr = element.append_attribute("name");
+						atr.set_value((*it)->GetName().c_str());
+						//Create node img/position
+						position = element.append_child("position");
+						//Create atributes in img/position
+						atr = position.append_attribute("x");
+						atr.set_value(rect.x);
+						atr = position.append_attribute("y");
+						atr.set_value(rect.y);
+						//Create node img/size
+						size = element.append_child("size");
+						//Create atributes in img/size
+						atr = size.append_attribute("w");
+						atr.set_value(rect.w);
+						atr = size.append_attribute("h");
+						atr.set_value(rect.h);
+						break;
+					case GUI_LABEL:
+						//Create node label
+						element = root.append_child("label");
+						//Create atributes in label
+						atr = element.append_attribute("size");
+						atr.set_value(lb->GetLabelSize());
+						atr = element.append_attribute("name");
+						atr.set_value((*it)->GetName().c_str());
+						atr = element.append_attribute("text");
+						atr.set_value(lb->GetText().c_str());
+						//Create node label/position
+						position = element.append_child("position");
+						//Create atributes in label/position
+						atr = position.append_attribute("x");
+						atr.set_value(rect.x);
+						atr = position.append_attribute("y");
+						atr.set_value(rect.y);
+						break;
+					case GUI_BUTTON:
+						//Create node button
+						element = root.append_child("button");
+						//Create atributes in button
+						atr = element.append_attribute("type");
+						atr.set_value((*it)->GetPresetType().c_str());
+						atr = element.append_attribute("name");
+						atr.set_value((*it)->GetName().c_str());
+						//Create node button/position
+						position = element.append_child("position");
+						//Create atributes in button/position
+						atr = position.append_attribute("x");
+						atr.set_value(rect.x);
+						atr = position.append_attribute("y");
+						atr.set_value(rect.y);
+						//Create node button/size
+						size = element.append_child("size");
+						//Create atributes in button/size
+						atr = size.append_attribute("w");
+						atr.set_value(rect.w);
+						atr = size.append_attribute("h");
+						atr.set_value(rect.h);
+						break;
+					case GUI_INPUT_TEXT:
+						break;
+					case GUI_LOAD_BAR:
+						break;
+					case GUI_H_SLIDER:
+						break;
+					case GUI_V_SLIDER:
+						break;
+					case GUI_MOUSE_CURSOR:
+						break;
+					case GUI_RECT:
+						break;
+					default:
+						LOG("Something went wrong when serializing");
+						ret = false;
+						break;
+				}
 			}
 		}
 		
@@ -667,8 +682,8 @@ void M_GUI::DrawDebug()
 	app->input->GetMousePosition(x, y);
 	xMouse->SetText(std::to_string(x).c_str(), SMALL);
 	yMouse->SetText(std::to_string(y).c_str(), SMALL);
-	xMouse->SetLocalPos(x + 10, y);
-	yMouse->SetLocalPos(x + 40, y);
+	xMouse->SetGlobalPos(x + 10, y);
+	yMouse->SetGlobalPos(x + 40, y);
 
 	for (std::list<GUIElement*>::iterator it = guiList.begin(); it != guiList.end(); it++)
 	{
@@ -754,7 +769,7 @@ GUIButton * M_GUI::CreateButton(GB_Rectangle<int> _position, GB_Rectangle<int> _
 	GUIButton* button = new GUIButton(_position, _standBySection, _hoverSection, _clickedSection, name);
 	return button;
 }
-GUIButton * M_GUI::CreateButtonFromPreset(GB_Rectangle<int> _position, std::string preset, std::string name)
+GUIButton * M_GUI::CreateButtonFromPreset(GB_Rectangle<int> _position, std::string preset, std::string name, const char* _text)
 {
 	GUIButton* ret;
 
@@ -769,6 +784,9 @@ GUIButton * M_GUI::CreateButtonFromPreset(GB_Rectangle<int> _position, std::stri
 		btn->SetPresetType(preset);
 		btn->SetRectangle(_position);
 		btn->image->SetRectangle(_position);
+		//btn->label->SetRectangle(_position);
+		btn->SetText(_text);
+		btn->label->Center();
 		ret = btn;
 	}
 	else
@@ -788,7 +806,7 @@ GUILabel * M_GUI::CreateLabel(GB_Rectangle<int> _position, label_size _size, std
 	{
 		label = new GUILabel(name);
 	}
-	label->SetLocalPos(_position.x, _position.y);
+	label->SetGlobalPos(_position.x, _position.y);
 	return label;
 }
 GUIImage * M_GUI::CreateImage(GB_Rectangle<int> _position, GB_Rectangle<int> _section, std::string name)

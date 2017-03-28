@@ -67,7 +67,7 @@ public:
 							 GB_Rectangle<int> _standBySection, 
 							 GB_Rectangle<int> _hoverSection, 
 							 GB_Rectangle<int> _clickedSection, std::string name); // From nothing
-	GUIButton*	CreateButtonFromPreset(GB_Rectangle<int> _position, std::string preset, std::string name); // From a preset
+	GUIButton*	CreateButtonFromPreset(GB_Rectangle<int> _position, std::string preset, std::string name, const char* _text = nullptr); // From a preset
 	GUILabel*	CreateLabel(GB_Rectangle<int> _position, label_size _size, std::string name, const char* _text = nullptr);
 	GUIImage*	CreateImage(GB_Rectangle<int> _position, GB_Rectangle<int> _section, std::string name); // From nothing
 	GUIImage*	CreateImageFromPreset(GB_Rectangle<int> _position, std::string preset, std::string name); // From a preset

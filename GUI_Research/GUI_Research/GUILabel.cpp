@@ -63,7 +63,13 @@ void GUILabel::Draw() const
 	if (texture != nullptr)
 	{
 		GB_Rectangle<float> rect = GetDrawRect();
+		GB_Rectangle<float> sect;
+		sect.x = 0;
+		sect.y = 0;
+		sect.w = rect.w;
+		sect.h = rect.h;
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 		app->render->Blit(texture, rect.x, rect.y, NULL, 0.0f);
+		//app->render->Blit(texture, &GetDrawRect().GetSDLrect(), &sect.GetSDLrect());
 	}
 }
