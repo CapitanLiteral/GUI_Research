@@ -6,8 +6,9 @@ GUIButton::GUIButton(GB_Rectangle<int> _position,
 					 GB_Rectangle<int> _standBySection, 
 					 GB_Rectangle<int> _hoverSection, 
 					 GB_Rectangle<int> _clickedSection,
+					 std::string name,
 					 int flags,
-					 char* text, label_size _size) : GUIElement(flags)
+					 char* text, label_size _size) : GUIElement(name, flags)
 {
 	SetType(GUI_BUTTON);
 	//SetRectangle(0, 100, 231, 71);
@@ -18,14 +19,14 @@ GUIButton::GUIButton(GB_Rectangle<int> _position,
 	SetInteractive(true);
 	SetCanFocus(true);
 
-	image = new GUIImage();
+	image = new GUIImage(GetName());
 	image->SetParent(this);
 	image->SetRectangle(_position);	
 	image->SetInteractive(false);
 	image->SetCanFocus(false);
 	image->SetSection(standBySection);
 
-	label = new GUILabel();
+	label = new GUILabel(GetName());
 	label->SetParent(this);
 	label->SetLocalPos(_position.x, _position.y);
 	label->SetInteractive(false);
@@ -37,7 +38,7 @@ GUIButton::GUIButton(GB_Rectangle<int> _position,
 	}
 	label->Center();
 }
-GUIButton::GUIButton(const GUIButton & btn, int flags) : GUIElement(flags)
+GUIButton::GUIButton(const GUIButton & btn, std::string name, int flags) : GUIElement(name, flags)
 {
 	SetType(GUI_BUTTON);
 	SetRectangle(btn.GetLocalRect());
@@ -46,7 +47,9 @@ GUIButton::GUIButton(const GUIButton & btn, int flags) : GUIElement(flags)
 	clickedSection = btn.clickedSection;
 	image = new GUIImage(*btn.image);
 	image->SetRectangle(btn.GetLocalRect());
+	image->SetParent(this);
 	label = btn.label;
+	label->SetParent(this);
 }
 GUIButton::~GUIButton()
 {

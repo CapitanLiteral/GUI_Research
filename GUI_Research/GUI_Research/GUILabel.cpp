@@ -8,12 +8,12 @@
 //TEMP
 #include "M_Render.h"
 
-GUILabel::GUILabel(int flags) : GUIElement(flags)
+GUILabel::GUILabel(std::string name, int flags) : GUIElement(name, flags)
 {
 	SetType(GUI_LABEL);
 	texture = nullptr;
 }
-GUILabel::GUILabel(const char * text, label_size _size, int flags) : GUIElement(flags)
+GUILabel::GUILabel(const char * text, label_size _size, std::string name, int flags) : GUIElement(name, flags)
 {
 	SetText(text, _size);
 	SetType(gui_types::GUI_LABEL);

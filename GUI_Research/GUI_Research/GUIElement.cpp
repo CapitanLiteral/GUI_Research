@@ -5,7 +5,7 @@
 #include "M_Window.h"
 #include "M_GUI.h"
 
-GUIElement::GUIElement(int flags) : rect(0,0,0,0), drawRect(0.f, 0.f, 0.f, 0.f)
+GUIElement::GUIElement(std::string name, int flags) : rect(0,0,0,0), drawRect(0.f, 0.f, 0.f, 0.f), name(name)
 {
 	if (flags & DRAGGABLE)
 		SetDraggable(true);
@@ -27,6 +27,7 @@ GUIElement::GUIElement(int flags) : rect(0,0,0,0), drawRect(0.f, 0.f, 0.f, 0.f)
 	else
 		SetActive(false);
 	
+	//FIX this should not be like this...
 	if (flags & STANDARD_PRESET)
 	{
 		SetActive(true);
@@ -211,13 +212,18 @@ std::string GUIElement::GetPresetType() const
 	return presetName;
 }
 
+std::string GUIElement::GetName() const
+{
+	return name;
+}
+
 void GUIElement::SetLocalPos(int x, int y)
 {
 	//Changes this item position and its childs.
 	if (parent)
 	{
-		rect.x = x + parent->GetLocalPos().x;
-		rect.y = y + parent->GetLocalPos().y;
+		rect.x = parent->GetLocalPos().x;
+		rect.y = parent->GetLocalPos().y;
 	}
 	else
 	{
@@ -255,7 +261,17 @@ void GUIElement::SetActive(bool _active)
 }
 void GUIElement::SetParent(GUIElement * _parent) 
 {
-	parent = _parent;
+	if (this->parent == nullptr)
+	{
+		_parent->childs.push_back(this);
+		parent = _parent;
+	}
+	else if (this->parent != _parent)
+	{
+		this->parent->childs.remove(this);
+		_parent->childs.push_back(this);
+		parent = _parent;
+	}	
 	status.statusChanged = true;
 }
 void GUIElement::SetType(gui_types _type)
@@ -438,6 +454,11 @@ void GUIElement::SetPresetType(std::string str)
 	presetName = str;
 }
 
+void GUIElement::SetName(std::string str)
+{
+	name = str;
+}
+
 void GUIElement::Update(const GUIElement* mouseHover, const GUIElement* focus, float dt)
 {
 	//When updateing first do the element particular update overrided in each subtype.
@@ -491,8 +512,14 @@ void GUIElement::Update(const GUIElement* mouseHover, const GUIElement* focus, f
 			MoveToRightT(dt);
 			break;
 		}
-
 	}
+	if (GetDraggable() && GetLClicked())
+	{
+		iPoint p;
+		app->input->GetMousePosition(p.x, p.y);
+		SetLocalPos(p.x, p.y);
+	}
+
 }
 
 void GUIElement::FlashSA(float dt)

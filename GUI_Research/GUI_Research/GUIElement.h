@@ -91,7 +91,7 @@ class GUIElement
 {
 	//Methods
 public:
-	GUIElement(int flags = NO_FLAGS);
+	GUIElement(std::string name, int flags = NO_FLAGS);
 	virtual ~GUIElement();
 	
 	void Update(const GUIElement* mouseHover, const GUIElement* focus, float dt); //Do something	// must implement dt
@@ -115,6 +115,8 @@ public:
 
 	void OnGuiEvent(gui_events eventToReact);
 
+	GUIElement* operator==(GUIElement* element); //TODO: needed to compare elements
+
 	//Getters & Setters ·········································· START ···················
 	GB_Rectangle<int> GetScreenRect() const;
 	GB_Rectangle<int> GetLocalRect() const;
@@ -137,6 +139,7 @@ public:
 	iPoint GetDrawPosition()const;
 	GB_Rectangle<float> GetDrawRect()const;
 	std::string GetPresetType() const;
+	std::string GetName() const;
 
 	void SetLocalPos(int x, int y);
 	void SetSize(int w, int h);
@@ -156,6 +159,7 @@ public:
 	void SetStatusChanged(bool changed);
 	void SetDrawPosition(float x, float y);
 	void SetPresetType(std::string str);
+	void SetName(std::string str);
 
 	void Enable();
 	void Disable();
@@ -196,6 +200,7 @@ private:
 	ElementStatus status;
 
 	std::string presetName;
+	std::string name;
 
 	staticAnim_or_transition currentStaticAnimation = SAT_NONE;
 	staticAnim_or_transition currentTransition = SAT_NONE;

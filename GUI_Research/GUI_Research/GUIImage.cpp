@@ -2,13 +2,13 @@
 #include "M_Render.h"
 #include "M_GUI.h"
 
-GUIImage::GUIImage(int flags) : GUIElement(flags)
+GUIImage::GUIImage(std::string name, int flags) : GUIElement(name, flags)
 {
 	SetType(GUI_IMAGE);
 	atlas = app->gui->GetAtlas();
 	//texture = nullptr;
 }
-GUIImage::GUIImage(const GUIImage & img, int flags) : GUIElement(flags)
+GUIImage::GUIImage(const GUIImage & img, std::string name, int flags) : GUIElement(name, flags)
 {
 	SetType(GUI_IMAGE);
 	atlas = app->gui->GetAtlas();
@@ -21,12 +21,6 @@ GUIImage::~GUIImage()
 
 void GUIImage::OnUpdate(const GUIElement * mouseHover, const GUIElement * focus, float dt)
 {
-	if (GetDraggable() && GetLClicked())
-	{
-		iPoint p;
-		app->input->GetMousePosition(p.x, p.y);
-		SetLocalPos(p.x, p.y);
-	}
 }
 void GUIImage::Draw() const
 {

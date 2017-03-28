@@ -12,8 +12,8 @@ class GUILabel :
 	public GUIElement
 {
 public:
-	GUILabel(int flags = STANDARD_PRESET);
-	GUILabel(const char* text, label_size _size, int flags = STANDARD_PRESET);
+	GUILabel(std::string name, int flags = STANDARD_PRESET);
+	GUILabel(const char* text, label_size _size, std::string name, int flags = STANDARD_PRESET);
 	virtual ~GUILabel();	
 	const SDL_Texture* GetTexture() const;
 	void Draw() const;

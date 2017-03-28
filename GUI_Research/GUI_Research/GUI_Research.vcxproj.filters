@@ -36,13 +36,7 @@
     <ClCompile Include="GUIImage.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GUIInputText.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUILabel.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIMouse.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="M_Audio.cpp">
@@ -96,7 +90,9 @@
     <ClCompile Include="M_Scene.cpp">
       <Filter>Modules\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Bezier.cpp" />
+    <ClCompile Include="Bezier.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUIAutoLabel.h">
@@ -111,13 +107,7 @@
     <ClInclude Include="GUIImage.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="GUIInputText.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUILabel.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIMouse.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="M_Audio.h">
@@ -177,6 +167,8 @@
     <ClInclude Include="M_Scene.h">
       <Filter>Modules\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Bezier.h" />
+    <ClInclude Include="Bezier.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
