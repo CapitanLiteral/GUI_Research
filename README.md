@@ -37,7 +37,7 @@
 
 <h2>Let's start.</h2>
 <p>First of all we must define all the different animations and transitions we want to do. In order to store all this we will use an enum we call staticAnim_or_transition. We could define one enum for transitions and another one for static animations but we decided to join all in one to make it easier later:  </p>
-<code>
+```
 enum staticAnim_or_transition
 {
 	SAT_NONE = 0,
@@ -60,7 +60,7 @@ enum staticAnim_or_transition
 	T_MOVE_DOWN
 };
 
-</code>
+```
 
 <p>Now we have all animations and transitions declared in the enum we want to store all the relations between ui events and the animations and transition so that when one of those events is broadcasted we can react to it. Not all events will have a reaction for all elements as many times it makes no sense.
     In order to store all the relations will use a map using as a key the event, this way when when an event is catched in a certain element it will search in this map if it must react in a certain way (will get into this later).
