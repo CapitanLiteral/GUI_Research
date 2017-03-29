@@ -100,6 +100,7 @@ bool GUIElement::Save(pugi::xml_node & node) const
 }
 void GUIElement::OnGuiEvent(int64_t eventToReact)
 {
+	//TODO SAT: 3. Search in the map for the event recieved. If found get the animation linked and determine if its a transition or an animation, then set currentStaticAnimation or currentTransition. Also set doingAnimation or doingTransition to false. 
 	if (this->eventsToReact & eventToReact)
 	{
 		std::map<gui_events, staticAnim_or_transition>::iterator it = transAndAnimations.find((gui_events)eventToReact);
@@ -121,11 +122,12 @@ void GUIElement::OnGuiEvent(int64_t eventToReact)
 					currentTransition = tmp;
 					doingTransition = false;
 					//Will asume all transitions enable/disable.
-					if (status.active) mustDisable = true;
+					if (status.active) mustDisable = true; //Will have to explain this in some way...
 				}
 			}
 		}
 	}
+	//-------
 }
 
 GB_Rectangle<int> GUIElement::GetScreenRect() const
@@ -415,6 +417,7 @@ void GUIElement::Disable()
 }
 void GUIElement::AddAnimationOrTransition(gui_events eventToReact, staticAnim_or_transition animOrTransition)
 {
+	//TODO SAT: 1. Insert in the map the pair of event and animation you recieve. Remeber before inserting checking if that event has been already added, if it has replace the animatio set before for the new one.
 	std::map<gui_events, staticAnim_or_transition>::iterator it = transAndAnimations.find(eventToReact);
 	if (it != transAndAnimations.end())
 	{
@@ -427,9 +430,11 @@ void GUIElement::AddAnimationOrTransition(gui_events eventToReact, staticAnim_or
 		transAndAnimations.insert(std::pair<gui_events, staticAnim_or_transition>(eventToReact, animOrTransition));
 		this->eventsToReact = (gui_events)(this->eventsToReact | eventToReact);
 	}
+	//----
 }
 void GUIElement::RemoveAnimationOrTransitionReaction(gui_events eventToReact)
 {
+	//TODO SAT: 2. Search in the map for that event, if its found remove that pair from the map.
 	if (this->eventsToReact & eventToReact)
 	{
 		std::map<gui_events, staticAnim_or_transition>::iterator it = transAndAnimations.find(eventToReact);
@@ -439,6 +444,7 @@ void GUIElement::RemoveAnimationOrTransitionReaction(gui_events eventToReact)
 			this->eventsToReact = (gui_events)(this->eventsToReact & ~eventToReact);
 		}
 	}
+	//-----
 }
 void GUIElement::GetAllAnimationAndTransitions(std::vector<std::pair<gui_events, staticAnim_or_transition>>& animsAndTrans)
 {

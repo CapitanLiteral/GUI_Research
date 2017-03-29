@@ -4,8 +4,7 @@
 #include "Module.h"
 
 struct SDL_Texture;
-class GuiImage;
-class GuiText;
+class GUIImage;
 
 class M_Scene : public Module
 {
@@ -26,9 +25,10 @@ public:
 	void GuiEvent(GUIElement* element, int64_t state)override;
 
 private:
-	SDL_Texture* debug_tex;
-	//GuiImage* banner;
-	//GuiText* text;
+	SDL_Texture* debug_tex = nullptr;
+	GUIImage* img1 = nullptr;
+	GUIImage* img2 = nullptr;
+	GUIImage* img3 = nullptr;
 };
 
 #endif // __j1SCENE_H__
