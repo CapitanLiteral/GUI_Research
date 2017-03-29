@@ -216,7 +216,7 @@ bool M_Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 }
 
 // Blit to screen
-bool M_Render::Blit(SDL_Texture* texture, const SDL_Rect* _rect, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY) const
+bool M_Render::Blit(SDL_Texture* texture, const SDL_Rect* _rect, const SDL_Rect* section, int alpha, float speed, double angle, int pivotX, int pivotY) const
 {
 	bool ret = true;
 	uint scale = app->win->GetScale();
@@ -239,6 +239,13 @@ bool M_Render::Blit(SDL_Texture* texture, const SDL_Rect* _rect, const SDL_Rect*
 		pivot.x = pivotX;
 		pivot.y = pivotY;
 		p = &pivot;
+	}
+
+	Uint8 currentAlpha;
+	SDL_GetTextureAlphaMod(texture, &currentAlpha);
+	if(alpha != currentAlpha)
+	{
+		SDL_SetTextureAlphaMod(texture, (Uint8)alpha);
 	}
 
 	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
