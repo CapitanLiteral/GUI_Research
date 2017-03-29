@@ -19,6 +19,32 @@ enum status_flags
 	ACTIVE			= (1 << 3),
 	STANDARD_PRESET = (1 << 4)
 };
+enum gui_events
+{
+	EVENT_NONE = 0,
+	LISTENING_END = (1 << 0),
+	MOUSE_ENTERS = (1 << 1),			// done
+	MOUSE_LEAVES = (1 << 2),			// done
+	MOUSE_LCLICK_DOWN = (1 << 3),			// done
+	MOUSE_LCLICK_UP = (1 << 4),			// done
+	MOUSE_RCLICK_DOWN = (1 << 5),			// done
+	MOUSE_RCLICK_UP = (1 << 6),			// done
+	GAIN_FOCUS = (1 << 7),			// done
+	LOST_FOUCS = (1 << 8),			// done
+	INPUT_CHANGED = (1 << 9),
+	INPUT_SUBMIT = (1 << 10),
+	VALUE_CHANGED = (1 << 11),
+	RETURN_DOWN = (1 << 12),
+
+	ENABLE = (1 << 13),
+	DISABLE = (1 << 14),
+
+	//UI-GAME-EVENTS ---> Put them on a better event system and they wont need to coexist with GUI-EVENTS
+	//					  for now this is okay
+
+	CLOSE_APP = (1 << 15)
+
+};
 
 struct ElementStatus
 {
@@ -32,34 +58,17 @@ struct ElementStatus
 	bool rClicked		= false;	// Right clicked
 	bool statusChanged	= false;	// Element status changed
 
-};
-
-enum gui_events
-{
-	EVENT_NONE			= 0,
-	LISTENING_END		= (1 << 0),
-	MOUSE_ENTERS		= (1 << 1),			// done
-	MOUSE_LEAVES		= (1 << 2),			// done
-	MOUSE_LCLICK_DOWN	= (1 << 3),			// done
-	MOUSE_LCLICK_UP		= (1 << 4),			// done
-	MOUSE_RCLICK_DOWN	= (1 << 5),			// done
-	MOUSE_RCLICK_UP		= (1 << 6),			// done
-	GAIN_FOCUS			= (1 << 7),			// done
-	LOST_FOUCS			= (1 << 8),			// done
-	INPUT_CHANGED		= (1 << 9),
-	INPUT_SUBMIT		= (1 << 10),
-	VALUE_CHANGED		= (1 << 11),
-	RETURN_DOWN			= (1 << 12),
-
-	ENABLE				= (1 << 13),
-	DISABLE				= (1 << 14),
-
-	//UI-GAME-EVENTS ---> Put them on a better event system and they wont need to coexist with GUI-EVENTS
-	//					  for now this is okay
-
-	CLOSE_APP			= (1 << 15)
+	gui_events onLClickUp		= EVENT_NONE;
+	gui_events onLClickDown		= EVENT_NONE;
+	gui_events onRClickUp		= EVENT_NONE;
+	gui_events onRClickDown		= EVENT_NONE;
+	gui_events onGainFocus		= EVENT_NONE;
+	gui_events onLooseFocus		= EVENT_NONE;
+	gui_events onMouseEnters	= EVENT_NONE;
+	gui_events onMouseLeaves	= EVENT_NONE;
 
 };
+
 enum gui_types
 {
 	GUI_UNKNOWN,
@@ -119,7 +128,7 @@ public:
 	//virtual bool OnSave(pugi::xml_node& node)const;
 	//virtual bool OnLoad(pugi::xml_node* node);
 
-	void OnGuiEvent(gui_events eventToReact);
+	void OnGuiEvent(int64_t eventToReact);
 
 	GUIElement* operator==(GUIElement* element); //TODO: needed to compare elements
 

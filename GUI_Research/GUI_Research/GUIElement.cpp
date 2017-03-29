@@ -98,11 +98,11 @@ bool GUIElement::Save(pugi::xml_node & node) const
 
 	return false;
 }
-void GUIElement::OnGuiEvent(gui_events eventToReact)
+void GUIElement::OnGuiEvent(int64_t eventToReact)
 {
 	if (this->eventsToReact & eventToReact)
 	{
-		std::map<gui_events, staticAnim_or_transition>::iterator it = transAndAnimations.find(eventToReact);
+		std::map<gui_events, staticAnim_or_transition>::iterator it = transAndAnimations.find((gui_events)eventToReact);
 		if (it != transAndAnimations.end())
 		{
 			staticAnim_or_transition tmp = it->second;
