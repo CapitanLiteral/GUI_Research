@@ -75,7 +75,7 @@ std::map<gui_events, staticAnim_or_transition> transAndAnimations;
 ```
     void AddAnimationOrTransition(gui_events eventToReact, staticAnim_or_transition animOrTransition);
     void RemoveAnimationOrTransitionReaction(gui_events eventToReact);
-    void GetAllAnimationAndTransitions(\std::vector\<\std::pair\<gui_events, staticAnim_or_transition>>& animsAndTrans);
+    void GetAllAnimationAndTransitions(std::vector<std::pair<gui_events, staticAnim_or_transition>>& animsAndTrans);
     bool HasEventReactionSet(gui_events eventToReact);
     staticAnim_or_transition GetAnimOrTransitionForEvent(gui_events eventToReact);
 ```
