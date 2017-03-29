@@ -6,7 +6,7 @@
 <h1>UI-Animations and transitions.</h1>
 
 //TODO: Add the links when branch created
-<p><a href="">Download the source code here with the solution folder and the TODO's folder.></a></p>
+<p><a href="">Download the source code here with the solution folder and the TODO's folder.</a></p>
 <p><a href="">Download the release solution here.</a></p>
 
 <h2>Introduction.</h2>
