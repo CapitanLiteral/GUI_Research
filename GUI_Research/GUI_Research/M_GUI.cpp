@@ -175,7 +175,7 @@ bool M_GUI::LoadLayout()
 		pugi::xml_document data;
 		pugi::xml_node root;
 
-		pugi::xml_parse_result result = data.load_buffer(buffer, size);
+		pugi::xml_parse_result result = data.load_buffer(buffer, size-1);
 		RELEASE(buffer);
 
 		if (result != NULL)
@@ -262,6 +262,8 @@ bool M_GUI::LoadLayout()
 			// bla bla some preset LIFEBAR
 			// NEWER PRESETS go up this comments
 
+			//TODO: Load listeners and events
+
 			//Load UI layout
 			root = data.child("gui").child("layout");
 			pugi::xml_object_range<pugi::xml_node_iterator> elements = root.children();
@@ -286,7 +288,34 @@ bool M_GUI::LoadLayout()
 						rect.w = it_elements->child("size").attribute("w").as_int();
 						rect.h = it_elements->child("size").attribute("h").as_int();
 						GUIButton* btn = CreateButtonFromPreset(rect, preset, name, text.c_str());
-						//btn->SetText(text);
+						//Load button actions and assign them to an action
+						//TODO: try to find a better system of assigning button actions to gui events
+						for (pugi::xml_node it_event = it_elements->child("events").first_child(); it_event; )
+						{
+							pugi::xml_node next = it_event.next_sibling();							
+							if (it_event.attribute("origin").as_int(0) & MOUSE_LCLICK_UP)	
+							{
+								if (it_event.attribute("action").as_int(0) & CLOSE_APP)
+									btn->SetOnLClickUp((gui_events)it_event.attribute("action").as_int(0));
+							}
+							else if (it_event.attribute("origin").as_int(0) & MOUSE_LCLICK_DOWN)
+							{
+								if (it_event.attribute("action").as_int(0) & CLOSE_APP)
+									btn->SetOnLClickUp((gui_events)it_event.attribute("action").as_int(0));
+							}
+							it_event = next;
+						}
+						//Load button listeners
+						//TODO: try to find a better system of assigning button actions to gui events
+						for (pugi::xml_node it_listener = it_elements->child("listeners").first_child(); it_listener; )
+						{
+							pugi::xml_node next = it_listener.next_sibling();
+							if (Module* module = app->FindModule(it_listener.attribute("name").as_string("")))
+							{
+								btn->AddListener(module);
+							}
+							it_listener = next;
+						}
 						guiList.push_back(btn);
 						LOG("Item %s created", (*it_elements).name());
 					}
@@ -421,101 +450,8 @@ bool M_GUI::SaveLayout()
 			if (name_found == names.end())
 			{
 				names.push_back((*it)->GetName());
-				GB_Rectangle<int> rect = (*it)->GetLocalRect();
-				pugi::xml_node element;
-				pugi::xml_attribute atr;
-				pugi::xml_node position;
-				pugi::xml_node size;
-				GUILabel* lb = nullptr;
-				if ((*it)->GetType() == GUI_LABEL)
-				{
-					lb = (GUILabel*)(*it);
-				}
-				switch ((*it)->GetType())
-				{
-					case GUI_UNKNOWN:
-						break;
-					case GUI_IMAGE:
-						//Create node img
-						element = root.append_child("img");
-						//Create atributes in img
-						atr = element.append_attribute("type");
-						atr.set_value((*it)->GetPresetType().c_str());
-						atr = element.append_attribute("name");
-						atr.set_value((*it)->GetName().c_str());
-						//Create node img/position
-						position = element.append_child("position");
-						//Create atributes in img/position
-						atr = position.append_attribute("x");
-						atr.set_value(rect.x);
-						atr = position.append_attribute("y");
-						atr.set_value(rect.y);
-						//Create node img/size
-						size = element.append_child("size");
-						//Create atributes in img/size
-						atr = size.append_attribute("w");
-						atr.set_value(rect.w);
-						atr = size.append_attribute("h");
-						atr.set_value(rect.h);
-						break;
-					case GUI_LABEL:
-						//Create node label
-						element = root.append_child("label");
-						//Create atributes in label
-						atr = element.append_attribute("size");
-						atr.set_value(lb->GetLabelSize());
-						atr = element.append_attribute("name");
-						atr.set_value((*it)->GetName().c_str());
-						atr = element.append_attribute("text");
-						atr.set_value(lb->GetText().c_str());
-						//Create node label/position
-						position = element.append_child("position");
-						//Create atributes in label/position
-						atr = position.append_attribute("x");
-						atr.set_value(rect.x);
-						atr = position.append_attribute("y");
-						atr.set_value(rect.y);
-						break;
-					case GUI_BUTTON:
-						//Create node button
-						element = root.append_child("button");
-						//Create atributes in button
-						atr = element.append_attribute("type");
-						atr.set_value((*it)->GetPresetType().c_str());
-						atr = element.append_attribute("name");
-						atr.set_value((*it)->GetName().c_str());
-						//Create node button/position
-						position = element.append_child("position");
-						//Create atributes in button/position
-						atr = position.append_attribute("x");
-						atr.set_value(rect.x);
-						atr = position.append_attribute("y");
-						atr.set_value(rect.y);
-						//Create node button/size
-						size = element.append_child("size");
-						//Create atributes in button/size
-						atr = size.append_attribute("w");
-						atr.set_value(rect.w);
-						atr = size.append_attribute("h");
-						atr.set_value(rect.h);
-						break;
-					case GUI_INPUT_TEXT:
-						break;
-					case GUI_LOAD_BAR:
-						break;
-					case GUI_H_SLIDER:
-						break;
-					case GUI_V_SLIDER:
-						break;
-					case GUI_MOUSE_CURSOR:
-						break;
-					case GUI_RECT:
-						break;
-					default:
-						LOG("Something went wrong when serializing");
-						ret = false;
-						break;
-				}
+
+				(*it)->Serialize(root);
 			}
 		}
 		
