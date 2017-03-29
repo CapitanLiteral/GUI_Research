@@ -10,6 +10,7 @@ CBeizier::CBeizier() : list(nullptr), speed(0.f)
 	slowMiddle.reserve(MAX_POINTS);
 	bLineal.reserve(MAX_POINTS);
 	bshake.reserve(MAX_POINTS);
+	bfly.reserve(MAX_POINTS);
 	temp.reserve(MAX_POINTS);
 
 
@@ -40,20 +41,25 @@ CBeizier::CBeizier() : list(nullptr), speed(0.f)
 	Bezier(points, cbezier_type::CB_EASE_INOUT_BACK);
 	points.clear();
 	
-	points.push_back({0.08f,0.5f});
-	points.push_back({ 0.16f,0.5f });
-	points.push_back({ 0.24f,-0.5f });
-	points.push_back({ 0.32f,-0.5f });
-	points.push_back({ 0.40f,0.5f });
-	points.push_back({ 0.48f,0.5f });
-	points.push_back({ 0.56f,-0.5f });
-	points.push_back({ 0.64f,-0.5f });
-	points.push_back({ 0.72f,0.5f });
-	points.push_back({ 0.80f,0.5f });
-	points.push_back({ 0.88f,-0.5f });
-	points.push_back({ 0.96f,-0.5f });
+	points.push_back({0.08f,1.0f});
+	points.push_back({ 0.16f,1.0f });
+	points.push_back({ 0.24f,-1.0f });
+	points.push_back({ 0.32f,-1.0f });
+	points.push_back({ 0.40f,1.0f });
+	points.push_back({ 0.48f,1.0f });
+	points.push_back({ 0.56f,-1.0f });
+	points.push_back({ 0.64f,-1.0f });
+	points.push_back({ 0.72f,1.0f });
+	points.push_back({ 0.80f,1.0f });
+	points.push_back({ 0.88f,-1.0f });
+	points.push_back({ 0.96f,-1.0f });
 	
 	Bezier(points, cbezier_type::CB_SHAKE,0);
+	points.clear();
+
+	points.push_back({ 0.3f,-0.4f });
+	points.push_back({ 0.2f, 1.5f });
+	Bezier(points, cbezier_type::CB_FLY);
 	points.clear();
 
 }
@@ -112,6 +118,13 @@ void CBeizier::DrawBezierCurve(cbezier_type type, iPoint position)
 		}
 	}
 	break;
+	case CB_FLY: {
+		size = bfly.size();
+		for (int i = 0; i + 1 < size; i++)
+		{
+			app->render->DrawLine((i * 2) + position.x, -(bfly[i] * 100) + position.y, (i * 2) + position.x, -(bfly[i + 1] * 100) + position.y, 255, 150, 0, 255);
+		}
+	}
 	default:
 		break;
 	}
@@ -131,24 +144,36 @@ float CBeizier::GetActualX(int ms, int current_ms, cbezier_type b_type)
 	{
 	case CB_EASE_INOUT_BACK:
 	{
-		ret = easeInoutBack[time];
+		if (time >= easeInoutBack.size()) ret = easeInoutBack[99];
+		else	ret = easeInoutBack[time];
+		break;
 	}
-	break;
 	case CB_SLOW_MIDDLE:
 	{
-		ret = slowMiddle[time];
-	}
-	break;
+		if (time >= slowMiddle.size())
+		{
+			ret = slowMiddle[99];
+		}
+		else	ret = slowMiddle[time];
+		break;
+	}	
 	case CB_LINEAL:
 	{
-		ret = bLineal[time];
+		if (time >= bLineal.size()) ret = bLineal[99];
+		else	ret = bLineal[time];
+		break;
 	}
-	break;
 	case CB_SHAKE:
 	{
-		ret = bshake[time];
+		if (time >= bshake.size()) ret = bshake[99];
+		else	ret = bshake[time];
+		break;
 	}
-	break;
+	case CB_FLY: {
+		if (time >= bfly.size()) ret = bfly[99];
+		else	ret = bfly[time];
+		break;
+	}
 	default: ret = 0.0f;
 		break;
 	}
@@ -211,6 +236,8 @@ void CBeizier::Bezier(std::vector<fPoint>& points, cbezier_type b_type, int new_
 	case CB_LINEAL: list = &bLineal;
 		break;
 	case CB_SHAKE: list = &bshake;
+		break;
+	case CB_FLY: list = &bfly;
 		break;
 	default: return;
 	}

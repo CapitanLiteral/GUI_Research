@@ -569,7 +569,29 @@ void GUIElement::Update(const GUIElement* mouseHover, const GUIElement* focus, f
 
 void GUIElement::FlashSA(float dt)
 {
-	currentStaticAnimation = SAT_NONE;
+	if (!doingAnimation)
+	{
+		transTimer.Start();
+		currentAnimTim = 0;
+		doingAnimation = true;
+	}
+	currentAnimTim = transTimer.Read();
+
+	animTime = 500;
+	float change_alpha = app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_SHAKE);
+
+	change_alpha = CLAMP01(change_alpha);
+
+	if (currentAnimTim < animTime)
+	{
+		alpha = 255 * (1-change_alpha);
+	}
+	else
+	{
+		alpha = 255;
+		currentStaticAnimation = SAT_NONE;
+		doingAnimation = false;
+	}
 }
 void GUIElement::ShakeSA(float dt)
 {
@@ -582,11 +604,9 @@ void GUIElement::ShakeSA(float dt)
 	currentAnimTim = transTimer.Read();
 
 	animTime = 500;
-	float time = (float)currentAnimTim / animTime;
-
 	if (currentAnimTim < animTime)
 	{
-		SetDrawPosition(rect.x - ((float)rect.w/5)*app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_SHAKE), drawRect.y);
+		SetDrawPosition(rect.x - 25*app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_SHAKE), drawRect.y);
 	}
 	else
 	{
@@ -605,22 +625,23 @@ void GUIElement::PulseSA(float dt)
 	}
 	currentAnimTim = transTimer.Read();
 
-	float time = (float)currentAnimTim / animDuraton;
-	float change_alpha = app->gui->cBeizier->GetActualX(animDuraton, currentAnimTim, CB_SLOW_MIDDLE);
+	animTime = 500;
+	float time = (float)currentAnimTim / animTime;
+	float change_alpha = app->gui->cBeizier->GetActualX(500, currentAnimTim, CB_SLOW_MIDDLE);
 
 	change_alpha = CLAMP01(change_alpha);
 
-	if (time <= 0.5)
+	if (currentAnimTim <= animTime/2)
 	{
-		//alpha = 255 * (1 - change_alpha);
+		alpha = 255 * (1 - change_alpha);
 	}
-	else if (time < 1)
+	else if (time < animTime/2)
 	{
-		//alpha = 255 * (change_alpha);
+		alpha = 255 * (change_alpha);
 	}
 	else
 	{
-		//alpha = 255;
+		alpha = 255;
 		currentStaticAnimation = SAT_NONE;
 		doingAnimation = false;
 	}
@@ -636,11 +657,9 @@ void GUIElement::BounceSA(float dt)
 	currentAnimTim = transTimer.Read();
 
 	animTime = 500;
-	float time = (float)currentAnimTim / animTime;
-
 	if (currentAnimTim < animTime)
 	{
-		SetDrawPosition(rect.x, drawRect.y - 50*app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_SHAKE));
+		SetDrawPosition(rect.x, rect.y - 25*app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_SHAKE));
 	}
 	else
 	{
@@ -739,14 +758,11 @@ void GUIElement::FadeT(float dt)
 		currentTransTime = 0;
 		doingTransition = true;
 	}
-
 	currentAnimTim = transTimer.Read();
-	float time = (float)currentAnimTim / animDuraton;
-
-
-	if (currentAnimTim < 1000)
+	animTime = 1000;
+	if (currentAnimTim < animTime)
 	{
-		float change_alpha = app->gui->cBeizier->GetActualX(1000, currentAnimTim, CB_SLOW_MIDDLE);
+		float change_alpha = app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_SLOW_MIDDLE);
 		change_alpha = CLAMP01(change_alpha);
 		alpha = 255 *(1- change_alpha);
 	}
@@ -804,11 +820,82 @@ void GUIElement::DropT(float dt)
 }
 void GUIElement::FlyT(float dt)
 {
-	currentTransition = SAT_NONE;
+	if (!doingTransition)
+	{
+		if (mustDisable)
+		{
+			transOrigin.create(rect.x, rect.y);
+			int screenRXBorderPos = app->win->GetWindowSize().x;
+			transDestination.create(screenRXBorderPos, rect.y);
+		}
+		else
+		{
+			transOrigin.create(drawRect.x, drawRect.y);
+			transDestination.create(rect.x, rect.y);
+		}
+
+		transTimer.Start();
+		currentTransTime = 0;
+		doingTransition = true;
+	}
+
+	currentTransTime = transTimer.Read();
+	if (currentTransTime <= 500)
+	{
+		if (mustDisable)
+			SetDrawPosition(transOrigin.x - app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 500, currentTransTime, CB_FLY), drawRect.y);
+		else
+			SetDrawPosition(transOrigin.x + app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 500, currentTransTime, CB_FLY), drawRect.y);
+	}
+	else
+	{
+		currentTransTime = 0;
+		currentTransition = SAT_NONE;
+		if (mustDisable)
+		{
+			status.active = false;
+			mustDisable = false;
+		}
+		return;
+	}
 }
 void GUIElement::SlideT(float dt)
 {
-	currentTransition = SAT_NONE;
+	if (!doingTransition)
+	{
+		transTimer.Start();
+		currentAnimTim = 0;
+		doingTransition = true;
+	}
+	currentAnimTim = transTimer.Read();
+
+	animTime = 500;
+	float time = (float)currentAnimTim / animTime;
+
+	if (currentAnimTim < animTime)
+	{
+		if (mustDisable)
+		{
+			drawRect.h = rect.h - rect.h*app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_LINEAL);
+		}
+		else drawRect.h = rect.x + rect.h*app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_LINEAL);
+	}
+	else
+	{
+		currentTransTime = 0;
+		currentTransition = SAT_NONE;
+		doingTransition = false;
+
+		if (mustDisable)
+		{
+			drawRect.h = 0;
+			status.active = false;
+			mustDisable = false;
+		}
+		else drawRect.h = rect.h;
+		return;
+	}
+
 }
 void GUIElement::MoveRightT(float dt)
 {

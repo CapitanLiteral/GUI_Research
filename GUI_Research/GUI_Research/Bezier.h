@@ -17,7 +17,8 @@ enum cbezier_type
 	CB_EASE_INOUT_BACK,
 	CB_SLOW_MIDDLE,
 	CB_LINEAL,
-	CB_SHAKE
+	CB_SHAKE,
+	CB_FLY
 };
 
 class CBeizier
@@ -47,6 +48,7 @@ private:
 	std::vector<float> slowMiddle;
 	std::vector<float> bLineal;
 	std::vector<float> bshake;
+	std::vector<float> bfly;
 
 	std::vector<float> temp;
 };
