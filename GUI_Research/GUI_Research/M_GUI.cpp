@@ -638,7 +638,7 @@ void M_GUI::BroadcastEventToListeners(GUIElement * element, gui_events event)
 	if (element->GetElementStatus().interactive && element->GetElementStatus().active)
 	{
 		//if (event != MOUSE_ENTERS)
-		SDL_Log("Event: %d", event);
+		SDL_Log("Event: %b", event);
 		//First we get listeners list of previous element hovered
 		std::list<Module*> tmpListeners = element->GetListeners();
 		//Iterate over listeners list to send them hover is lost

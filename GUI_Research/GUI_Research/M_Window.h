@@ -5,6 +5,9 @@
 #include "GB_Rectangle.h"
 #include "p2Point.h"
 
+//TODO: I dont like to include this here only for the events, maybe I should fix it...
+#include "GUIElement.h"
+
 struct SDL_Window;
 struct SDL_Surface;
 
@@ -33,6 +36,8 @@ public:
 	uint GetScale() const;
 
 	void DrawDebug()override;
+	void GuiEvent(GUIElement* element, gui_events event) override;
+
 
 public:
 	//The window we'll be rendering to

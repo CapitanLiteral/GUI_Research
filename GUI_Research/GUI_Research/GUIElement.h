@@ -40,19 +40,25 @@ enum gui_events
 	LISTENING_END		= (1 << 0),
 	MOUSE_ENTERS		= (1 << 1),			// done
 	MOUSE_LEAVES		= (1 << 2),			// done
-	MOUSE_LCLICK_DOWN	= (1 << 3),		// done
-	MOUSE_LCLICK_UP		= (1 << 4),		// done
-	MOUSE_RCLICK_DOWN	= (1 << 5),		// done
-	MOUSE_RCLICK_UP		= (1 << 6),		// done
-	GAIN_FOCUS			= (1 << 7),				// done
-	LOST_FOUCS			= (1 << 8),				// done
+	MOUSE_LCLICK_DOWN	= (1 << 3),			// done
+	MOUSE_LCLICK_UP		= (1 << 4),			// done
+	MOUSE_RCLICK_DOWN	= (1 << 5),			// done
+	MOUSE_RCLICK_UP		= (1 << 6),			// done
+	GAIN_FOCUS			= (1 << 7),			// done
+	LOST_FOUCS			= (1 << 8),			// done
 	INPUT_CHANGED		= (1 << 9),
 	INPUT_SUBMIT		= (1 << 10),
 	VALUE_CHANGED		= (1 << 11),
 	RETURN_DOWN			= (1 << 12),
 
 	ENABLE				= (1 << 13),
-	DISABLE				= (1 << 14)
+	DISABLE				= (1 << 14),
+
+	//UI-GAME-EVENTS ---> Put them on a better event system and they wont need to coexist with GUI-EVENTS
+	//					  for now this is okay
+
+	CLOSE_APP			= (1 << 15)
+
 };
 enum gui_types
 {

@@ -125,3 +125,10 @@ uint M_Window::GetScale() const
 void M_Window::DrawDebug()
 {
 }
+
+void M_Window::GuiEvent(GUIElement * element, gui_events event)
+{
+	if (event & MOUSE_LCLICK_DOWN)
+		if (event & CLOSE_APP)
+			app->quit = true;
+}
