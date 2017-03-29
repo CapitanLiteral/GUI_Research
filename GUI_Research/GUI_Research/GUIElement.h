@@ -235,16 +235,17 @@ private:
 	cbezier_type curveType = cbezier_type::CB_EASE_INOUT_BACK;
 
 	bool mustDisable = false;
-	bool doingTransition = false;
 
 	Timer transTimer;
 	iPoint transOrigin = iPoint(0, 0);
 	iPoint transDestination = iPoint(0, 0);
 	int currentTransTime = 0;
+	bool doingTransition = false;
 
 	int currentAnimTim = 0;
 	int animDuraton = 1000;
 	bool doingAnimation = false;
+	int animTime = 500;
 
 protected:
 	std::list<Module*> listeners;

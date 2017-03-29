@@ -566,7 +566,27 @@ void GUIElement::FlashSA(float dt)
 }
 void GUIElement::ShakeSA(float dt)
 {
-	currentStaticAnimation = SAT_NONE;
+	if (!doingTransition)
+	{
+		transTimer.Start();
+		currentAnimTim = 0;
+		doingTransition = true;
+	}
+	currentAnimTim = transTimer.Read();
+
+	animTime = 500;
+	float time = (float)currentAnimTim / animTime;
+
+	if (currentAnimTim < animTime)
+	{
+		SetDrawPosition(rect.x - ((float)rect.w/5)*app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_SHAKE), drawRect.y);
+	}
+	else
+	{
+		SetDrawPosition(rect.x, rect.y);
+		currentStaticAnimation = SAT_NONE;
+		doingTransition = false;
+	}
 }
 void GUIElement::PulseSA(float dt)
 {
@@ -599,7 +619,27 @@ void GUIElement::PulseSA(float dt)
 }
 void GUIElement::BounceSA(float dt)
 {
-	currentStaticAnimation = SAT_NONE;
+	if (!doingTransition)
+	{
+		transTimer.Start();
+		currentAnimTim = 0;
+		doingTransition = true;
+	}
+	currentAnimTim = transTimer.Read();
+
+	animTime = 500;
+	float time = (float)currentAnimTim / animTime;
+
+	if (currentAnimTim < animTime)
+	{
+		SetDrawPosition(rect.x, drawRect.y - 50*app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_SHAKE));
+	}
+	else
+	{
+		SetDrawPosition(rect.x, rect.y);
+		currentStaticAnimation = SAT_NONE;
+		doingTransition = false;
+	}
 }
 
 void GUIElement::ScaleT(float dt)

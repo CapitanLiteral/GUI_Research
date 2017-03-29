@@ -16,7 +16,8 @@ enum cbezier_type
 	CB_NO_TYPE = 0,
 	CB_EASE_INOUT_BACK,
 	CB_SLOW_MIDDLE,
-	CB_LINEAL
+	CB_LINEAL,
+	CB_SHAKE
 };
 
 class CBeizier
@@ -32,7 +33,7 @@ public:
 
 	bool CalculatePivots(std::vector<fPoint>& points);
 	void CPoints(fPoint x0, fPoint x1, fPoint x2, fPoint x3);
-	void Bezier(std::vector<fPoint>& points, cbezier_type bType);
+	void Bezier(std::vector<fPoint>& points, cbezier_type bType, int destiny = 1);
 
 private:
 
@@ -40,9 +41,12 @@ private:
 	std::vector<fPoint> pivotPoints;
 
 	float speed = 0.0f;
+	float destiny = 0.0f;
+
 	std::vector<float> easeInoutBack;
 	std::vector<float> slowMiddle;
 	std::vector<float> bLineal;
+	std::vector<float> bshake;
 
 	std::vector<float> temp;
 };

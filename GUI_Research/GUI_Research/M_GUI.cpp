@@ -85,10 +85,13 @@ bool M_GUI::Start()
 	img2->Center();
 	//img2->AddAnimationOrTransition(MOUSE_ENTERS, T_SCALE);
 	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_SCALE);
-	img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_SCALE);
+	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_SCALE);
 	//img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, T_MOVE_DOWN);
 	//img2->AddAnimationOrTransition(ENABLE, T_MOVE_DOWN);
 	//img2->AddAnimationOrTransition(ENABLE, T_DROP);
+	img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, SA_SHAKE);
+	img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, SA_BOUNCE);
+	//img2->AddAnimationOrTransition(ENABLE, T_SCALE);
 	//img2->AddAnimationOrTransition(MOUSE_ENTERS, SA_PULSE);
 
 	GUILabel* label_center = CreateLabel({ 0, 0, 0, 0 }, DEFAULT, "label_center", "label_center");
@@ -737,6 +740,7 @@ void M_GUI::DrawDebug()
 	cBeizier->DrawBezierCurve(CB_EASE_INOUT_BACK, {800, 200});
 	cBeizier->DrawBezierCurve(CB_SLOW_MIDDLE, { 800, 200 });
 	cBeizier->DrawBezierCurve(CB_LINEAL, { 800, 200 });
+	cBeizier->DrawBezierCurve(CB_SHAKE, { 800,500 });
 }
 GUIElement * M_GUI::FindElement(std::list<GUIElement*> list, std::string name)
 {

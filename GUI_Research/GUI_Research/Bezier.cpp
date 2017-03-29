@@ -4,6 +4,15 @@
 
 CBeizier::CBeizier() : list(nullptr), speed(0.f)
 {
+	//points.push_back({});
+
+	easeInoutBack.reserve(MAX_POINTS);
+	slowMiddle.reserve(MAX_POINTS);
+	bLineal.reserve(MAX_POINTS);
+	bshake.reserve(MAX_POINTS);
+	temp.reserve(MAX_POINTS);
+
+
 	std::vector<fPoint> points;
 	//cool efect; stop in the middle;
 	points.push_back({ 0.95f,1.f });
@@ -30,11 +39,23 @@ CBeizier::CBeizier() : list(nullptr), speed(0.f)
 
 	Bezier(points, cbezier_type::CB_EASE_INOUT_BACK);
 	points.clear();
+	
+	points.push_back({0.08f,0.5f});
+	points.push_back({ 0.16f,0.5f });
+	points.push_back({ 0.24f,-0.5f });
+	points.push_back({ 0.32f,-0.5f });
+	points.push_back({ 0.40f,0.5f });
+	points.push_back({ 0.48f,0.5f });
+	points.push_back({ 0.56f,-0.5f });
+	points.push_back({ 0.64f,-0.5f });
+	points.push_back({ 0.72f,0.5f });
+	points.push_back({ 0.80f,0.5f });
+	points.push_back({ 0.88f,-0.5f });
+	points.push_back({ 0.96f,-0.5f });
+	
+	Bezier(points, cbezier_type::CB_SHAKE,0);
+	points.clear();
 
-	easeInoutBack.reserve(MAX_POINTS);
-	slowMiddle.reserve(MAX_POINTS);
-	bLineal.reserve(MAX_POINTS);
-	temp.reserve(MAX_POINTS);
 }
 
 
@@ -43,6 +64,7 @@ CBeizier::~CBeizier()
 	easeInoutBack.clear();
 	slowMiddle.clear();
 	bLineal.clear();
+	bshake.clear();
 	temp.clear();
 }
 
@@ -82,6 +104,14 @@ void CBeizier::DrawBezierCurve(cbezier_type type, iPoint position)
 		}
 	}
 	break;
+	case CB_SHAKE: {
+		size = bshake.size();
+		for (int i = 0; i + 1 < size; i++)
+		{
+			app->render->DrawLine((i * 2) + position.x, -(bshake[i] * 100) + position.y, (i * 2) + position.x, -(bshake[i + 1] * 100) + position.y, 255, 150, 0, 255);
+		}
+	}
+	break;
 	default:
 		break;
 	}
@@ -114,6 +144,11 @@ float CBeizier::GetActualX(int ms, int current_ms, cbezier_type b_type)
 		ret = bLineal[time];
 	}
 	break;
+	case CB_SHAKE:
+	{
+		ret = bshake[time];
+	}
+	break;
 	default: ret = 0.0f;
 		break;
 	}
@@ -138,7 +173,7 @@ bool CBeizier::CalculatePivots(std::vector<fPoint> &points)
 	pivotPoints.push_back(points[points.size() - 1]);
 
 	//pushback destiny
-	pivotPoints.push_back({ 1, 1 });
+	pivotPoints.push_back({ 1, destiny});
 
 	return true;
 }
@@ -160,8 +195,10 @@ void CBeizier::CPoints(fPoint x0, fPoint x1, fPoint x2, fPoint x3)
 	}
 }
 
-void CBeizier::Bezier(std::vector<fPoint>& points, cbezier_type b_type)
+void CBeizier::Bezier(std::vector<fPoint>& points, cbezier_type b_type, int new_destiny)
 {
+	destiny = new_destiny;
+
 	//clear previous pivots
 	pivotPoints.clear();
 
@@ -172,6 +209,8 @@ void CBeizier::Bezier(std::vector<fPoint>& points, cbezier_type b_type)
 	case CB_SLOW_MIDDLE: list = &slowMiddle;
 		break;
 	case CB_LINEAL: list = &bLineal;
+		break;
+	case CB_SHAKE: list = &bshake;
 		break;
 	default: return;
 	}
@@ -186,7 +225,7 @@ void CBeizier::Bezier(std::vector<fPoint>& points, cbezier_type b_type)
 			{
 				CPoints(pivotPoints[i], pivotPoints[i + 1], pivotPoints[i + 2], pivotPoints[i + 3]);
 			}
-			list->push_back(1);
+			list->push_back(destiny);
 		}
 	}
 	else if (points.size() == 1)
@@ -197,7 +236,7 @@ void CBeizier::Bezier(std::vector<fPoint>& points, cbezier_type b_type)
 			p = 2 * t*(1 - t)*points[0].y + pow(t, 2);
 			list->push_back(p);
 		}
-		list->push_back(1);
+		list->push_back(destiny);
 	}
 	else
 	{
@@ -207,6 +246,6 @@ void CBeizier::Bezier(std::vector<fPoint>& points, cbezier_type b_type)
 			p = t;
 			list->push_back(p);
 		}
-		list->push_back(1);
+		list->push_back(destiny);
 	}
 }
