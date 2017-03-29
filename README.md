@@ -25,7 +25,7 @@
 <img src="https://www.shopify.com/partners/blog/104547526-the-benefits-of-using-a-ui-kit" />
 
 <p>Those animations and transitions will give us a richer UI that provide much more information to the user.
-    You can check this page that shows some different animations and transitions very clearly:  <a href="https://semantic-ui.com/modules/transition.html#/definition"></a>https://semantic-ui.com/modules/transition.html#/definition</p>
+    You can check this page that shows some different animations and transitions very clearly:</p> <a href="https://semantic-ui.com/modules/transition.html#/definition">https://semantic-ui.com/modules/transition.html#/definition</a>
 
 
 <h2>Introduction to the system.</h2>
