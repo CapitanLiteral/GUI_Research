@@ -83,8 +83,8 @@ bool M_GUI::Start()
 	img2->SetDraggable(false);
 	guiList.push_back(img2);
 	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_SCALE);
-	img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_DROP);
-	img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, T_MOVE_TO_RIGHT);
+	img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, SA_SHAKE);
+	img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, SA_BOUNCE);
 	//img2->AddAnimationOrTransition(ENABLE, T_SCALE);
 	//img2->AddAnimationOrTransition(MOUSE_ENTERS, SA_PULSE);
 
@@ -734,6 +734,7 @@ void M_GUI::DrawDebug()
 	cBeizier->DrawBezierCurve(CB_EASE_INOUT_BACK, {800, 200});
 	cBeizier->DrawBezierCurve(CB_SLOW_MIDDLE, { 800, 200 });
 	cBeizier->DrawBezierCurve(CB_LINEAL, { 800, 200 });
+	cBeizier->DrawBezierCurve(CB_SHAKE, { 800,500 });
 }
 GUIElement * M_GUI::FindElement(std::list<GUIElement*> list, std::string name)
 {
