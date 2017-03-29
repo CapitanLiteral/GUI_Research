@@ -22,11 +22,11 @@
     
   <window>
     <resolution width="1920" height="1080" scale="1"/>
-    <fullscreen value="false"/>
+    <fullscreen value="true"/>
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
-    <start_maximized value="true"/>
+    <start_maximized value="false"/>
   </window>
 
   <file_system>

@@ -520,22 +520,38 @@ void GUIElement::SetOnLClickDown(gui_events _event)
 
 void GUIElement::SetOnRClickUp(gui_events _event)
 {
+	status.statusChanged = true;
+	status.onRClickUp = _event;
 }
 
 void GUIElement::SetOnRClickDown(gui_events _event)
 {
+	status.statusChanged = true;
+	status.onRClickDown = _event;
 }
 
 void GUIElement::SetOnGainFocus(gui_events _event)
 {
+	status.statusChanged = true;
+	status.onGainFocus = _event;
 }
 
 void GUIElement::SetOnLooseFocus(gui_events _event)
 {
+	status.statusChanged = true;
+	status.onLooseFocus = _event;
 }
 
 void GUIElement::SetOnMouseEnters(gui_events _event)
 {
+	status.statusChanged = true;
+	status.onMouseEnters = _event;
+}
+
+void GUIElement::SetOnMouseLeaves(gui_events _event)
+{
+	status.statusChanged = true;
+	status.onMouseLeaves = _event;
 }
 
 void GUIElement::Update(const GUIElement* mouseHover, const GUIElement* focus, float dt)

@@ -513,50 +513,53 @@ void M_GUI::ManageEvents()
 //Broadcast an event to all GUIElement listeners
 void M_GUI::BroadcastEventToListeners(GUIElement * element, gui_events _event)
 {
-	int64_t event = _event;
-	element->OnGuiEvent(event);
-
-	if (element->GetElementStatus().interactive && element->GetElementStatus().active)
+	if (!GetUIEditing())
 	{
-		//if (event != MOUSE_ENTERS)
-		SDL_Log("Event: %b", event);
-		switch (event)
+		int64_t event = _event;
+		element->OnGuiEvent(event);
+
+		if (element->GetElementStatus().interactive && element->GetElementStatus().active)
 		{
-			case MOUSE_ENTERS:
-				event |= element->GetElementStatus().onMouseEnters;
-				break;
-			case MOUSE_LEAVES:
-				event |= element->GetElementStatus().onMouseLeaves;
-				break;
-			case MOUSE_LCLICK_DOWN:
-				event |= element->GetElementStatus().onLClickDown;
-				break;
-			case MOUSE_LCLICK_UP:
-				event |= element->GetElementStatus().onLClickUp;
-				break;
-			case MOUSE_RCLICK_DOWN:
-				event |= element->GetElementStatus().onRClickDown;
-				break;
-			case MOUSE_RCLICK_UP:
-				event |= element->GetElementStatus().onRClickUp;
-				break;
-			case GAIN_FOCUS:
-				event |= element->GetElementStatus().onGainFocus;
-				break;
-			case LOST_FOUCS:
-				event |= element->GetElementStatus().onLooseFocus;
-				break;
-			default:
-				break;
+			//if (event != MOUSE_ENTERS)
+			SDL_Log("Event: %b", event);
+			switch (event)
+			{
+				case MOUSE_ENTERS:
+					event |= element->GetElementStatus().onMouseEnters;
+					break;
+				case MOUSE_LEAVES:
+					event |= element->GetElementStatus().onMouseLeaves;
+					break;
+				case MOUSE_LCLICK_DOWN:
+					event |= element->GetElementStatus().onLClickDown;
+					break;
+				case MOUSE_LCLICK_UP:
+					event |= element->GetElementStatus().onLClickUp;
+					break;
+				case MOUSE_RCLICK_DOWN:
+					event |= element->GetElementStatus().onRClickDown;
+					break;
+				case MOUSE_RCLICK_UP:
+					event |= element->GetElementStatus().onRClickUp;
+					break;
+				case GAIN_FOCUS:
+					event |= element->GetElementStatus().onGainFocus;
+					break;
+				case LOST_FOUCS:
+					event |= element->GetElementStatus().onLooseFocus;
+					break;
+				default:
+					break;
+			}
+			//First we get listeners list of previous element hovered
+			std::list<Module*> tmpListeners = element->GetListeners();
+			//Iterate over listeners list to send them hover is lost
+			for (std::list<Module*>::iterator it = tmpListeners.begin(); it != tmpListeners.end(); it++)
+			{
+				(*it)->GuiEvent(element, event);
+			}
 		}
-		//First we get listeners list of previous element hovered
-		std::list<Module*> tmpListeners = element->GetListeners();
-		//Iterate over listeners list to send them hover is lost
-		for (std::list<Module*>::iterator it = tmpListeners.begin(); it != tmpListeners.end(); it++)
-		{
-			(*it)->GuiEvent(element, event);
-		}
-	}	
+	}
 }
 void M_GUI::Draw()
 {

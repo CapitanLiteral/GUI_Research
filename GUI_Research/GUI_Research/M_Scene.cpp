@@ -30,7 +30,7 @@ bool M_Scene::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool M_Scene::Start()
 {
-	/*img1 = app->gui->CreateImageFromPreset({ 100, 100, 484, 512 }, "window", "image_test_animation_transition1");
+	img1 = app->gui->CreateImageFromPreset({ 100, 100, 484, 512 }, "window", "image_test_animation_transition1");
 	img1->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, T_FADE);
 	img1->AddAnimationOrTransition(ENABLE, T_FADE);
 	app->gui->guiList.push_back(img1);
@@ -43,7 +43,7 @@ bool M_Scene::Start()
 	img3 = app->gui->CreateImageFromPreset({ 1200, 100, 484, 512 }, "window", "image_test_animation_transition3");
 	img3->AddAnimationOrTransition(MOUSE_ENTERS, SA_SHAKE);
 	img3->AddAnimationOrTransition(MOUSE_LEAVES, SA_BOUNCE);
-	app->gui->guiList.push_back(img3);*/
+	app->gui->guiList.push_back(img3);
 
 	return true;
 }
