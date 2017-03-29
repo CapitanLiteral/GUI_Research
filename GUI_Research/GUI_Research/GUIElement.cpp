@@ -386,6 +386,7 @@ void GUIElement::Enable()
 		}
 		status.active = true; 
 		status.statusChanged = true;
+		alpha = 255;
 	}
 }
 void GUIElement::Disable()
@@ -611,14 +612,15 @@ void GUIElement::PulseSA(float dt)
 
 	if (time <= 0.5)
 	{
-		app->render->DrawQuad({ 500,500,50,50 }, 255, 150, 150, 255 * (1 - change_alpha));
+		//alpha = 255 * (1 - change_alpha);
 	}
 	else if (time < 1)
 	{
-		app->render->DrawQuad({ 500,500,50,50 }, 255, 150, 150, 255 * (change_alpha));
+		//alpha = 255 * (change_alpha);
 	}
 	else
 	{
+		//alpha = 255;
 		currentStaticAnimation = SAT_NONE;
 		doingAnimation = false;
 	}
@@ -731,7 +733,34 @@ void GUIElement::ScaleT(float dt)
 }
 void GUIElement::FadeT(float dt)
 {
-	currentTransition = SAT_NONE;
+	if (!doingTransition)
+	{
+		transTimer.Start();
+		currentTransTime = 0;
+		doingTransition = true;
+	}
+
+	currentAnimTim = transTimer.Read();
+	float time = (float)currentAnimTim / animDuraton;
+
+
+	if (currentAnimTim < 1000)
+	{
+		float change_alpha = app->gui->cBeizier->GetActualX(1000, currentAnimTim, CB_SLOW_MIDDLE);
+		change_alpha = CLAMP01(change_alpha);
+		alpha = 255 *(1- change_alpha);
+	}
+	else
+	{
+		currentTransTime = 0;
+		currentTransition = SAT_NONE;
+		if (mustDisable)
+		{
+			status.active = false;
+			mustDisable = false;
+		}
+		return;
+	}
 }
 void GUIElement::DropT(float dt)
 {

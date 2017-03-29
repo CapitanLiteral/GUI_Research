@@ -247,11 +247,12 @@ private:
 	bool doingAnimation = false;
 	int animTime = 500;
 
-	int alpha = 255;
+	
 
 protected:
 	std::list<Module*> listeners;
 	bool haveFocus = false; // TODO implement it on event management
+	int alpha = 255;
 
 };
 
