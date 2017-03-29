@@ -16,13 +16,13 @@
 <p>A static animations is a small animation that at the end doesn’t modify the element, a simple example is a shake or a bounce animation where the element moves a bit around and at the end recovers its position. Good examples are typical animations done when you place the mouse over a button or when you click on a UI element.
 </p>
 
-<img href="https://github.com/GUI-Research/GUI_Research/blob/gh-pages/sa.gif"></img>
+<img src="https://github.com/GUI-Research/GUI_Research/blob/gh-pages/sa.gif"></img>
 
 <h3>Transitions.</h3>
 <p>A transition is an animation used to change the status of the element, most usually to enable or disable the element. Modifying its position, size, alpha, etc we can animate a window or a button to not simply disappear or disappear from the screen.
 </p>
 
-<img href="https://github.com/GUI-Research/GUI_Research/blob/gh-pages/trans.gif"></img>
+<img src="https://github.com/GUI-Research/GUI_Research/blob/gh-pages/trans.gif"></img>
 
 <p>Those animations and transitions will give us a richer UI that provide much more information to the user.
     You can check this page that shows some different animations and transitions very clearly:  <a href="https://semantic-ui.com/modules/transition.html#/definition"></a>https://semantic-ui.com/modules/transition.html#/definition</p>
