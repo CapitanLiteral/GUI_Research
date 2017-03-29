@@ -21,6 +21,8 @@ public:
 
 	void OnUpdate(const GUIElement* mouseHover, const GUIElement* focus, float dt) override;
 	void Draw() const override;
+	void Serialize(pugi::xml_node node)override;
+	void Deserialize(pugi::xml_node node)override;
 	void SetText(std::string txt, label_size size = DEFAULT);
 
 	GUIImage* image = nullptr;

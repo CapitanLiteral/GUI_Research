@@ -17,6 +17,8 @@ public:
 	virtual ~GUILabel();	
 	const SDL_Texture* GetTexture() const;
 	void Draw() const;
+	void Serialize(pugi::xml_node root)override;
+	void Deserialize(pugi::xml_node root)override;
 	void SetText(const char* text, label_size _size);
 	label_size GetLabelSize() const { return lbSize; }
 	std::string GetText() const { return text; }

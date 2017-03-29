@@ -231,6 +231,11 @@ std::string GUIElement::GetName() const
 	return name;
 }
 
+std::list<Module*> GUIElement::GetListeners_noconst()
+{
+	return listeners;
+}
+
 void GUIElement::SetLocalPos(int x, int y)
 {
 	localPosition.create(x, y);
@@ -493,6 +498,38 @@ void GUIElement::SetPresetType(std::string str)
 void GUIElement::SetName(std::string str)
 {
 	name = str;
+}
+
+void GUIElement::SetOnLClickUp(gui_events _event)
+{
+	status.statusChanged = true;
+	status.onLClickUp = _event;
+}
+
+void GUIElement::SetOnLClickDown(gui_events _event)
+{
+	status.statusChanged = true;
+	status.onLClickDown = _event;
+}
+
+void GUIElement::SetOnRClickUp(gui_events _event)
+{
+}
+
+void GUIElement::SetOnRClickDown(gui_events _event)
+{
+}
+
+void GUIElement::SetOnGainFocus(gui_events _event)
+{
+}
+
+void GUIElement::SetOnLooseFocus(gui_events _event)
+{
+}
+
+void GUIElement::SetOnMouseEnters(gui_events _event)
+{
 }
 
 void GUIElement::Update(const GUIElement* mouseHover, const GUIElement* focus, float dt)

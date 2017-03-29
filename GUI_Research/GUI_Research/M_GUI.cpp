@@ -230,7 +230,7 @@ bool M_GUI::LoadLayout()
 				}
 				GUIButton* btn = CreateButton({ 0,0,stb.w,stb.h }, stb, hov, clk, name);
 				btn->SetPresetType(name);
-				GuiPresets.insert(std::pair<std::string, GUIElement*>(name, btn));
+				guiPresets.insert(std::pair<std::string, GUIElement*>(name, btn));
 			}
 
 			//Loading image presets
@@ -253,7 +253,7 @@ bool M_GUI::LoadLayout()
 				}
 				GUIImage* img = CreateImage({ 0,0,stb.w,stb.h }, stb, name);
 				img->SetPresetType(name);
-				GuiPresets.insert(std::pair<std::string, GUIElement*>(name, img));
+				guiPresets.insert(std::pair<std::string, GUIElement*>(name, img));
 			}
 
 			//TODO: Make label presets makes no sense for me, any other new GUI presset goes here, but for the moment
@@ -266,133 +266,94 @@ bool M_GUI::LoadLayout()
 
 			//Load UI layout
 			root = data.child("gui").child("layout");
-			pugi::xml_object_range<pugi::xml_node_iterator> elements = root.children();
-			for (pugi::xml_node_iterator it_elements = elements.begin();
-				 it_elements != elements.end(); it_elements++)
+			//pugi::xml_object_range<pugi::xml_node_iterator> elements = root.children();
+			//for (pugi::xml_node_iterator it_elements = elements.begin();
+			//	 it_elements != elements.end(); it_elements++)
+			for (pugi::xml_node layout_element = root.first_child(); layout_element; )
 			{
+				pugi::xml_node next = layout_element.next_sibling();
 				//BUTTON
-				if (!strcmp(it_elements->name(), "button"))
+				if (!strcmp(layout_element.name(), "button"))
 				{
-					std::string preset = it_elements->attribute("type").as_string();
-					std::map<std::string, GUIElement*>::iterator node = GuiPresets.find(preset);
-					std::string name = it_elements->attribute("name").as_string("");
+					std::string preset = layout_element.attribute("type").as_string();
+					std::map<std::string, GUIElement*>::iterator node = guiPresets.find(preset);
+					std::string name = layout_element.attribute("name").as_string("");
 					GUIElement* tmpElement = FindElement(guiList, name);
 					// If name is "" or another element with same name exists does not load the element, 
 					// same if not preset found in presets list
-					if (node != GuiPresets.end() && tmpElement == nullptr && name != "") 
+					if (node != guiPresets.end() && tmpElement == nullptr && name != "")
 					{
-						std::string text = it_elements->attribute("text").as_string("");
-						GB_Rectangle<int> rect;						
-						rect.x = it_elements->child("position").attribute("x").as_int();
-						rect.y = it_elements->child("position").attribute("y").as_int();
-						rect.w = it_elements->child("size").attribute("w").as_int();
-						rect.h = it_elements->child("size").attribute("h").as_int();
-						GUIButton* btn = CreateButtonFromPreset(rect, preset, name, text.c_str());
-						//Load button actions and assign them to an action
-						//TODO: try to find a better system of assigning button actions to gui events
-						for (pugi::xml_node it_event = it_elements->child("events").first_child(); it_event; )
-						{
-							pugi::xml_node next = it_event.next_sibling();							
-							if (it_event.attribute("origin").as_int(0) & MOUSE_LCLICK_UP)	
-							{
-								if (it_event.attribute("action").as_int(0) & CLOSE_APP)
-									btn->SetOnLClickUp((gui_events)it_event.attribute("action").as_int(0));
-							}
-							else if (it_event.attribute("origin").as_int(0) & MOUSE_LCLICK_DOWN)
-							{
-								if (it_event.attribute("action").as_int(0) & CLOSE_APP)
-									btn->SetOnLClickUp((gui_events)it_event.attribute("action").as_int(0));
-							}
-							it_event = next;
-						}
-						//Load button listeners
-						//TODO: try to find a better system of assigning button actions to gui events
-						for (pugi::xml_node it_listener = it_elements->child("listeners").first_child(); it_listener; )
-						{
-							pugi::xml_node next = it_listener.next_sibling();
-							if (Module* module = app->FindModule(it_listener.attribute("name").as_string("")))
-							{
-								btn->AddListener(module);
-							}
-							it_listener = next;
-						}
+						GUIButton* btn = CreateButtonFromPreset({0,0,0,0}, preset, name, "hola");
+						btn->Deserialize(layout_element);
 						guiList.push_back(btn);
-						LOG("Item %s created", (*it_elements).name());
+						LOG("Item %s created", layout_element.name());
 					}
 					else if (tmpElement != nullptr)
 					{
-						LOG("Item %s not created, another element exists with same name, (%s)", (*it_elements).name(), name.c_str());
+						LOG("Item %s not created, another element exists with same name, (%s)", layout_element.name(), name.c_str());
 					}
-					else if (node == GuiPresets.end())
+					else if (node == guiPresets.end())
 					{
-						LOG("Item %s not created, no preset found for %s", (*it_elements).name(), name.c_str());
+						LOG("Item %s not created, no preset found for %s", layout_element.name(), name.c_str());
 					}
 					else if (name == "")
 					{
-						LOG("Item %s not created, name not valid", (*it_elements).name(), name.c_str());
+						LOG("Item %s not created, name not valid", layout_element.name(), name.c_str());
 					}
 				}
 				//IMAGE
-				else if (!strcmp(it_elements->name(), "img"))
+				else if (!strcmp(layout_element.name(), "img"))
 				{
-					std::string preset = it_elements->attribute("type").as_string();
-					std::map<std::string, GUIElement*>::iterator node = GuiPresets.find(preset);
-					std::string name = it_elements->attribute("name").as_string("");
+					std::string preset = layout_element.attribute("type").as_string();
+					std::map<std::string, GUIElement*>::iterator node = guiPresets.find(preset);
+					std::string name = layout_element.attribute("name").as_string("");
 					GUIElement* tmpElement = FindElement(guiList, name);
 					// If name is "" or another element with same name exists does not load the element, 
 					// same if not preset found in presets list
-					if (node != GuiPresets.end() && tmpElement == nullptr && name != "")
+					if (node != guiPresets.end() && tmpElement == nullptr && name != "")
 					{
-						std::string name = it_elements->attribute("name").as_string();
-						GB_Rectangle<int> rect;
-						rect.x = it_elements->child("position").attribute("x").as_int();
-						rect.y = it_elements->child("position").attribute("y").as_int();
-						rect.w = it_elements->child("size").attribute("w").as_int();
-						rect.h = it_elements->child("size").attribute("h").as_int();
-						GUIImage* img = CreateImageFromPreset(rect, preset, name);
+						GUIImage* img = CreateImageFromPreset({0,0,0,0}, preset, name);
+						img->Deserialize(layout_element);
 						guiList.push_back(img);
-						LOG("Item %s created", (*it_elements).name());
+						LOG("Item %s created", layout_element.name());
 					}
 					else if (tmpElement != nullptr)
 					{
-						LOG("Item %s not created, another element exists with same name, (%s)", (*it_elements).name(), name.c_str());
+						LOG("Item %s not created, another element exists with same name, (%s)", layout_element.name(), name.c_str());
 					}
-					else if (node == GuiPresets.end())
+					else if (node == guiPresets.end())
 					{
-						LOG("Item %s not created, no preset found for %s", (*it_elements).name(), name.c_str());
+						LOG("Item %s not created, no preset found for %s", layout_element.name(), name.c_str());
 					}
 					else if (name == "")
 					{
-						LOG("Item %s not created, name not valid", (*it_elements).name(), name.c_str());
+						LOG("Item %s not created, name not valid", layout_element.name(), name.c_str());
 					}
 					
 				}
 				//LABEL
-				else if (!strcmp(it_elements->name(), "label"))
+				else if (!strcmp(layout_element.name(), "label"))
 				{
-					std::string name = it_elements->attribute("name").as_string("");
+					std::string name = layout_element.attribute("name").as_string("");
 					GUIElement* tmpElement = FindElement(guiList, name);
 					if (tmpElement == nullptr && name != "")
 					{
-						std::string txt = it_elements->attribute("text").as_string();
-						GB_Rectangle<int> rect;
-						rect.x = it_elements->child("position").attribute("x").as_int();
-						rect.y = it_elements->child("position").attribute("y").as_int();
-						label_size size = (label_size)it_elements->attribute("size").as_int();
-						GUILabel* lb = CreateLabel(rect, size, name, txt.c_str());
+						GUILabel* lb = CreateLabel({0,0,0,0}, DEFAULT, name, "");
+						lb->Deserialize(layout_element);
 						guiList.push_back(lb);
-						LOG("Item %s created", (*it_elements).name());
+						LOG("Item %s created", layout_element.name());
 					}
 					else if (tmpElement != nullptr)
 					{
-						LOG("Item %s not created, another element exists with same name, (%s)", (*it_elements).name(), name.c_str());
+						LOG("Item %s not created, another element exists with same name, (%s)", layout_element.name(), name.c_str());
 					}
 					else if (name == "")
 					{
-						LOG("Item %s not created, name not valid", (*it_elements).name(), name.c_str());
+						LOG("Item %s not created, name not valid", layout_element.name(), name.c_str());
 					}
 				}
 				//Newer types of GUI elements to load go here
+				layout_element = next;
 			}
 
 			data.reset();
@@ -755,7 +716,7 @@ GUIButton * M_GUI::CreateButtonFromPreset(GB_Rectangle<int> _position, std::stri
 
 	if (el == nullptr)
 	{
-		GUIButton* btn_preset = (GUIButton*)GuiPresets.find(preset)->second;
+		GUIButton* btn_preset = (GUIButton*)guiPresets.find(preset)->second;
 		GUIButton* btn = new GUIButton(*btn_preset, name);
 		btn->SetPresetType(preset);
 		btn->SetRectangle(_position);
@@ -803,7 +764,7 @@ GUIImage * M_GUI::CreateImageFromPreset(GB_Rectangle<int> _position, std::string
 
 	if (el == nullptr)
 	{
-		GUIImage* img_preset = (GUIImage*)GuiPresets.find(preset)->second;
+		GUIImage* img_preset = (GUIImage*)guiPresets.find(preset)->second;
 		GUIImage* img = new GUIImage(*img_preset, name);
 		img->SetPresetType(preset);
 		img->SetRectangle(_position);

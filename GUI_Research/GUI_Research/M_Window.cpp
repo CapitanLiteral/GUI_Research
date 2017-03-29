@@ -128,7 +128,7 @@ void M_Window::DrawDebug()
 
 void M_Window::GuiEvent(GUIElement * element, int64_t event)
 {
-	if (event & MOUSE_LCLICK_DOWN)
+	if (event & MOUSE_LCLICK_UP)
 		if (event & CLOSE_APP)
 			app->quit = true;
 }

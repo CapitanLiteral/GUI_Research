@@ -59,6 +59,8 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 	float GetDT() const;
+	const std::list<Module*> GetModules() const;
+	Module* FindModule(std::string _name);
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;

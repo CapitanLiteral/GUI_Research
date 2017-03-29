@@ -90,7 +90,7 @@ private:
 	SDL_Texture* atlas;
 	GUIElement* mouseHover = nullptr;
 	GUIElement* focus = nullptr;
-	std::map<std::string, GUIElement*> GuiPresets; // A map of basic UI elements defined on the xml
+	std::map<std::string, GUIElement*> guiPresets; // A map of basic UI elements defined on the xml
 	bool mustSaveScene = false;
 	bool mustLoadScene = false;
 

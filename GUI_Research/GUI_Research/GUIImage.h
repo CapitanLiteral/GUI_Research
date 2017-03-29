@@ -11,6 +11,8 @@ public:
 
 	void OnUpdate(const GUIElement* mouseHover, const GUIElement* focus, float dt) override;
 	void Draw() const;
+	void Serialize(pugi::xml_node root)override;
+	void Deserialize(pugi::xml_node root)override;
 
 	GB_Rectangle<int> GetSection() const;
 	void SetSection(GB_Rectangle<int> _section);

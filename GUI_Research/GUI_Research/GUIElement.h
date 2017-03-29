@@ -22,27 +22,27 @@ enum status_flags
 enum gui_events
 {
 	EVENT_NONE = 0,
-	LISTENING_END = (1 << 0),
-	MOUSE_ENTERS = (1 << 1),			// done
-	MOUSE_LEAVES = (1 << 2),			// done
-	MOUSE_LCLICK_DOWN = (1 << 3),			// done
-	MOUSE_LCLICK_UP = (1 << 4),			// done
-	MOUSE_RCLICK_DOWN = (1 << 5),			// done
-	MOUSE_RCLICK_UP = (1 << 6),			// done
-	GAIN_FOCUS = (1 << 7),			// done
-	LOST_FOUCS = (1 << 8),			// done
-	INPUT_CHANGED = (1 << 9),
-	INPUT_SUBMIT = (1 << 10),
-	VALUE_CHANGED = (1 << 11),
-	RETURN_DOWN = (1 << 12),
+	LISTENING_END			= (1 << 0),
+	MOUSE_ENTERS			= (1 << 1),			// done
+	MOUSE_LEAVES			= (1 << 2),			// done
+	MOUSE_LCLICK_DOWN		= (1 << 3),			// done
+	MOUSE_LCLICK_UP			= (1 << 4),			// done
+	MOUSE_RCLICK_DOWN		= (1 << 5),			// done
+	MOUSE_RCLICK_UP			= (1 << 6),			// done
+	GAIN_FOCUS				= (1 << 7),			// done
+	LOST_FOUCS				= (1 << 8),			// done
+	INPUT_CHANGED			= (1 << 9),
+	INPUT_SUBMIT			= (1 << 10),
+	VALUE_CHANGED			= (1 << 11),
+	RETURN_DOWN				= (1 << 12),
 
-	ENABLE = (1 << 13),
-	DISABLE = (1 << 14),
+	ENABLE					= (1 << 13),
+	DISABLE					= (1 << 14),
 
 	//UI-GAME-EVENTS ---> Put them on a better event system and they wont need to coexist with GUI-EVENTS
 	//					  for now this is okay
 
-	CLOSE_APP = (1 << 15)
+	CLOSE_APP				= (1 << 15)
 
 };
 
@@ -159,6 +159,7 @@ public:
 	GB_Rectangle<float> GetDrawRect()const;
 	std::string GetPresetType() const;
 	std::string GetName() const;
+	std::list<Module*> GetListeners_noconst();
 
 	virtual void SetLocalPos(int x, int y);
 	virtual void SetGlobalPos(int x, int y);
@@ -181,6 +182,16 @@ public:
 	void SetPresetType(std::string str);
 	void SetName(std::string str);
 
+	void SetOnLClickUp   (gui_events _event);
+	void SetOnLClickDown (gui_events _event);
+	void SetOnRClickUp   (gui_events _event);
+	void SetOnRClickDown (gui_events _event);
+	void SetOnGainFocus  (gui_events _event);
+	void SetOnLooseFocus (gui_events _event);
+	void SetOnMouseEnters(gui_events _event);
+	void SetOnMouseLeaves(gui_events _event);
+
+
 	void Enable();
 	void Disable();
 
@@ -191,6 +202,9 @@ public:
 	staticAnim_or_transition GetAnimOrTransitionForEvent(gui_events eventToReact);
 
 	//Getters & Setters ·········································· END ···················
+
+	virtual void Serialize(pugi::xml_node root){}
+	virtual void Deserialize(pugi::xml_node root){}
 
 private:
 	void resize(fPoint newScale);
