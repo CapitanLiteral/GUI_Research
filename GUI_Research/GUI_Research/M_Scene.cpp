@@ -2,11 +2,9 @@
 #include "Log.h"
 #include "App.h"
 #include "M_Input.h"
-#include "M_Textures.h"
-#include "M_Audio.h"
-#include "M_Render.h"
-#include "M_Window.h"
 #include "M_Gui.h"
+#include "GUIElement.h"
+#include "GUIImage.h"
 #include "M_Scene.h"
 
 #include "GB_Rectangle.h"
@@ -32,8 +30,20 @@ bool M_Scene::Awake(pugi::xml_node& node)
 // Called before the first frame
 bool M_Scene::Start()
 {
-	debug_tex = app->tex->Load("data/textures/test.png");
-	
+	/*img1 = app->gui->CreateImageFromPreset({ 100, 100, 484, 512 }, "window", "image_test_animation_transition1");
+	img1->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, T_FADE);
+	img1->AddAnimationOrTransition(ENABLE, T_FADE);
+	app->gui->guiList.push_back(img1);
+
+	img2 = app->gui->CreateImageFromPreset({ 600, 100, 484, 512 }, "window", "image_test_animation_transition2");
+	img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_MOVE_RIGHT);
+	img2->AddAnimationOrTransition(ENABLE, T_MOVE_RIGHT);
+	app->gui->guiList.push_back(img2);
+
+	img3 = app->gui->CreateImageFromPreset({ 1200, 100, 484, 512 }, "window", "image_test_animation_transition3");
+	img3->AddAnimationOrTransition(MOUSE_ENTERS, SA_SHAKE);
+	img3->AddAnimationOrTransition(MOUSE_LEAVES, SA_BOUNCE);
+	app->gui->guiList.push_back(img3);*/
 
 	return true;
 }
@@ -41,16 +51,16 @@ bool M_Scene::Start()
 // Called each loop iteration
 update_status M_Scene::PreUpdate(float dt)
 {
-	/*
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		app->render->camera.y -= 50 * dt;
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		app->render->camera.y += 50 * dt;
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		app->render->camera.x -= 50 * dt;
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		app->render->camera.x += 50 * dt;
-	*/
+	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	{
+		if (img1)
+			img1->Enable();
+	}
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
+		if (img2)
+			img2->Enable();
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -66,11 +76,7 @@ update_status M_Scene::Update(float dt)
 // Called each loop iteration
 update_status M_Scene::PostUpdate(float dt)
 {
-	/*
-	uint w, h;
-	app->tex->GetSize(debug_tex, w, h);
-	app->render->Blit(debug_tex, &GB_Rectangle<int>( 100, 100, w, h ).GetSDLrect(), nullptr);
-	*/
+
 
 	return UPDATE_CONTINUE;
 }

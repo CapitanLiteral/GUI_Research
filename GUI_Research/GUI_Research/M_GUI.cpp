@@ -71,32 +71,6 @@ bool M_GUI::Start()
 	debugGuiList.push_back(xMouse);
 	debugGuiList.push_back(yMouse);
 
-
-
-	img2 = CreateImageFromPreset({ 100, 100, 484, 512 }, "window", "image_test_animation_transition");
-	//img->SetRectangle(100, 500, 231, 71);
-	//img->SetSection(0, 110, 231, 71);
-	//img2->SetRectangle(100, 100, 484, 512);
-	img2->SetSection(0, 513, 484, 512);
-	img2->SetInteractive(true);
-	img2->SetCanFocus(true);
-	img2->SetDraggable(false);
-	guiList.push_back(img2);
-	img2->Center();
-
-
-	//img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, T_MOVE_RIGHT);
-	//img2->AddAnimationOrTransition(ENABLE, T_MOVE_RIGHT);
-	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, SA_SHAKE);
-	//img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, SA_BOUNCE);
-	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_DROP);
-	//img2->AddAnimationOrTransition(ENABLE, T_DROP);
-	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, SA_PULSE);
-	img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, T_FADE);
-	img2->AddAnimationOrTransition(ENABLE, T_FADE);
-	//img2->AddAnimationOrTransition(ENABLE, T_SCALE);
-	//img2->AddAnimationOrTransition(MOUSE_ENTERS, SA_PULSE);
-
 	GUILabel* label_center = CreateLabel({ 0, 0, 0, 0 }, DEFAULT, "label_center", "label_center");
 	label_center->Center();
 	guiList.push_back(label_center);
@@ -743,7 +717,7 @@ void M_GUI::DrawDebug()
 	cBeizier->DrawBezierCurve(CB_EASE_INOUT_BACK, {800, 200});
 	cBeizier->DrawBezierCurve(CB_SLOW_MIDDLE, { 800, 200 });
 	cBeizier->DrawBezierCurve(CB_LINEAL, { 800, 200 });
-	cBeizier->DrawBezierCurve(CB_SHAKE, { 800,500 });
+	cBeizier->DrawBezierCurve(CB_SHAKE, { 800, 200 });
 }
 GUIElement * M_GUI::FindElement(std::list<GUIElement*> list, std::string name)
 {
