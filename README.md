@@ -133,8 +133,8 @@ By default this variable will be equal to 0 what means EVENT_NONE. Each time we 
 
 <p>Now you can add those bits you will have to remove them if a reaction is removed from the map. As this is just an optional feature we will let you investigate how to remove it and how to check in the variable if a certain event is stored there. Here we let you a pair of links might help you:
 <ul>
-    <li><a href="http://www.cprogramming.com/tutorial/bitwise_operators.html">https://semantic-ui.com/modules/transition.html#/definition</a></li>
-    <li><a href="http://www.learncpp.com/cpp-tutorial/38-bitwise-operators/">https://semantic-ui.com/modules/transition.html#/definition</a></li>
+    <li><a href="http://www.cprogramming.com/tutorial/bitwise_operators.html">http://www.cprogramming.com/tutorial/bitwise_operators.html</a></li>
+    <li><a href="http://www.learncpp.com/cpp-tutorial/38-bitwise-operators/">http://www.learncpp.com/cpp-tutorial/38-bitwise-operators/</a></li>
 </ul>
 
 If you don’t want to investigate it or you can’t understand it you can check the solution and ask us if you need any help.</p>
