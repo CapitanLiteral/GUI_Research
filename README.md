@@ -37,6 +37,7 @@
 
 <h2>Let's start.</h2>
 <p>First of all we must define all the different animations and transitions we want to do. In order to store all this we will use an enum we call staticAnim_or_transition. We could define one enum for transitions and another one for static animations but we decided to join all in one to make it easier later:  </p>
+
 ```
 enum staticAnim_or_transition
 {
