@@ -66,65 +66,69 @@ enum staticAnim_or_transition
     In order to store all the relations will use a map using as a key the event, this way when when an event is catched in a certain element it will search in this map if it must react in a certain way (will get into this later).
 </p>
 
-<code>\std::map\<\gui_events, staticAnim_or_transition\> transAndAnimations;</code>
+```
+std::map<gui_events, staticAnim_or_transition> transAndAnimations;
+```
 
-<p>Once the map is created we will define some suport methods to add or remove relations between events and animations. We can do some more support methods, here we show some:
-
-<ul>
-    <li><code>void AddAnimationOrTransition(gui_events eventToReact, staticAnim_or_transition animOrTransition);</code>
-    </li>
-    <li><code>void RemoveAnimationOrTransitionReaction(gui_events eventToReact);</code></li>
-    <li><code>void GetAllAnimationAndTransitions(std::vector<std::pair<gui_events, staticAnim_or_transition>>& animsAndTrans);</code></li>
-    <li><code>bool HasEventReactionSet(gui_events eventToReact);</code></li>
-    <li><code>staticAnim_or_transition GetAnimOrTransitionForEvent(gui_events eventToReact);</code></li>
-</ul>
-</p>
+<p>Once the map is created we will define some suport methods to add or remove relations between events and animations. We can do some more support methods, here we show some:</p>
+```
+    void AddAnimationOrTransition(gui_events eventToReact, staticAnim_or_transition animOrTransition);
+    void RemoveAnimationOrTransitionReaction(gui_events eventToReact);
+    void GetAllAnimationAndTransitions(\std::vector\<\std::pair\<gui_events, staticAnim_or_transition>>& animsAndTrans);
+    bool HasEventReactionSet(gui_events eventToReact);
+    staticAnim_or_transition GetAnimOrTransitionForEvent(gui_events eventToReact);
+```
 <p>
 As we will be searching in the map with map::find and its a heavy method we used a optional variable tha starores if an event has set a reaction, this way before searching in the map we can look in this variable and if we get that there is a reaction to that event we then search in the map and if not we won’t do the search. Is not a big improvment as the map doesn’t get really big but can be a cool way to practise bit operations.
 As i have said before will use bit operations to know if a concret element has a reaction to a concret event. If you have looked in the code you have probably seen this:</p>
 
-<code>
+```
 enum gui_events
 {
     EVENT_NONE = 0,
-    LISTENING_END = (1 \<< 0),
-    MOUSE_ENTERS = (1 \<< 1),
-    MOUSE_LEAVES = (1 \<< 2),
-    MOUSE_LCLICK_DOWN = (1 \<< 3),
-    MOUSE_LCLICK_UP = (1 \<< 4),
-    MOUSE_RCLICK_DOWN = (1 \<< 5),
-    MOUSE_RCLICK_UP = (1 \<< 6),
-    GAIN_FOCUS = (1 \<< 7),
-    LOST_FOUCS = (1 \<< 8),
-    INPUT_CHANGED = (1 \<< 9),
-    INPUT_SUBMIT = (1 \<< 10),
-    VALUE_CHANGED = (1 \<< 11),
-    RETURN_DOWN = (1 \<< 12),
+    LISTENING_END = (1 << 0),
+    MOUSE_ENTERS = (1 << 1),
+    MOUSE_LEAVES = (1 << 2),
+    MOUSE_LCLICK_DOWN = (1 << 3),
+    MOUSE_LCLICK_UP = (1 << 4),
+    MOUSE_RCLICK_DOWN = (1 << 5),
+    MOUSE_RCLICK_UP = (1 << 6),
+    GAIN_FOCUS = (1 << 7),
+    LOST_FOUCS = (1 << 8),
+    INPUT_CHANGED = (1 << 9),
+    INPUT_SUBMIT = (1 << 10),
+    VALUE_CHANGED = (1 << 11),
+    RETURN_DOWN = (1 << 12),
 
-    ENABLE = (1 \<< 13),
-    DISABLE = (1 \<< 14),
+    ENABLE = (1 << 13),
+    DISABLE = (1 << 14),
 
 };
-</code>
+```
 
-<p>We have defined all events in an enum so we create a gui_events variable in our GUIElement and will call it “eventsToReact”. You can see that in each state in this enum there is something like this <code>(1 \<< n)</code>, this means we move a bit to the left n positions, so:
+<p>We have defined all events in an enum so we create a gui_events variable in our GUIElement and will call it “eventsToReact”. You can see that in each state in this enum there is something like this:</p>
+```
+(1 << n)
+```
+<p>, this means we move a bit to the left n positions, so:</p>
 
-<ul>
-    <li><code>(1 \<< 0) = 00001 = 1</code></li>
-    <li><code>(1 \<< 1) = 00010 = 2</code></li>
-    <li><code>(1 \<< 2) = 00100 = 4</code></li>
-    <li><code>(1 \<< 3) = 01000 = 8</code></li>
-    <li><code>(1 \<< 4) = 10000 = 16</code></li>
-</ul>
+```
+    (1 << 0) = 00001 = 1
+    (1 << 1) = 00010 = 2
+    (1 << 2) = 00100 = 4
+    (1 << 3) = 01000 = 8
+    (1 << 4) = 10000 = 16
+```
 
-as you can see now each event is represented by a number that in binary is full of 0 less one bit that is not repeated in any other case. Now you may ask why this will help us so here we go. Do you remember the variable we told you to create before named “eventsToReact”?
+<p>as you can see now each event is represented by a number that in binary is full of 0 less one bit that is not repeated in any other case. Now you may ask why this will help us so here we go. Do you remember the variable we told you to create before named “eventsToReact”?
 By default this variable will be equal to 0 what means EVENT_NONE. Each time we add a reaction to the element we will add into this variable the event passed using bit operations:</p>
 
-<code>
+```
     eventsToReact = (gui_events)(eventsToReact | newEventToReact);
 
-</code>
-<p>You can see that we must cast the operation as it is internally doing a bit operation with ints but what does this mean? Supose before this events to react was ...000 and we added a reaction to the event MOUSE_LCLICK_DOWN which have the number 01000 = 8. After this operation eventsToReact now is equal to 01000. Now we add a reaction to another event like <code>MOUSE_ENTERS = (1 \<< 1) = 00010 = 2</code>. After adding this event eventsToReact’s value is 01010 = 10. You can se that the previous bit we added hasn’t been modified. Later on the code we will be able to look in the desired bit of this variable if is one()we have a reaction) or zero(we don’t have a reaction).</p>
+```
+
+<p>You can see that we must cast the operation as it is internally doing a bit operation with ints but what does this mean? Supose before this events to react was ...000 and we added a reaction to the event MOUSE_LCLICK_DOWN which have the number 01000 = 8. After this operation eventsToReact now is equal to 01000. Now we add a reaction to another event like MOUSE_ENTERS. After adding this event eventsToReact’s value is 01010 = 10. You can se that the previous bit we added hasn’t been modified. Later on the code we will be able to look in the desired bit of this variable if is one()we have a reaction) or zero(we don’t have a reaction).</p>
 
 <p>Now you can add those bits you will have to remove them if a reaction is removed from the map. As this is just an optional feature we will let you investigate how to remove it and how to check in the variable if a certain event is stored there. Here we let you a pair of links might help you:
 <ul>
@@ -142,7 +146,7 @@ If you don’t want to investigate it or you can’t understand it you can check
 
 <p>Move now to the element Update, here we will look both variables currentStaticAnimation and currentTransition with a switch and each case call the method it’s assosiated:</p>
 
-<code>
+```
 if (currentStaticAnimation != SAT_NONE)
 {
 //Do here the animation according the active one.
@@ -200,7 +204,7 @@ if (currentTransition != SAT_NONE)
     break;
     }
     }
-</code>
+```
 
 <p>From here untill the end you can do the animations as you want but remember that untill you don’t change the value of currentStaticAnimation and/or currentTransition to SAT_NONE the realted methods will be called every frame. </p>
 
