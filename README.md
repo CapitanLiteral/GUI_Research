@@ -22,7 +22,7 @@
 <p>A transition is an animation used to change the status of the element, most usually to enable or disable the element. Modifying its position, size, alpha, etc we can animate a window or a button to not simply disappear or disappear from the screen.
 </p>
 
-<img src="https://www.shopify.com/partners/blog/104547526-the-benefits-of-using-a-ui-kit" />
+<img src="trans.gif" />
 
 <p>Those animations and transitions will give us a richer UI that provide much more information to the user.
     You can check this page that shows some different animations and transitions very clearly:</p> <a href="https://semantic-ui.com/modules/transition.html#/definition">https://semantic-ui.com/modules/transition.html#/definition</a>
