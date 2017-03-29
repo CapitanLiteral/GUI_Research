@@ -83,15 +83,14 @@ bool M_GUI::Start()
 	img2->SetDraggable(false);
 	guiList.push_back(img2);
 	img2->Center();
-	//img2->AddAnimationOrTransition(MOUSE_ENTERS, T_SCALE);
-	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_SCALE);
-	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_SCALE);
-	//img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, T_MOVE_DOWN);
-	//img2->AddAnimationOrTransition(ENABLE, T_MOVE_DOWN);
+
+
+	img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, T_MOVE_RIGHT);
+	img2->AddAnimationOrTransition(ENABLE, T_MOVE_RIGHT);
+	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, SA_SHAKE);
+	//img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, SA_BOUNCE);
+	//img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, T_DROP);
 	//img2->AddAnimationOrTransition(ENABLE, T_DROP);
-	img2->AddAnimationOrTransition(MOUSE_LCLICK_DOWN, SA_SHAKE);
-	img2->AddAnimationOrTransition(MOUSE_RCLICK_DOWN, SA_BOUNCE);
-	//img2->AddAnimationOrTransition(ENABLE, T_SCALE);
 	//img2->AddAnimationOrTransition(MOUSE_ENTERS, SA_PULSE);
 
 	GUILabel* label_center = CreateLabel({ 0, 0, 0, 0 }, DEFAULT, "label_center", "label_center");

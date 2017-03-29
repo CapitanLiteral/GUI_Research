@@ -6,8 +6,6 @@
 #include "Module.h"
 #include <vector>
 
-class Entity;
-
 class M_Render : public Module
 {
 public:
@@ -52,7 +50,6 @@ public:
 	void DrawDebug()override;
 
 private:
-	void DrawEntities(std::vector<Entity*> entities);
 
 
 public:

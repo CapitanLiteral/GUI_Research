@@ -108,15 +108,21 @@ void GUIElement::OnGuiEvent(int64_t eventToReact)
 			staticAnim_or_transition tmp = it->second;
 			if (tmp < SAT_SEPARATOR)
 			{
-				currentStaticAnimation = tmp;
-				doingAnimation = false;
+				if (currentStaticAnimation == SAT_NONE)
+				{
+					currentStaticAnimation = tmp;
+					doingAnimation = false;
+				}
 			}
 			else if (tmp > SAT_SEPARATOR)
 			{
-				currentTransition = tmp;
-				doingTransition = false;
-				//Will asume all transitions enable/disable.
-				if (status.active) mustDisable = true;
+				if (currentTransition == SAT_NONE)
+				{
+					currentTransition = tmp;
+					doingTransition = false;
+					//Will asume all transitions enable/disable.
+					if (status.active) mustDisable = true;
+				}
 			}
 		}
 	}
