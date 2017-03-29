@@ -6,7 +6,7 @@
 <h1>UI-Animations and transitions.</h1>
 
 <h2>Introduction.</h2>
-<p>Hi there, we are Pere Rifà and Josep Casanovas, two students at CITM currently at second grade on Game development. During our project 2 subject we amust develop a solution to a given development problem or feature. In our case we had to create a system to provide animations and transitions to UI. Before we start we must thank Capitan Literal (//TODO add link) who programmed the UI system we will use as base project.</p>
+<p>Hi there, we are Pere Rifà and Josep Casanovas, two students at CITM currently at second grade on Game development. During our project 2 subject we amust develop a solution to a given development problem or feature. In our case we had to create a system to provide animations and transitions to UI. Before we start we must thank <a href="https://github.com/CapitanLiteral">Capitan Literal</a> who programmed the UI system we will use as base project.</p>
 
 <p>This guide and the code provided uses C++ and the project given use Visual Studio 2015 but you can take all the source files and compile them by your own.</p>
 
