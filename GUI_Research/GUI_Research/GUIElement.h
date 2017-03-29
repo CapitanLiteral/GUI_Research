@@ -99,7 +99,10 @@ enum staticAnim_or_transition
 	T_DROP,
 	T_FLY,
 	T_SLIDE,
-	T_MOVE_TO_RIGHT
+	T_MOVE_RIGHT,
+	T_MOVE_LEFT,
+	T_MOVE_UP,
+	T_MOVE_DOWN
 };
 
 class GUIElement
@@ -202,7 +205,10 @@ private:
 	void DropT(float dt);
 	void FlyT(float dt);
 	void SlideT(float dt);
-	void MoveToRightT(float dt);
+	void MoveRightT(float dt);
+	void MoveLeftT(float dt);
+	void MoveUpT(float dt);
+	void MoveDownT(float dt);
 
 //protected:
 //	void SetSize(int w, int h);
@@ -232,9 +238,13 @@ private:
 	bool doingTransition = false;
 
 	Timer transTimer;
-	iPoint destination;
-	int currentTime = 0;
-	int animTime = 1000;
+	iPoint transOrigin = iPoint(0, 0);
+	iPoint transDestination = iPoint(0, 0);
+	int currentTransTime = 0;
+
+	int currentAnimTim = 0;
+	int animDuraton = 1000;
+	bool doingAnimation = false;
 
 protected:
 	std::list<Module*> listeners;

@@ -84,7 +84,7 @@ bool M_Scene::CleanUp()
 }
 
 
-void M_Scene::GuiEvent(GUIElement* element, gui_events state) 
+void M_Scene::GuiEvent(GUIElement* element, int64_t state) 
 {
 	
 }

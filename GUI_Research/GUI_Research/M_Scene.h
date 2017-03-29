@@ -23,7 +23,7 @@ public:
 
 	void DrawDebug();
 
-	void GuiEvent(GUIElement* element, gui_events state)override;
+	void GuiEvent(GUIElement* element, int64_t state)override;
 
 private:
 	SDL_Texture* debug_tex;

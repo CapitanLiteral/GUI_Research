@@ -36,7 +36,7 @@ public:
 	uint GetScale() const;
 
 	void DrawDebug()override;
-	void GuiEvent(GUIElement* element, in64_t event) override;
+	void GuiEvent(GUIElement* element, int64_t event) override;
 
 
 public:

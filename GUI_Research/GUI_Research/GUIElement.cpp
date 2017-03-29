@@ -109,14 +109,15 @@ void GUIElement::OnGuiEvent(int64_t eventToReact)
 			if (tmp < SAT_SEPARATOR)
 			{
 				currentStaticAnimation = tmp;
+				doingAnimation = false;
 			}
 			else if (tmp > SAT_SEPARATOR)
 			{
 				currentTransition = tmp;
+				doingTransition = false;
 				//Will asume all transitions enable/disable.
 				if (status.active) mustDisable = true;
 			}
-			doingTransition = false;
 		}
 	}
 }
@@ -473,8 +474,8 @@ void GUIElement::SetDrawPosition(float x, float y)
 {
 	drawRect.Move(x, y);
 
-	for (std::list<GUIElement*>::iterator it = childs.begin(); it != childs.end(); ++it)
-		if ((*it)) (*it)->SetDrawPosition((*it)->drawRect.x + x, (*it)->drawRect.y + y);
+	/*for (std::list<GUIElement*>::iterator it = childs.begin(); it != childs.end(); ++it)
+		if ((*it)) (*it)->SetDrawPosition((*it)->drawRect.x + x, (*it)->drawRect.y + y);*/
 }
 
 void GUIElement::SetPresetType(std::string str)
@@ -536,8 +537,17 @@ void GUIElement::Update(const GUIElement* mouseHover, const GUIElement* focus, f
 		case T_SLIDE:
 			SlideT(dt);
 			break;
-		case T_MOVE_TO_RIGHT:
-			MoveToRightT(dt);
+		case T_MOVE_RIGHT:
+			MoveRightT(dt);
+			break;
+		case T_MOVE_LEFT:
+			MoveLeftT(dt);
+			break;
+		case T_MOVE_UP:
+			MoveUpT(dt);
+			break;
+		case T_MOVE_DOWN:
+			MoveDownT(dt);
 			break;
 		}
 	}
@@ -560,16 +570,16 @@ void GUIElement::ShakeSA(float dt)
 }
 void GUIElement::PulseSA(float dt)
 {
-	if (!doingTransition)
+	if (!doingAnimation)
 	{
 		transTimer.Start();
-		currentTime = 0;
-		doingTransition = true;
+		currentAnimTim = 0;
+		doingAnimation = true;
 	}
-	currentTime = transTimer.Read();
+	currentAnimTim = transTimer.Read();
 
-	float time = (float)currentTime / animTime;
-	float change_alpha = app->gui->cBeizier->GetActualX(animTime, currentTime, CB_SLOW_MIDDLE);
+	float time = (float)currentAnimTim / animDuraton;
+	float change_alpha = app->gui->cBeizier->GetActualX(animDuraton, currentAnimTim, CB_SLOW_MIDDLE);
 
 	change_alpha = CLAMP01(change_alpha);
 
@@ -584,7 +594,7 @@ void GUIElement::PulseSA(float dt)
 	else
 	{
 		currentStaticAnimation = SAT_NONE;
-		doingTransition = false;
+		doingAnimation = false;
 	}
 }
 void GUIElement::BounceSA(float dt)
@@ -594,7 +604,57 @@ void GUIElement::BounceSA(float dt)
 
 void GUIElement::ScaleT(float dt)
 {
-	float speed;
+	/*static iPoint originScale;
+	static iPoint destinationScale;
+	if (!doingAnimation)
+	{
+		if (mustDisable)
+		{
+			transOrigin.create(rect.x, rect.h);
+			transDestination.create(rect.x + rect.w/2, rect.y + rect.h / 2);
+			originScale.create(rect.w, rect.h);
+			destinationScale.create(rect.w / 2, rect.h / 2);
+		}
+		else
+		{
+			transOrigin.create(drawRect.x, drawRect.y);
+			transDestination.create(rect.x, rect.y);
+			originScale.create(drawRect.w, drawRect.h);
+			destinationScale.create(rect.w, rect.h);
+		}
+		transTimer.Start();
+		currentTransTime = 0;
+		doingTransition = true;
+	}
+
+	currentTransTime = transTimer.Read();
+	if (currentTransTime <= 1000)
+	{
+		if (mustDisable)
+		{
+			drawRect.x = transOrigin.x - app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, CB_SLOW_MIDDLE);
+			drawRect.y = transOrigin.y - app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, CB_SLOW_MIDDLE);
+			drawRect.w = originScale.x + app->gui->cBeizier->GetActualPoint(originScale, destinationScale, 1000, currentTransTime, CB_SLOW_MIDDLE);
+			drawRect.y = originScale.y + app->gui->cBeizier->GetActualPoint(originScale, destinationScale, 1000, currentTransTime, CB_SLOW_MIDDLE);
+		}
+		else
+		{
+			;
+		}
+	}
+	else
+	{
+		currentTransTime = 0;
+		currentTransition = SAT_NONE;
+		if (mustDisable)
+		{
+			status.active = false;
+			mustDisable = false;
+		}
+		return;
+	}*/
+
+	/*float speed;
 
 	if (mustDisable)
 	{
@@ -609,7 +669,7 @@ void GUIElement::ScaleT(float dt)
 	}
 	else
 	{
-		if (/*drawRect.x <= rect.x || drawRect.y <= rect.y ||*/ drawRect.w >= rect.w || drawRect.h >= rect.h)
+		if (drawRect.w >= rect.w || drawRect.h >= rect.h)
 		{
 			currentTransition = SAT_NONE;
 			drawRect.Set(rect.x, rect.y, rect.w, rect.h);
@@ -621,7 +681,7 @@ void GUIElement::ScaleT(float dt)
 	drawRect.x += speed/2;
 	drawRect.y += speed/2;
 	drawRect.w -= speed;
-	drawRect.h -= speed;	
+	drawRect.h -= speed;	*/
 }
 void GUIElement::FadeT(float dt)
 {
@@ -629,53 +689,34 @@ void GUIElement::FadeT(float dt)
 }
 void GUIElement::DropT(float dt)
 {
-	float speed = 0.f;
-
 	if (!doingTransition)
 	{
-		destination.create(rect.w * 0.2, rect.h*0.2);
-		transTimer.Start();
-		currentTime = 0;
-		doingTransition = true;
-	}
-
-	/*if (mustDisable)
-	{
-		//Lets reduce its size
-		if (drawRect.w <= rect.w*0.2f || drawRect.h <= rect.h*0.2f)
+		if (mustDisable)
 		{
-			currentTransition = SAT_NONE;
-			status.active = false;
-			mustDisable = false;
-			return;
-		}
-
-		speed = -700 * dt;
-	}
-	else
-	{
-		//Lets increase the size
-		if (drawRect.w < rect.w && drawRect.h < rect.h)
-		{
-			speed = 700 * dt;
+			transOrigin.create(rect.w, rect.h);
+			transDestination.create(rect.w * 0.2, rect.h * 0.2);
 		}
 		else
 		{
-			currentTransition = SAT_NONE;
-			drawRect.Set(rect.x, rect.y, rect.w, rect.h);
-			return;
+			transOrigin.create(drawRect.w, drawRect.h);
+			transDestination.create(rect.w, rect.h);
 		}
-	}*/
+		transTimer.Start();
+		currentTransTime = 0;
+		doingTransition = true;
+	}
 
-	currentTime = transTimer.Read();
-	if (currentTime <= 1000 && drawRect.h > 0.f)
+	currentTransTime = transTimer.Read();
+	if (currentTransTime <= 1000)
 	{
-		drawRect.h = rect.h + app->gui->cBeizier->GetActualPoint(iPoint(rect.w, rect.h), destination, 1000, currentTime, CB_SLOW_MIDDLE);
+		if(mustDisable)
+			drawRect.h = transOrigin.y + app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, CB_SLOW_MIDDLE);
+		else
+			drawRect.h = transOrigin.y - app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, CB_SLOW_MIDDLE);
 	}
 	else
 	{
-		currentTime = 0;
-		//drawRect.Set(rect.x, rect.y, rect.w, rect.h);
+		currentTransTime = 0;
 		currentTransition = SAT_NONE;
 		if (mustDisable)
 		{
@@ -685,8 +726,6 @@ void GUIElement::DropT(float dt)
 		return;
 	}
 
-	/*drawRect.w += speed;
-	drawRect.h += speed;*/
 }
 void GUIElement::FlyT(float dt)
 {
@@ -696,27 +735,159 @@ void GUIElement::SlideT(float dt)
 {
 	currentTransition = SAT_NONE;
 }
-void GUIElement::MoveToRightT(float dt)
+void GUIElement::MoveRightT(float dt)
 {
-	static int screenRXBorderPos = app->win->GetWindowSize().x;
-
 	if (!doingTransition)
 	{
-		destination.create(screenRXBorderPos - rect.w, rect.y);
+		if (mustDisable)
+		{
+			transOrigin.create(rect.x, rect.y);
+			int screenRXBorderPos = app->win->GetWindowSize().x;
+			transDestination.create(screenRXBorderPos - rect.w, rect.y);
+		}
+		else
+		{
+			transOrigin.create(drawRect.x, drawRect.y);
+			transDestination.create(rect.x, rect.y);
+		}
+
 		transTimer.Start();
-		currentTime = 0;
+		currentTransTime = 0;
 		doingTransition = true;
 	}
 
-	currentTime = transTimer.Read();
-	if (currentTime <= 1000)
+	currentTransTime = transTimer.Read();
+	if (currentTransTime <= 1000)
 	{
-		SetDrawPosition(rect.x - app->gui->cBeizier->GetActualPoint(iPoint(rect.x, rect.y), destination, 1000, currentTime, curveType), drawRect.y);
+		if(mustDisable)
+			SetDrawPosition(transOrigin.x - app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, curveType), drawRect.y);
+		else
+			SetDrawPosition(transOrigin.x + app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, curveType), drawRect.y);
 	}
 	else
 	{
-		currentTime = 0;
-		//drawRect.Set(rect.x, rect.y, rect.w, rect.h);
+		currentTransTime = 0;
+		currentTransition = SAT_NONE;
+		if (mustDisable)
+		{
+			status.active = false;
+			mustDisable = false;
+		}
+		return;
+	}
+}
+void GUIElement::MoveLeftT(float dt)
+{
+	if (!doingTransition)
+	{
+		if (mustDisable)
+		{
+			transOrigin.create(rect.x, rect.y);
+			transDestination.create(0, rect.y);
+		}
+		else
+		{
+			transOrigin.create(drawRect.x, drawRect.y);
+			transDestination.create(rect.x, rect.y);
+		}
+
+		transTimer.Start();
+		currentTransTime = 0;
+		doingTransition = true;
+	}
+
+	currentTransTime = transTimer.Read();
+	if (currentTransTime <= 1000)
+	{
+		if (mustDisable)
+			SetDrawPosition(transOrigin.x + app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, curveType), drawRect.y);
+		else
+			SetDrawPosition(transOrigin.x - app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, curveType), drawRect.y);
+	}
+	else
+	{
+		currentTransTime = 0;
+		currentTransition = SAT_NONE;
+		if (mustDisable)
+		{
+			status.active = false;
+			mustDisable = false;
+		}
+		return;
+	}
+}
+void GUIElement::MoveUpT(float dt)
+{
+	if (!doingTransition)
+	{
+		if (mustDisable)
+		{
+			transOrigin.create(rect.x, rect.y);
+			transDestination.create(rect.x, 0);
+		}
+		else
+		{
+			transOrigin.create(drawRect.x, drawRect.y);
+			transDestination.create(rect.x, rect.y);
+		}
+
+		transTimer.Start();
+		currentTransTime = 0;
+		doingTransition = true;
+	}
+
+	currentTransTime = transTimer.Read();
+	if (currentTransTime <= 1000)
+	{
+		if (mustDisable)
+			SetDrawPosition(drawRect.x, transOrigin.y + app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, curveType));
+		else
+			SetDrawPosition(drawRect.x, transOrigin.y - app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, curveType));
+	}
+	else
+	{
+		currentTransTime = 0;
+		currentTransition = SAT_NONE;
+		if (mustDisable)
+		{
+			status.active = false;
+			mustDisable = false;
+		}
+		return;
+	}
+}
+void GUIElement::MoveDownT(float dt)
+{
+	if (!doingTransition)
+	{
+		if (mustDisable)
+		{
+			transOrigin.create(rect.x, rect.y);
+			int screenBYBorderPos = app->win->GetWindowSize().y;
+			transDestination.create(rect.x, screenBYBorderPos - rect.h);
+		}
+		else
+		{
+			transOrigin.create(drawRect.x, drawRect.y);
+			transDestination.create(rect.x, rect.y);
+		}
+
+		transTimer.Start();
+		currentTransTime = 0;
+		doingTransition = true;
+	}
+
+	currentTransTime = transTimer.Read();
+	if (currentTransTime <= 1000)
+	{
+		if (mustDisable)
+			SetDrawPosition(drawRect.x, transOrigin.y - app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, curveType));
+		else
+			SetDrawPosition(drawRect.x, transOrigin.y + app->gui->cBeizier->GetActualPoint(transOrigin, transDestination, 1000, currentTransTime, curveType));
+	}
+	else
+	{
+		currentTransTime = 0;
 		currentTransition = SAT_NONE;
 		if (mustDisable)
 		{
