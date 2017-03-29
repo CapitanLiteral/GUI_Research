@@ -757,6 +757,7 @@ void GUIElement::FadeT(float dt)
 		transTimer.Start();
 		currentTransTime = 0;
 		doingTransition = true;
+		if (!mustDisable) alpha = 0;
 	}
 	currentAnimTim = transTimer.Read();
 	animTime = 1000;
@@ -764,7 +765,7 @@ void GUIElement::FadeT(float dt)
 	{
 		float change_alpha = app->gui->cBeizier->GetActualX(animTime, currentAnimTim, CB_SLOW_MIDDLE);
 		change_alpha = CLAMP01(change_alpha);
-		alpha = 255 *(1- change_alpha);
+		alpha = 255 * ((mustDisable) ? (1 - change_alpha) : (change_alpha));
 	}
 	else
 	{
