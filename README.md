@@ -25,7 +25,7 @@
 //TODO: Add gif
 
 <p>Those animations and transitions will give us a richer UI that provide much more information to the user.
-    You can check this page that shows some different animations and transitions very clearly:  <href>https://semantic-ui.com/modules/transition.html#/definition</href></p>
+    You can check this page that shows some different animations and transitions very clearly:  <a href="https://semantic-ui.com/modules/transition.html#/definition"></a></p>
 
 
 <h2>Introduction to the system.</h2>
@@ -133,8 +133,8 @@ By default this variable will be equal to 0 what means EVENT_NONE. Each time we 
 
 <p>Now you can add those bits you will have to remove them if a reaction is removed from the map. As this is just an optional feature we will let you investigate how to remove it and how to check in the variable if a certain event is stored there. Here we let you a pair of links might help you:
 <ul>
-    <li><href>http://www.cprogramming.com/tutorial/bitwise_operators.html</href></li>
-    <li><href>http://www.learncpp.com/cpp-tutorial/38-bitwise-operators/</href></li>
+    <li><a href="http://www.cprogramming.com/tutorial/bitwise_operators.html"></a></li>
+    <li><a href="http://www.learncpp.com/cpp-tutorial/38-bitwise-operators/"></a></li>
 </ul>
 
 If you don’t want to investigate it or you can’t understand it you can check the solution and ask us if you need any help.</p>
