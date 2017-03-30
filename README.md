@@ -68,9 +68,8 @@ to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NE
 
 <h1 id="UI_A_T">UI-Animations and transitions.</h1>
 
-//TODO: Add the links when branch created
-<p><a href="https://github.com/GUI-Research/GUI_Research/tree/AnimationsAndTransitions-Research">Download the source code here with the solution folder and the TODO's folder.</a></p>
-<p><a href="">Download the release solution here.</a></p>
+<p><a href="https://github.com/GUI-Research/GUI_Research/releases/tag/A%26T-Handout">Download the source code here with the solution folder and the TODO's folder.</a></p>
+<p><a href="https://github.com/GUI-Research/GUI_Research/releases/tag/A%26T_1.0v">Download the release solution here.</a></p>
 
 <h2>Introduction.</h2>
 <p>Hi there, we are Pere Rifà and Josep Casanovas, two students at CITM currently at second grade on Game development. During our project 2 subject we amust develop a solution to a given development problem or feature. In our case we had to create a system to provide animations and transitions to UI. Before we start we must thank <a href="https://github.com/CapitanLiteral">Capitan Literal</a> who programmed the UI system we will use as base project.</p>
