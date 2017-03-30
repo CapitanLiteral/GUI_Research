@@ -13,6 +13,19 @@ Index
 <li> <a href="#UI_D_D_How">How do we achieve this?</a></li>
 </ol>
 <li><a href="#UI_A_T">UI-Animations and transitions.</a></li>
+<ol>
+<li> <a href="UI_A_T_Intro">Introduction</a><li>
+<li> <a href="UI_A_T_SvsT">Static animations vs. transitions</a><li>
+<li> <a href="UI_A_T_IntroSys">Introduction to the system</a><li>
+<li> <a href="UI_A_T_Goal">Goal</a><li>
+<li> <a href="UI_A_T_Start">Let's start</a><li>
+<li> <a href="UI_A_T_aboutMethods">About methods</a><li>
+<li> <a href="UI_A_T_transparency">Transparency</a><li>
+<li> <a href="UI_A_T_position">Position</a><li>
+<li> <a href="UI_A_T_size">Size</a><li>
+<li> <a href="UI_A_T_bezier">Bezier curve</a><li>
+<li> <a href="UI_A_T_Todos">Let's do some work!!! TODOs</a><li>
+</ol>
 </ul>
 
 
@@ -216,12 +229,12 @@ void M_Window::GuiEvent(GUIElement * element, int64_t event)
 <p><a href="https://github.com/GUI-Research/GUI_Research/releases/tag/A%26T-Handout">Download the source code here with the solution folder and the TODO's folder.</a></p>
 <p><a href="https://github.com/GUI-Research/GUI_Research/releases/tag/A%26T_1.0v">Download the release solution here.</a></p>
 
-<h2>Introduction.</h2>
+<h2 id="UI_A_T_Intro">Introduction.</h2>
 <p>Hi there, we are Pere Rifà and Josep Casanovas, two students at CITM currently at second grade on Game development. During our project 2 subject we amust develop a solution to a given development problem or feature. In our case we had to create a system to provide animations and transitions to UI. Before we start we must thank <a href="https://github.com/CapitanLiteral">Capitan Literal</a> who programmed the UI system we will use as base project.</p>
 
 <p>This guide and the code provided uses C++ and the project given use Visual Studio 2015 but you can take all the source files and compile them by your own.</p>
 
-<h2>Static animations vs. transitions.</h2>
+<h2 id="UI_A_T_SvsT">Static animations vs. transitions.</h2>
 <p>We use animations and transitions in UI to give more feedback to the user depending on his actions and all events related to her user interface. But what is the difference between a transition and a static animation?</p>
 <h3>Static animation.</h3>
 <p>A static animations is a small animation that at the end doesn’t modify the element, a simple example is a shake or a bounce animation where the element moves a bit around and at the end recovers its position. Good examples are typical animations done when you place the mouse over a button or when you click on a UI element.
@@ -239,12 +252,12 @@ void M_Window::GuiEvent(GUIElement * element, int64_t event)
     You can check this page that shows some different animations and transitions very clearly:</p> <a href="https://semantic-ui.com/modules/transition.html#/definition">https://semantic-ui.com/modules/transition.html#/definition</a>
 
 
-<h2>Introduction to the system.</h2>
+<h2 id="UI_A_T_IntroSys">Introduction to the system.</h2>
 <p>As we have said before, we developed the animationa and transition system on a previous UI system so we will explain a few things you may need to know about it.</p>
 <p>The system is divided into two main parts, a class called M_Gui wich is the module that manage all the system. The second part is a class called GUIElement whichhh is a base class for all the UI elements such as GUIImage, GUILabel, etc. The module has a a list with all the elements created in thhe app and manages all of them. It manages all the events like mouse clicks, etc; updates all the elements and render them into thhhe screen.</p>
 <p>We will be working on the second part, the base class for all elements. This class contains some basic attributes like the type, a rectangle that defines the position and the size, a status and some more we will explain later used in our system. It also have some methods like setters and getters for the attributes, a method to recive events, an update, a virtual draw, and some more we don't really need to care about. Later we will focus on some we will use on animations and transitions</p>
 
-<h2>Goal.</h2>
+<h2 id="UI_A_T_Goal">Goal.</h2>
 <p>This would be easily integrated with the UI data driven explained before by Capitan Literal so we encourage you to do it and save in an xml the animations you want for all elements.</p>
 <p>In order to add those animations and transitions in this guide we will start from the UI system done by Capitan Literal (link) and will modify the GUIElement class base for all the rest of UI classes such as Image, label, button, etc.</p>
 <p>If you execute the TODO's solution you will see these:</p>
@@ -253,7 +266,7 @@ void M_Window::GuiEvent(GUIElement * element, int64_t event)
 <img src="debugImage.png"/>
 <p>but these gui elements do nothing. At the end of the guide all those elements will be animated as the text over each one says.</p>
 
-<h2>Let's start.</h2>
+<h2 id="UI_A_T_Start">Let's start.</h2>
 <p>First of all we must define all the different animations and transitions we want to do. In order to store all this we will use an enum we call staticAnim_or_transition. We could define one enum for transitions and another one for static animations but we decided to join all in one to make it easier later:  </p>
 
 ```
@@ -429,7 +442,7 @@ if (currentTransition != SAT_NONE)
 
 <p>Here we will explain how we have done some animations and transitions but take into account that you can adapt the number of animations and transitions to your needs.</p>
 
-<h2>About Methods.</h2>
+<h2 id="UI_A_T_aboutMethods">About Methods.</h2>
 
 <p>All methods are different in the core of its functions but share a similar structure, the start and end of the animation or transition. The common part is related to the initialization where we set up the variables needed to allow the effect.
 </p>
@@ -452,7 +465,7 @@ If it’s less means that the animation is running and we have to modify the val
 <p>The structure of the code to implement on each method will be slightly different according to the characteristics you want to modify and how you want to modify them.
 </p>
 
-<h3>Transparency</h3>
+<h3 id="UI_A_T_transparency">Transparency</h3>
 
 <p>Let’s start by changing the visibility of an element. A well-known example of this kind of effect is the Fade, similar to Fade To Black function where you reduce or increase the alpha value of the texture from 0 to 255 or inverse before rendering. This provides an effect of transparency in the element and makes a smooth transition from seen to unseen or the other way, remember mustDisable.</p>
 
@@ -463,7 +476,7 @@ If it’s less means that the animation is running and we have to modify the val
 
 <img src="Fade.gif" align="middle"/>
 
-<h3>Position</h3>
+<h3 id="UI_A_T_position">Position</h3>
 
 <p>Finally we change the position of the element, is staging elements like an object that enters one side of the screen and stood in sight of the user. In this case you have to be careful when initializing variables and add a conditional transition to whether the item get out or in the stage. By swapping the positions of origin and destination as the transition and taking into account the size of the element will be enough to make the transition correct entry and exit. 
 
@@ -472,7 +485,7 @@ In the methods for modifying the position we’ll change only the position of dr
 
 <img src="moveUp.gif" align="middle"/>
 
-<h3>Size</h3>
+<h3 id="UI_A_T_size">Size</h3>
 
 <p>The second characteristic we’ll modify is the size of the elements. In methods focused on resizing the objective is to re size the area where the texture will be printed. To do that we created a new variable SDL_Rect called drawRect which is the modified rect where we Blit the texture of its original rect. The names used by the two rectangles are: rect and drawRect, also remember the mustDisable. </p>
 
@@ -480,7 +493,7 @@ In the methods for modifying the position we’ll change only the position of dr
 
 <img src="Slide.gif" align="middle"/>
 
-<h2>Bezier Curve</h2>
+<h2 id="UI_A_T_bezier">Bezier Curve</h2>
 
 <p>So.. that’s all? Fifty-fifty. The methodology we use to change the value of these variables is what allows us to create some animation or transition effects that add value to the interface and allow a better interaction with users.
 </p>
@@ -507,7 +520,7 @@ In the methods for modifying the position we’ll change only the position of dr
 
 <a href="http://easings.net/es" > Function Easing with Bezier Curve </a>
 
-<h2>Let's do some work!!!</h2>
+<h2 id="UI_A_T_Todos">Let's do some work!!!</h2>
 <h3>TODO 1</h3>
 <p>
 Insert in the map the pair of event and animation you recieve. Remeber before inserting check if that event has already been added, if it has replace the animation set before for the new one.
