@@ -50,14 +50,14 @@ to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NE
 <ol>
 <li>
 <p>Decide a xml organization, how do we save things in there and which data is important to save and which not.</p>
-<pre><code class="xml">int main(void)
+<pre><code class="xml">
 <button type_name="button" have_animations="0">
-				<sections>
-					<section type="standBy" x="0" y="110" w="230" h="71" />
-					<section type="hover" x="411" y="166" w="230" h="71" />
-					<section type="clicked" x="642" y="166" w="230" h="71" />
-				</sections>
-			</button>
+	<sections>
+		<section type="standBy" x="0" y="110" w="230" h="71" />
+		<section type="hover" x="411" y="166" w="230" h="71" />
+		<section type="clicked" x="642" y="166" w="230" h="71" />
+	</sections>
+</button>
 </code>
 <h2>Code</h2>
 </pre>
