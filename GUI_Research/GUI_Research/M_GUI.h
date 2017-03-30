@@ -25,12 +25,12 @@ public:
 	update_status Update(float dt) override;
 	update_status PostUpdate(float dt) override;
 
-	bool LoadLayout(); //TODO: LoadLayout needs lots of improvements 
-					   //Define wich list it fills and wich gui.xml gets for example 
-					   //FIX: Each element could load and save himself
-	bool SaveLayout(); //TODO: SaveLayout needs lots of improvements 
-					   //Define wich list it saves and wich gui.xml creates for example
-					   //FIX: Each element could load and save himself
+	bool LoadLayout(); 
+					   
+					   
+	bool SaveLayout(); 
+					   
+					   
 
 	//Not implemented
 	bool UpdateGuiList();
@@ -102,8 +102,6 @@ private:
 	GUILabel* xMouse;
 	GUILabel* yMouse;
 	bool UIEditing = false;
-
-	GUIImage* img2 = nullptr; //TMP
 
 };
 

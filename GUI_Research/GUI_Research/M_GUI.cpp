@@ -40,22 +40,11 @@ bool M_GUI::Awake(pugi::xml_node &)
 bool M_GUI::Start()
 {
 	bool ret = true;
-	//TODO 1: Load atlas
+
 	atlas = app->tex->Load("gui/atlas2.png");
 
 	//This goes the first
 	ret = LoadLayout();
-
-
-
-	//GUIImage* img = CreateImage({ 0, 100, 328, 103 }, { 485, 829, 328, 103 });
-	//guiList.push_back(img);
-
-	//GUIImage* img_small = CreateImage({ 500, 100, 328/2, 103/2 }, { 485, 829, 328, 103 });
-	//guiList.push_back(img_small);
-
-	//GUIImage* img_big = CreateImage({ 1000, 100, 328*2, 103*2 }, { 485, 829, 328, 103 });
-	//guiList.push_back(img_big);
 
 	////Debug UI
 	lastFrameMS = new GUIAutoLabel<uint32>({ 0,0,30,30 }, &app->last_frame_ms, "ms");
@@ -71,9 +60,6 @@ bool M_GUI::Start()
 	debugGuiList.push_back(xMouse);
 	debugGuiList.push_back(yMouse);
 
-	GUILabel* label_center = CreateLabel({ 0, 0, 0, 0 }, DEFAULT, "label_center", "label_center");
-	label_center->Center();
-	guiList.push_back(label_center);
 	return ret;
 }
 update_status M_GUI::PreUpdate(float dt)
@@ -91,14 +77,7 @@ update_status M_GUI::PreUpdate(float dt)
 	//This is the git gud code...
 	//IterateList(&guiList, &M_GUI::DoElementUpdate, dt);
 	//IterateList(&debugGuiList, &M_GUI::DoElementUpdate, dt);
-
-	//TMP
-	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-	{
-		if (img2) img2->Enable();
-	}
-	//---
-
+	
 	for (std::list<GUIElement*>::iterator it = guiList.begin(); it != guiList.end(); it++)
 	{
 		if ((*it)->GetActive())
@@ -132,7 +111,7 @@ update_status M_GUI::PostUpdate(float dt)
 	}
 	return UPDATE_CONTINUE;
 }
-//TODO: LoadLayout needs lots of improvements...
+
 bool M_GUI::LoadLayout()
 {
 	bool ret = true;
@@ -157,7 +136,7 @@ bool M_GUI::LoadLayout()
 			root = data.child("gui").child("elements");
 			pugi::xml_node buttons = root.child("buttons");
 			pugi::xml_node imgs = root.child("imgs");
-			//TODO 2: Load UI presets
+
 			//Loading button presets
 			for (pugi::xml_node it = buttons.first_child(); it != NULL; it = it.next_sibling())
 			{
@@ -230,13 +209,7 @@ bool M_GUI::LoadLayout()
 				guiPresets.insert(std::pair<std::string, GUIElement*>(name, img));
 			}
 
-			//TODO: Make label presets makes no sense for me, any other new GUI presset goes here, but for the moment
-			//		only 3 Gui items are implemented Label, Image and Button...
-			// bla bla some preset SLIDER
-			// bla bla some preset LIFEBAR
-			// NEWER PRESETS go up this comments
-
-			//TODO: Load listeners and events
+			
 
 			//Load UI layout
 			root = data.child("gui").child("layout");
@@ -352,7 +325,7 @@ bool M_GUI::LoadLayout()
 	}
 	return ret;
 }
-//TODO: SaveLayout needs lots of improvements...
+
 bool M_GUI::SaveLayout()
 {
 	bool ret = true;
@@ -475,8 +448,7 @@ void M_GUI::ManageEvents()
 		mouseHover->SetMouseInside(false);
 		mouseHover = nullptr;
 	}
-	// TODO find wich element has the focus
-	// TODO manage the input & events
+	
 	if (mouseHover != nullptr && mouseHover->GetCanFocus() == true && app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == key_state::KEY_DOWN)
 	{
 		if (focus != mouseHover && focus != nullptr)
@@ -614,10 +586,11 @@ void M_GUI::DrawDebug()
 			(*it)->Draw();
 	}
 
-	cBeizier->DrawBezierCurve(CB_EASE_INOUT_BACK, {800, 200});
-	cBeizier->DrawBezierCurve(CB_SLOW_MIDDLE, { 800, 200 });
-	cBeizier->DrawBezierCurve(CB_LINEAL, { 800, 200 });
-	cBeizier->DrawBezierCurve(CB_SHAKE, { 800, 200 });
+	iPoint p(1130, 900);
+	cBeizier->DrawBezierCurve(CB_EASE_INOUT_BACK, p);
+	cBeizier->DrawBezierCurve(CB_SLOW_MIDDLE, p);
+	cBeizier->DrawBezierCurve(CB_LINEAL, p);
+	cBeizier->DrawBezierCurve(CB_SHAKE, {1350, 850});
 }
 GUIElement * M_GUI::FindElement(std::list<GUIElement*> list, std::string name)
 {

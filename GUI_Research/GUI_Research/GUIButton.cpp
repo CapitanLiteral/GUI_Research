@@ -163,7 +163,6 @@ void GUIButton::Deserialize(pugi::xml_node layout_element)
 	label->Center();
 	SetText(text);
 	//Load button actions and assign them to an action
-	//TODO: try to find a better system of assigning button actions to gui events
 	for (pugi::xml_node it_event = layout_element.child("events").first_child(); it_event; )
 	{
 		pugi::xml_node next = it_event.next_sibling();
@@ -180,7 +179,6 @@ void GUIButton::Deserialize(pugi::xml_node layout_element)
 		it_event = next;
 	}
 	//Load button listeners
-	//TODO: try to find a better system of assigning button actions to gui events
 	for (pugi::xml_node it_listener = layout_element.child("listeners").first_child(); it_listener; )
 	{
 		pugi::xml_node next = it_listener.next_sibling();

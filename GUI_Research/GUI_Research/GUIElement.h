@@ -94,7 +94,6 @@ enum staticAnim_or_transition
 
 	SAT_SEPARATOR, //Dont really like this must change it but for now i use this to know if it is a transition or a 
 
-	T_SCALE,
 	T_FADE,
 	T_DROP,
 	T_FLY,
@@ -132,8 +131,6 @@ public:
 	//virtual bool OnLoad(pugi::xml_node* node);
 
 	void OnGuiEvent(int64_t eventToReact);
-
-	GUIElement* operator==(GUIElement* element); //TODO: needed to compare elements
 
 	//Getters & Setters ·········································· START ···················
 	GB_Rectangle<int> GetScreenRect() const;
@@ -214,7 +211,6 @@ private:
 	void PulseSA(float dt);
 	void BounceSA(float dt);
 
-	void ScaleT(float dt);
 	void FadeT(float dt);
 	void DropT(float dt);
 	void FlyT(float dt);
@@ -223,9 +219,6 @@ private:
 	void MoveLeftT(float dt);
 	void MoveUpT(float dt);
 	void MoveDownT(float dt);
-
-//protected:
-//	void SetSize(int w, int h);
 
 	//Attributes
 private:
@@ -240,13 +233,14 @@ private:
 	std::string presetName;
 	std::string name;
 
+	//-----
+
 	staticAnim_or_transition currentStaticAnimation = SAT_NONE;
 	staticAnim_or_transition currentTransition = SAT_NONE;
 	std::map<gui_events, staticAnim_or_transition> transAndAnimations;
 	gui_events eventsToReact = EVENT_NONE;
-	GB_Rectangle<float> drawRect;
 
-	cbezier_type curveType = cbezier_type::CB_EASE_INOUT_BACK;
+	GB_Rectangle<float> drawRect; //This rectangle is used to change the blit position for animations but don't lose the original position.
 
 	bool mustDisable = false;
 
@@ -256,17 +250,21 @@ private:
 	int currentTransTime = 0;
 	bool doingTransition = false;
 
+	Timer animTimer;
 	int currentAnimTim = 0;
 	int animDuraton = 1000;
 	bool doingAnimation = false;
 	int animTime = 500;
 
-	
+	//--------
 
 protected:
 	std::list<Module*> listeners;
-	bool haveFocus = false; // TODO implement it on event management
+	bool haveFocus = false;
+
+	//-----
 	int alpha = 255;
+	//-----
 
 };
 

@@ -29,6 +29,9 @@ private:
 	GUIImage* img1 = nullptr;
 	GUIImage* img2 = nullptr;
 	GUIImage* img3 = nullptr;
+	GUIImage* img4 = nullptr;
+	GUIImage* img5 = nullptr;
+	GUIImage* img6 = nullptr;
 };
 
 #endif // __j1SCENE_H__

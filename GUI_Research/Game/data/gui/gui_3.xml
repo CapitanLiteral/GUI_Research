@@ -27,46 +27,6 @@
     </imgs>
   </elements>
   <layout>
-    <button type="button" name="btn1" text="btn1">
-      <events>
-        <event action="32768" origin="16"/>
-      </events>
-      <listeners>
-        <listener name="window"/>
-      </listeners>
-      <position x="936" y="172" />
-      <size w="100" h="100" />
-    </button>
-    <button type="button" name="btn2" text="btn2">
-      <position x="1100" y="94" />
-      <size w="200" h="100" />
-    </button>
-    <button type="button" name="btn3" text="btn3">
-      <position x="1385" y="105" />
-      <size w="200" h="100" />
-    </button>
-    <button type="button" name="btn4" text="btn4">
-      <position x="1557" y="299" />
-      <size w="200" h="100" />
-    </button>
-    <button type="another_button" name="btn8">
-      <position x="73" y="59" />
-      <size w="100" h="100" />
-    </button>
-    <button type="another_button" name="btn9">
-      <position x="297" y="565" />
-      <size w="100" h="100" />
-    </button>
-    <img type="space_ship" name="tittle1">
-      <position x="356" y="224" />
-      <size w="100" h="100" />
-    </img>
-    <img type="window" name="image_test_animation_transition">
-      <position x="124" y="287" />
-      <size w="484" h="512" />
-    </img>
-    <label name="label" text="Hola" size="0">
-      <position x="600" y="287" />
-    </label>
+    
   </layout>
 </gui>

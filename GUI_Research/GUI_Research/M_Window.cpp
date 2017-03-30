@@ -1,6 +1,7 @@
 #include "Log.h"
 #include "App.h"
 #include "M_Window.h"
+#include "GUIElement.h"
 
 #include "SDL/include/SDL.h"
 

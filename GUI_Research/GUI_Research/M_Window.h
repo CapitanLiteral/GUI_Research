@@ -5,8 +5,6 @@
 #include "GB_Rectangle.h"
 #include "p2Point.h"
 
-//TODO: I dont like to include this here only for the events, maybe I should fix it...
-#include "GUIElement.h"
 
 struct SDL_Window;
 struct SDL_Surface;
