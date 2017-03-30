@@ -29,8 +29,8 @@ Index
 
 
 <h1 id="UI_D_D"> UI-Data driven. </h1>
-<p>Download the source code <a href="">here</a> with the solution folder and the TODO's folder.</p>
-<p>Download the release solution <a href="">here</a>.</p>
+<p>Download the source code <a href="https://github.com/GUI-Research/GUI_Research/archive/D_D_UI_v0.1.1.zip">here</a> with the solution folder and the TODO's folder.</p>
+<p>Download the release solution <a href="https://github.com/GUI-Research/GUI_Research/releases/download/D_D_UI_v0.1.1/Game_Release_v0.1.zip">here</a>.</p>
 
 <h2 id="UI_D_D_Intro">Data driven UI introduction</h2>
 <p>First things first. This is a simple UI project to teach the basis of what is a data driven UI</p>
