@@ -1,5 +1,6 @@
 # GUI_Research
 
+<p>Visit counts</p>
 <script type="text/javascript" src="https://counter8.fcs.ovh/private/counter.js?c=36bs8mbcn7pedcxy6tmq539nqd96xnu6"></script>
 <noscript><a href="https://www.freecounterstat.com" title="website counter"><img src="https://counter8.fcs.ovh/private/freecounterstat.php?c=36bs8mbcn7pedcxy6tmq539nqd96xnu6" border="0" title="website counter" alt="website counter"></a></noscript>
 
