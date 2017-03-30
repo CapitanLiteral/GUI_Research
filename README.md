@@ -167,7 +167,7 @@ void GUILabel::Deserialize(pugi::xml_node layout_element)
 	std::string txt = layout_element.attribute("text").as_string();
 	label_size size = (label_size)layout_element.attribute("size").as_int();
 	SetText(txt.c_str(), size);
-	GB_Rectangle<int> rect;
+	GB_Rectangle<&zwj;int> rect;
 	rect.x = layout_element.child("position").attribute("x").as_int();
 	rect.y = layout_element.child("position").attribute("y").as_int();
 	SetGlobalPos(rect.x, rect.y);
