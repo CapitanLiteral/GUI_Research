@@ -141,7 +141,6 @@ void GUILabel::Serialize(pugi::xml_node root)
 	pugi::xml_node position;
 	pugi::xml_node size;
 	pugi::xml_node element;
-
 	element = root.append_child("label");
 	//Create atributes in label
 	atr = element.append_attribute("size");
@@ -157,10 +156,25 @@ void GUILabel::Serialize(pugi::xml_node root)
 	atr.set_value(GetLocalRect().x);
 	atr = position.append_attribute("y");
 	atr.set_value(GetLocalRect().y);
-
 }
 			</code>
 		</pre>
+		<p>This is a label deserialization method</p>
+		<pre>
+			<code class="cpp">
+void GUILabel::Deserialize(pugi::xml_node layout_element)
+{
+	std::string txt = layout_element.attribute("text").as_string();
+	label_size size = (label_size)layout_element.attribute("size").as_int();
+	SetText(txt.c_str(), size);
+	GB_Rectangle<int> rect;
+	rect.x = layout_element.child("position").attribute("x").as_int();
+	rect.y = layout_element.child("position").attribute("y").as_int();
+	SetGlobalPos(rect.x, rect.y);
+}
+			</code>
+		</pre>
+		<p>From here calling this methods inside the Load and Save methods of M_Gui we can save and load our UI</p>
 	</li>
 	<li>
 		<p>Once we get this done, our UI will load and save the data.</p>
@@ -168,7 +182,22 @@ void GUILabel::Serialize(pugi::xml_node root)
 	</li>
 	<li>
 		<p>We dont want a UI that does nothig, we want some nice features right?</p>
-		<p>To make this possible we need events.</p>
+		<p>To make this possible we need events. Steps below.</p>
+		<ul> 
+			<li>Create a new event inside "gui_events", a enum inside the file "GUIElement.h" this event will be a event to extend features, like "CLOSE_APP" that closes the app.</li>
+			<li>Next thing will be to put the handle of the event inside the listeners. We have an example on "M_Window::GUIEvent(GUIElement * element, int64_t event)"</li>
+			<pre>
+			<code class="cpp">
+void M_Window::GuiEvent(GUIElement * element, int64_t event)
+{
+	if (event & MOUSE_LCLICK_UP)
+		if (event & CLOSE_APP)
+			app->quit = true;
+}
+			</code>
+		</pre>
+		</ul>
+
 	</li>
 	<li></li>
 </ol>
