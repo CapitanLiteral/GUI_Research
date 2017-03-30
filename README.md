@@ -369,6 +369,7 @@ In the methods for modifying the position we’ll change only the position of dr
 Insert in the map the pair of event and animation you recieve. Remeber before inserting check if that event has already been added, if it has replace the animation set before for the new one.
 </p>
 ```
+
 std::map<gui_events, staticAnim_or_transition>::iterator it = transAndAnimations.find(eventToReact);
 	if (it != transAndAnimations.end())
 	{
