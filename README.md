@@ -1,9 +1,20 @@
 # GUI_Research
-<h1> UI-Data drive. </h1>
+
+Index
+<ul>
+<li> <a href="#UI_D_D">UI-Data driven. </a></li>
+<li><a href="#UI_A_T">UI-Animations and transitions.</a></li>
+</ul>
+
+
+<h1 name="UI_D_D"> UI-Data driven. </h1>
+<p><a href="">Download the source code here with the solution folder and the TODO's folder.</a></p>
+<p><a href="">Download the release solution here.</a></p>
+
 
 <hr>
 
-<h1>UI-Animations and transitions.</h1>
+<h1 name="UI_A_T">UI-Animations and transitions.</h1>
 
 //TODO: Add the links when branch created
 <p><a href="">Download the source code here with the solution folder and the TODO's folder.</a></p>
