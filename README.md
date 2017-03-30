@@ -14,14 +14,14 @@ Index
 </ol>
 <li><a href="#UI_A_T">UI-Animations and transitions.</a></li>
 <ol>
-<li> <a href="UI_A_T_Intro">Introduction</a></li>
-<li> <a href="UI_A_T_SvsT">Static animations vs. transitions</a></li>
-<li> <a href="UI_A_T_IntroSys">Introduction to the system</a></li>
-<li> <a href="UI_A_T_Goal">Goal</a></li>
-<li> <a href="UI_A_T_Start">Let's start</a></li>
-<li> <a href="UI_A_T_aboutMethods">About methods</a></li>
-<li> <a href="UI_A_T_bezier">Bezier curve</a></li>
-<li> <a href="UI_A_T_Todos">Let's do some work!!! TODOs</a></li>
+<li> <a href="#UI_A_T_Intro">Introduction</a></li>
+<li> <a href="#UI_A_T_SvsT">Static animations vs. transitions</a></li>
+<li> <a href="#UI_A_T_IntroSys">Introduction to the system</a></li>
+<li> <a href="#UI_A_T_Goal">Goal</a></li>
+<li> <a href="#UI_A_T_Start">Let's start</a></li>
+<li> <a href="#UI_A_T_aboutMethods">About methods</a></li>
+<li> <a href="#UI_A_T_bezier">Bezier curve</a></li>
+<li> <a href="#UI_A_T_Todos">Let's do some work!!! TODOs</a></li>
 </ol>
 </ul>
 
