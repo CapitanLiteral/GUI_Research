@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\App.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\Bezier.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\Defs.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\GB_Rectangle.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\GUIAutoLabel.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\GUIButton.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\GUIElement.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\GUIImage.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\GUILabel.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\j1PerfTimer.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\j1Timer.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\Log.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\Main.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Audio.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\M_FileSystem.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Fonts.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\M_GUI.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Input.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Render.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Scene.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Textures.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Window.cpp" />
+    <ClCompile Include="..\..\GUI_Research TODO%27s\GUI_Research\PugiXml\src\pugixml.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\App.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\Bezier.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\Defs.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\GB_Rectangle.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\GUIAutoLabel.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\GUIButton.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\GUIElement.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\GUIImage.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\GUILabel.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\j1PerfTimer.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\j1Timer.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\Log.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\Module.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Audio.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\M_FileSystem.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Fonts.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\M_GUI.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Input.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Render.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Scene.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Textures.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\M_Window.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\p2Point.h" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\PugiXml\src\pugiconfig.hpp" />
+    <ClInclude Include="..\..\GUI_Research TODO%27s\GUI_Research\PugiXml\src\pugixml.hpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{280DC136-0B0C-4D98-B45D-52D39C639204}</ProjectGuid>
+    <RootNamespace>GUI_Research</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Game/</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Game_Release/</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
