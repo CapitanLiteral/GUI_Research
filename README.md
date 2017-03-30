@@ -44,48 +44,104 @@ to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NE
 <h2 id="UI_D_D_How">How do we achieve this?</h2>
 <p>Followhing this simple steps</p>
 <ol>
-<li>
-<p>Decide a xml organization, how do we save things in there and which data is important to save and which not.</p>
-<p>I divided the XML in two parts, the fisrt one is for "presets", the presets are templates to load. For example
-you want to make a button. You must define:</p>
-<ul> 
-<li>The "Type" that is something like the name of the template.</li>
-<li>If the button has animations.</li>
-<li>And which sections the button will take from the atlas</li>
-</ul>
-Here goes an example of a button template
-<pre><code class="xml">
-<&zwj;button type_name="button" have_animations="0">
-	<&zwj;sections>
-		<&zwj;section type="standBy" x="0" y="110" w="230" h="71" />
-		<&zwj;section type="hover" x="411" y="166" w="230" h="71" />
-		<&zwj;section type="clicked" x="642" y="166" w="230" h="71" />
-	<&zwj;/sections>
-<&zwj;/button>
-</code>
-</pre>
-Here goes an example of an image template
-<pre><code class="xml">
-<&zwj;img type_name="space_ship" have_animations="0">
-	<&zwj;section type="standBy" x="485" y="829" w="328" h="103" />
-<&zwj;/img>
-
-</code>
-</pre>
-</li>
-<li>
-<p>When we finish the xml, we must define how UI items will read and write its data.</p>
-<p>Example here, a basic example, not a copy paste...</p>
-</li>
-<li>
-<p>Once we get this done, our UI will load and save the data.</p>
-<p>Congratulations, now you have a UI loaded, but... does nothing.</p>
-</li>
-<li>
-<p>We dont want a UI that does nothig, we want some nice features right?</p>
-<p>To make this possible we need events.</p>
-</li>
-<li></li>
+	<li>
+		<p>Decide a xml organization, how do we save things in there and which data is important to save and which not.</p>
+		<p>I divided the XML in two parts, the fisrt one is for "presets", the presets are templates to load. For example
+		you want to make a button. You must define:</p>
+		<ul> 
+			<li>The "Type" that is something like the name of the template.</li>
+			<li>If the button has animations.</li>
+			<li>And which sections the button will take from the atlas</li>
+		</ul>
+		Here goes an example of a button template
+		<pre>
+			<code class="xml">
+			<&zwj;button type_name="button" have_animations="0">
+				<&zwj;sections>
+					<&zwj;section type="standBy" x="0" y="110" w="230" h="71" />
+					<&zwj;section type="hover" x="411" y="166" w="230" h="71" />
+					<&zwj;section type="clicked" x="642" y="166" w="230" h="71" />
+				<&zwj;/sections>
+			<&zwj;/button>
+			</code>
+		</pre>
+		Here goes an example of an image template
+		<pre>
+			<code class="xml">
+			<&zwj;img type_name="space_ship" have_animations="0">
+				<&zwj;section type="standBy" x="485" y="829" w="328" h="103" />
+			<&zwj;/img>
+			</code>
+		</pre>
+		<p>Templates are done, so go to make some layout elements</p>
+		<p>To display a button we need to create it first into the layout node of the xml like this:</p>
+		<ul> 
+			<li>The "Type" refers to the template, its needed to create the button to choose a template</li>
+			<li>Then, put a name, the name is a unique identifier for the button so make sure that is UNIQUE!!</li>
+			<li>The text that wue want to display inside the button, its optional</li>
+			<li>Position and Size talk for himself, they are needed to diplay the button in a specific position and size in the screen</li>
+		</ul>
+		Here goes a button example
+		<pre>
+			<code class="xml">
+				<&zwj;button type="button" name="btn2" text="btn2">
+					<&zwj;position x="33" y="107" />
+					<&zwj;size w="200" h="100" />
+				<&zwj;/button>
+			</code>
+		</pre>
+		And here an image example, its basically the same as the button but without text
+		<pre>
+			<code class="xml">
+				<&zwj;img type="window" name="image_test_animation_transition1">
+					<&zwj;position x="160" y="452" />
+					<&zwj;size w="484" h="512" />
+				<&zwj;/img>
+			</code>
+		</pre>
+		<p>Now lets put some sause here, create a button with some specific event, this is needed to interact with our App</p>
+		<p>We added some new things to the button, lets see them:</p>
+		<ul> 
+			<li>
+			We added events, for each event that we want to assign we must put the following
+				<ul> 
+					<li>"action" to tell wich event we want to make it happen, something like close the App, open a Menu and this kind of things.</li>
+					<li>"origin" to tell when action will happen, onMouseClickUp, onMouseClickDown, etc.</li>
+				</ul>
+			<p>In the action and origin properties we must put de int value of the "enum" inside the code.</p>
+			<p> This could be enchanced with a good event system wich handles events in a different way</p>
+			</li>
+			<li>Now add the listeners, wich modules will listen the upper events, here just add the module names you can have more than one listener</li>
+		</ul>
+		<p>Here the example of a button to close the App</p>
+		<pre>
+			<code class="xml">
+				<&zwj;button type="button" name="quit" text="Quit">
+					<&zwj;events>
+						<&zwj;event action="32768" origin="16" />
+					<&zwj;/events>
+					<&zwj;listeners>
+						<&zwj;event name="window" />
+					<&zwj;/listeners>
+					<&zwj;position x="1816" y="4" />
+					<&zwj;size w="100" h="100" />
+				<&zwj;/button>
+			</code>
+		</pre>
+	</li>
+	<li>
+		<p>When we finish the xml, we must define how UI items will read and write its data.</p>
+		<p>Example here, a basic example, not a copy paste...</p>
+	</li>
+	<li>
+		<p>Once we get this done, our UI will load and save the data.</p>
+		<p>Congratulations, now you have a UI loaded, but... does nothing.</p>
+	</li>
+	<li>
+		<p>We dont want a UI that does nothig, we want some nice features right?</p>
+		<p>To make this possible we need events.</p>
+	</li>
+	<li></li>
 </ol>
 
 
