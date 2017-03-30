@@ -6,7 +6,8 @@ Index
 <ol>
 <li> <a href="#UI_D_D_Intro">Intro </a></li>
 <li> <a href="#UI_D_D_UML">UML </a></li>
-<li> <a href="#UI_D_D_Explanation">Explanation</a></li>
+<li> <a href="#UI_D_D_Explanation">Explanation</a></li>UI_D_D_How
+<li> <a href="#UI_D_D_How">How do we achieve this?</a></li>
 </ol>
 <li><a href="#UI_A_T">UI-Animations and transitions.</a></li>
 </ul>
@@ -37,8 +38,27 @@ You should implement a good event handler too. This should make things much more
 <p>For us, moving around data means that our UI its gonna be based on a permanent data stored in the hard disk. This will allow us<br/>
 to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NEED TO RECOMPILE AGAIN AND AGAIN EACH TIME YOU MAKE A CHANGE</b>, yeah, its something to celebrate.</p>
 
-
-
+<h2 id="UI_D_D_How">How do we achieve this?</h2>
+<p>Followhing this simple steps</p>
+<ol>
+<li>
+<p>Decide a xml organization, how do we save things in there and which data is important to save and which not.</p>
+<p>Example here</p>
+</li>
+<li>
+<p>When we finish the xml, we must define how UI items will read and write its data.</p>
+<p>Example here, a basic example, not a copy paste...</p>
+</li>
+<li>
+<p>Once we get this done, our UI will load and save the data.</p>
+<p>Congratulations, now you have a UI loaded, but... does nothing.</p>
+</li>
+<li>
+<p>We dont want a UI that does nothig, we want some nice features right?</p>
+<p>To make this possible we need events.</p>
+</li>
+<li></li>
+</ol>
 
 
 
