@@ -31,11 +31,11 @@ You should implement a good event handler too. This should make things much more
 
 <h2 id="UI_D_D_Explanation">Explanation</h2>
 <p>Now we know what this project has, so lets get into the sauce and learn what a Data driven system is.</p>
-<p>A data driven system its a system that moves around data. 
-<b>Which data?</b>
-Any data.
-For us, moving around data means that our UI its gonna be based on a permanent data stored in the hard disk. This will allow us
-to load te UI layout without coding it inside our project. <b>YOU DONT NEED TO RECOMPILE AGAIN AND AGAIN EACH TIME YOU MAKE A CHANGE</b>, yeah, its something to celebrate.
+<p>A data driven system its a system that moves around data. <br/>
+<b>Which data?</b><br/>
+Any data.<br/>
+For us, moving around data means that our UI its gonna be based on a permanent data stored in the hard disk. This will allow us<br/>
+to load te UI layout without coding it inside our project. <br/><b>YOU DONT NEED TO RECOMPILE AGAIN AND AGAIN EACH TIME YOU MAKE A CHANGE</b>, yeah, its something to celebrate.
 </p>
 
 
