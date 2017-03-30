@@ -46,6 +46,15 @@ to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NE
 <ol>
 <li>
 <p>Decide a xml organization, how do we save things in there and which data is important to save and which not.</p>
+<p>I divided the XML in two parts, the fisrt one is for "presets", the presets are templates to load. For example
+you want to make a button. You must define:
+<ul> 
+<li>The "Type" that is something like the name of the template.</li>
+<li>If the button has animations.</li>
+<li>And which sections the button will take from the atlas</li>
+</ul>
+</p>
+Here goes an example of a button template
 <pre><code class="xml">
 <&zwj;button type_name="button" have_animations="0">
 	<&zwj;sections>
