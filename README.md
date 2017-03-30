@@ -14,17 +14,17 @@ Index
 </ol>
 <li><a href="#UI_A_T">UI-Animations and transitions.</a></li>
 <ol>
-<li> <a href="UI_A_T_Intro">Introduction</a><li>
-<li> <a href="UI_A_T_SvsT">Static animations vs. transitions</a><li>
-<li> <a href="UI_A_T_IntroSys">Introduction to the system</a><li>
-<li> <a href="UI_A_T_Goal">Goal</a><li>
-<li> <a href="UI_A_T_Start">Let's start</a><li>
-<li> <a href="UI_A_T_aboutMethods">About methods</a><li>
-<li> <a href="UI_A_T_transparency">Transparency</a><li>
-<li> <a href="UI_A_T_position">Position</a><li>
-<li> <a href="UI_A_T_size">Size</a><li>
-<li> <a href="UI_A_T_bezier">Bezier curve</a><li>
-<li> <a href="UI_A_T_Todos">Let's do some work!!! TODOs</a><li>
+<li> <a href="UI_A_T_Intro">Introduction</a></li>
+<li> <a href="UI_A_T_SvsT">Static animations vs. transitions</a></li>
+<li> <a href="UI_A_T_IntroSys">Introduction to the system</a></li>
+<li> <a href="UI_A_T_Goal">Goal</a></li>
+<li> <a href="UI_A_T_Start">Let's start</a></li>
+<li> <a href="UI_A_T_aboutMethods">About methods</a></li>
+<li> <a href="UI_A_T_transparency">Transparency</a></li>
+<li> <a href="UI_A_T_position">Position</a></li>
+<li> <a href="UI_A_T_size">Size</a></li>
+<li> <a href="UI_A_T_bezier">Bezier curve</a></li>
+<li> <a href="UI_A_T_Todos">Let's do some work!!! TODOs</a></li>
 </ol>
 </ul>
 
@@ -213,18 +213,11 @@ void M_Window::GuiEvent(GUIElement * element, int64_t event)
 			</code>
 		</pre>
 		</ul>
+
 	</li>
+	<li></li>
 </ol>
-<h2 id="UI_D_D_Try">Try it for yourself!</h2>
-<ol>
-	<li>Create a new button template inside the "data/gui/gui.xml" using "data/gui/atlas2.png"<br/>
-	You could use the arrows in the atlas for example, get sprite postions from <a href="http://www.spritecow.com/">here</a></li>
-	<li>Create a button inside the layout, and give it a position and a size. Dont need to be really precise with the position because you can enable UI editor pressing "F2" and then save it pressing the number "2"</li>
-	<li>Now go to "gui_events" and create a new event with the feature you want! But take care, the next step will be the implementation so dont pick something too hard.</li>
-	<li>Now just add the feature into the listeners you want to react to it</li>
-	<li>And the last one is to add the enum action, the origin event and the listeners to the button in the xml.</li>
-	<p>And that's all folks!</p>
-</ol>
+
 
 
 
