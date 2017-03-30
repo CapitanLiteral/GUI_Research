@@ -11,6 +11,7 @@ Index
 <li> <a href="#UI_D_D_UML">UML </a></li>
 <li> <a href="#UI_D_D_Explanation">Explanation</a></li>
 <li> <a href="#UI_D_D_How">How do we achieve this?</a></li>
+<li> <a href="#UI_D_D_Try">Try it for yourself!</a></li>
 </ol>
 <li><a href="#UI_A_T">UI-Animations and transitions.</a></li>
 <ol>
@@ -222,10 +223,6 @@ void M_Window::GuiEvent(GUIElement * element, int64_t event)
 		<p>And that's all folks!</p>
 	</ol>
 </ol>
-
-
-
-
 
 <hr>
 
