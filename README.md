@@ -50,7 +50,7 @@ to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NE
 <ol>
 <li>
 <p>Decide a xml organization, how do we save things in there and which data is important to save and which not.</p>
-<pre><code class="xml">
+<pre><code class="xml hljs">
 <button type_name="button" have_animations="0">
 	<sections>
 		<section type="standBy" x="0" y="110" w="230" h="71" />
