@@ -614,10 +614,10 @@ void M_GUI::DrawDebug()
 			(*it)->Draw();
 	}
 
-	cBeizier->DrawBezierCurve(CB_EASE_INOUT_BACK, {800, 200});
-	cBeizier->DrawBezierCurve(CB_SLOW_MIDDLE, { 800, 200 });
-	cBeizier->DrawBezierCurve(CB_LINEAL, { 800, 200 });
-	cBeizier->DrawBezierCurve(CB_SHAKE, { 800, 200 });
+	//cBeizier->DrawBezierCurve(CB_EASE_INOUT_BACK, {800, 200});
+	//cBeizier->DrawBezierCurve(CB_SLOW_MIDDLE, { 800, 200 });
+	//cBeizier->DrawBezierCurve(CB_LINEAL, { 800, 200 });
+	//cBeizier->DrawBezierCurve(CB_SHAKE, { 800, 200 });
 }
 GUIElement * M_GUI::FindElement(std::list<GUIElement*> list, std::string name)
 {
