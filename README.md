@@ -20,13 +20,10 @@ Index
 <li> <a href="UI_A_T_Goal">Goal</a></li>
 <li> <a href="UI_A_T_Start">Let's start</a></li>
 <li> <a href="UI_A_T_aboutMethods">About methods</a></li>
-<li> <a href="UI_A_T_transparency">Transparency</a></li>
-<li> <a href="UI_A_T_position">Position</a></li>
-<li> <a href="UI_A_T_size">Size</a></li>
 <li> <a href="UI_A_T_bezier">Bezier curve</a></li>
 <li> <a href="UI_A_T_Todos">Let's do some work!!! TODOs</a></li>
 </ol>
-</ul>
+00</ul>
 
 
 <h1 id="UI_D_D"> UI-Data driven. </h1>
