@@ -69,7 +69,7 @@ to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NE
 <h1 id="UI_A_T">UI-Animations and transitions.</h1>
 
 //TODO: Add the links when branch created
-<p><a href="">Download the source code here with the solution folder and the TODO's folder.</a></p>
+<p><a href="https://github.com/GUI-Research/GUI_Research/tree/AnimationsAndTransitions-Research">Download the source code here with the solution folder and the TODO's folder.</a></p>
 <p><a href="">Download the release solution here.</a></p>
 
 <h2>Introduction.</h2>
