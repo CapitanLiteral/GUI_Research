@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="highlight/styles/default.css">
+<link rel="stylesheet" href="highlight/styles/agate.css">
 
 
 # GUI_Research
