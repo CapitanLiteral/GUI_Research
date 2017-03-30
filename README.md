@@ -363,8 +363,135 @@ In the methods for modifying the position we’ll change only the position of dr
 
 <a href="http://easings.net/es" > Function Easing with Bezier Curve </a>
 
+<h2>Let's do some work!!!</h2>
+<h3>TODO 1</h3>
+<p>
+Insert in the map the pair of event and animation you recieve. Remeber before inserting check if that event has already been added, if it has replace the animation set before for the new one.
+</p>
+```
+std::map<gui_events, staticAnim_or_transition>::iterator it = transAndAnimations.find(eventToReact);
+	if (it != transAndAnimations.end())
+	{
+	}
+	else
+	{
+		
+		this->eventsToReact = (gui_events)(this->eventsToReact | eventToReact);
+	}
+
+```
+
+<h3>TODO 2</h3>
+<p>Search in the map for the event recieved. If found get the animation linked and determine if its a transition or an animation using SAT_SEPARATOR, then set currentStaticAnimation or currentTransition. Also set doingAnimation or doingTransition to false.</p>
+<p>NOTE: The parameter recived is a int64_t but you can use it as a staticAnim_or_transition.</p>
+<p>On transition case we asume that all transitions are used to enable or disable the element so after setting the current transition check the active status of the element (status.active == true). If the element is active we want to disable it at the end of this transition so mark as true the mustDiable flag.
+</p>
+
+```
+if (this->eventsToReact & eventToReact)
+	{
+		std::map<gui_events, staticAnim_or_transition>::iterator it = transAndAnimations.end();
+		if (it != transAndAnimations.end())
+		{
+			staticAnim_or_transition tmp = it->second;
+			if (tmp < SAT_SEPARATOR)
+			{
+			}
+			else if (tmp > SAT_SEPARATOR)
+			{
+			}
+		}
+	}
+
+```
+
+<h3>TODO 3</h3>
+<p>Let's do the first transition, fade.</p>
+<p>If doingTransition is false it means it's the first time FadeT is called so we must set the starting variables. We must reset the timer and the transition time counter (currentTransTime), now doingTransition is true and if mustDisable is false it means we are using fade to move alpha from 0 to 255 so make sure the alpha is 0..</p>
+<p>If time is less than duration trnsition is still on so get the alpha variation using curves. Use a slow midle curve type. The vaule you get from the curve will be the alpha variation for this frame. After you get that variation you must clamp it from 0 to 1 (Check CLAMP01 define).</p>
+<p>If time is greater than the duration the transition is over so now set currentTransition to none and set active to false if needed.</p>
+```
+if (!doingTransition)
+	{
+	}
+
+	currentTransTime = transTimer.Read();
+
+	if (currentTransTime < transDuration)
+	{
+		float change_alpha = 0.0f;
+		alpha = 255 * ((mustDisable) ? (1 - change_alpha) : (change_alpha));
+	}
+	else
+	{
+		if (mustDisable)
+		{
+			status.active = false;
+			mustDisable = false;
+		}
+		return;
+	}
+
+```
+
+<h3>TODO 4</h3>
+<p>Let's do an animation using scales! The structure of the method is the same as fade but now will use curves a bit different.</p>
+<p>There are two iPoint variables called transOrigin and transDestination. Use them to set the goal of the transition and the origin. In this case the origin is the current scale stored in rect and the goal is to reduce it untill is 0 in Y direction. Store that information in those variables.</p>
+<p>If we are on an enable case swap origin and the goal.</p>
+<p>Set drawRect.h to transorigin.y + the value you get from the curve. Use GetActualPoint with a slow middle curve.</p>
+<p>Set drawRect.h to transorigin.y - the value you get from the curve. Use GetActualPoint with a slow middle curve.</p>
+
+```
+if (!doingTransition)
+	{
+		if (mustDisable)
+		{
+		}
+		else
+		{
+		}
+
+		transTimer.Start();
+		currentTransTime = 0;
+		doingTransition = true;
+	}
+
+	currentTransTime = transTimer.Read();
+
+	if (currentTransTime <= transDuration)
+	{
+		if (mustDisable)
+		{
+		}
+		else
+		{
+		}
+	}
+	else
+	...
+```
+
+<h3>TODO 5</h3>
+<p>Now an animation.</p>
+<p>Init vars.</p>
+<p>Update the time counter every frame (currentAnimeTime)</p>
+<p>Set drawRect.x to rect.x - 25 * the value you get from the curve. use a SHAKE curve.</p>
+<p>When the animation is over reset the drawRect position using the rect and make sure you left the currentAnimation variable to none.</p>
+
+```
+if (!doingAnimation)
+	{
+		animTime = 500;
+	}
 
 
+	if (currentAnimTim < animTime)
+	{
+	}
+	else
+	{
+	}
+```
 
 
 
