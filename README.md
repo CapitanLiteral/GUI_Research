@@ -1,3 +1,4 @@
+{% load static %}
 <link rel="stylesheet" href="highlight/styles/default.css">
 
 
