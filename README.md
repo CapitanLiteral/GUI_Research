@@ -7,14 +7,14 @@ Index
 </ul>
 
 
-<h1 name="UI_D_D"> UI-Data driven. </h1>
+<h1 id="UI_D_D"> UI-Data driven. </h1>
 <p><a href="">Download the source code here with the solution folder and the TODO's folder.</a></p>
 <p><a href="">Download the release solution here.</a></p>
 
 
 <hr>
 
-<h1 name="UI_A_T">UI-Animations and transitions.</h1>
+<h1 id="UI_A_T">UI-Animations and transitions.</h1>
 
 //TODO: Add the links when branch created
 <p><a href="">Download the source code here with the solution folder and the TODO's folder.</a></p>
