@@ -53,7 +53,6 @@ you want to make a button. You must define:</p>
 <li>If the button has animations.</li>
 <li>And which sections the button will take from the atlas</li>
 </ul>
-
 Here goes an example of a button template
 <pre><code class="xml">
 <&zwj;button type_name="button" have_animations="0">
@@ -63,6 +62,14 @@ Here goes an example of a button template
 		<&zwj;section type="clicked" x="642" y="166" w="230" h="71" />
 	<&zwj;/sections>
 <&zwj;/button>
+</code>
+</pre>
+Here goes an example of an image template
+<pre><code class="xml">
+<&zwj;img type_name="space_ship" have_animations="0">
+	<&zwj;section type="standBy" x="485" y="829" w="328" h="103" />
+<&zwj;/img>
+
 </code>
 </pre>
 </li>
