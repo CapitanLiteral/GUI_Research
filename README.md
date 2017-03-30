@@ -131,7 +131,36 @@ to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NE
 	</li>
 	<li>
 		<p>When we finish the xml, we must define how UI items will read and write its data.</p>
-		<p>Example here, a basic example, not a copy paste...</p>
+		<p>I assume you know how to use pugi xml, if not se the docs <a href="http://pugixml.org/">here</a></p>
+		<p>This is a label serialization method</p>
+		<pre>
+			<code class="cpp">
+void GUILabel::Serialize(pugi::xml_node root)
+{
+	pugi::xml_attribute atr;
+	pugi::xml_node position;
+	pugi::xml_node size;
+	pugi::xml_node element;
+
+	element = root.append_child("label");
+	//Create atributes in label
+	atr = element.append_attribute("size");
+	atr.set_value(GetLabelSize());
+	atr = element.append_attribute("name");
+	atr.set_value(GetName().c_str());
+	atr = element.append_attribute("text");
+	atr.set_value(GetText().c_str());
+	//Create node label/position
+	position = element.append_child("position");
+	//Create atributes in label/position
+	atr = position.append_attribute("x");
+	atr.set_value(GetLocalRect().x);
+	atr = position.append_attribute("y");
+	atr.set_value(GetLocalRect().y);
+
+}
+			</code>
+		</pre>
 	</li>
 	<li>
 		<p>Once we get this done, our UI will load and save the data.</p>
