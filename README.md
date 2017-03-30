@@ -40,8 +40,11 @@
 <h2>Goal.</h2>
 <p>This would be easily integrated with the UI data driven explained before by Capitan Literal so we encourage you to do it and save in an xml the animations you want for all elements.</p>
 <p>In order to add those animations and transitions in this guide we will start from the UI system done by Capitan Literal (link) and will modify the GUIElement class base for all the rest of UI classes such as Image, label, button, etc.</p>
-
-//TODO: Image of the result
+<p>If you execute the TODO's solution you will see these:</p>
+<img src="nonDebugImage.png"></img>
+<p>and if you press F1 to enter debug mode:</p>
+<img src="debugImage.png"></img>
+<p>but these gui elements do nothing. At the end of the guide all those elements will be animated as the text over each one says.</p>
 
 <h2>Let's start.</h2>
 <p>First of all we must define all the different animations and transitions we want to do. In order to store all this we will use an enum we call staticAnim_or_transition. We could define one enum for transitions and another one for static animations but we decided to join all in one to make it easier later:  </p>
