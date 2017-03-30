@@ -463,7 +463,8 @@ void GUIElement::SetOnMouseLeaves(gui_events _event)
 
 void GUIElement::AddAnimationOrTransition(gui_events eventToReact, staticAnim_or_transition animOrTransition)
 {
-	//TODO 1: Insert in the map the pair of event and animation you recieve. Remeber before inserting checking if that event has been already added, if it has replace the animatio set before for the new one.
+	//TODO 1: Insert in the map the pair of event and animation you recieve. Remeber before inserting check if that event has already been added, 
+	//if it has replace the animation set before for the new one.
 
 	std::map<gui_events, staticAnim_or_transition>::iterator it = transAndAnimations.find(eventToReact);
 	if (it != transAndAnimations.end())
