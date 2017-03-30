@@ -1,5 +1,3 @@
-<html>
-{% load static %}
 <link rel="stylesheet" href="highlight/styles/default.css">
 
 
@@ -512,5 +510,3 @@ if (!doingAnimation)
 	}
 ```
 
-
-</html>
