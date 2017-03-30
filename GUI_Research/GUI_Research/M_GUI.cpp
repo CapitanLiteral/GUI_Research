@@ -711,17 +711,31 @@ GUIButton * M_GUI::CreateButtonFromPreset(GB_Rectangle<int> _position, std::stri
 }
 GUILabel * M_GUI::CreateLabel(GB_Rectangle<int> _position, label_size _size, std::string name, const char* _text)
 {
-	GUILabel* label;
-	if (_text != nullptr)
+	GUILabel* ret = nullptr;
+
+	GUIElement* el = FindElement(guiList, name);
+	if (el == nullptr)
+		el = FindElement(debugGuiList, name);
+
+	if (el == nullptr)
 	{
-		label = new GUILabel(_text, _size, name);
+		if (_text != nullptr)
+		{
+			ret = new GUILabel(_text, _size, name);
+		}
+		else
+		{
+			ret = new GUILabel(name);
+		}
+		ret->SetGlobalPos(_position.x, _position.y);
 	}
 	else
 	{
-		label = new GUILabel(name);
+		ret = (GUILabel*)el;
+		if (_text != nullptr)
+			ret->SetText(_text, _size);
 	}
-	label->SetGlobalPos(_position.x, _position.y);
-	return label;
+	return ret;
 }
 GUIImage * M_GUI::CreateImage(GB_Rectangle<int> _position, GB_Rectangle<int> _section, std::string name)
 {
