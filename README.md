@@ -221,7 +221,7 @@ void M_Window::GuiEvent(GUIElement * element, int64_t event)
 		<li>Now go to "gui_events" and create a new event with the feature you want! But take care, the next step will be the implementation so dont pick something too hard.</li>
 		<li>Now just add the feature into the listeners you want to react to it</li>
 		<li>And the last one is to add the enum action, the origin event and the listeners to the button in the xml.</li>
-		<p>And that's all folks!</p>
+		<p>And that's all folks! made by <a href="https://github.com/CapitanLiteral">Capitan Literal</a></p>
 	</ol>
 </ol>
 
