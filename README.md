@@ -368,8 +368,8 @@ In the methods for modifying the position we’ll change only the position of dr
 <p>
 Insert in the map the pair of event and animation you recieve. Remeber before inserting check if that event has already been added, if it has replace the animation set before for the new one.
 </p>
-```
 
+```
 std::map<gui_events, staticAnim_or_transition>::iterator it = transAndAnimations.find(eventToReact);
 	if (it != transAndAnimations.end())
 	{
@@ -411,6 +411,7 @@ if (this->eventsToReact & eventToReact)
 <p>If doingTransition is false it means it's the first time FadeT is called so we must set the starting variables. We must reset the timer and the transition time counter (currentTransTime), now doingTransition is true and if mustDisable is false it means we are using fade to move alpha from 0 to 255 so make sure the alpha is 0..</p>
 <p>If time is less than duration trnsition is still on so get the alpha variation using curves. Use a slow midle curve type. The vaule you get from the curve will be the alpha variation for this frame. After you get that variation you must clamp it from 0 to 1 (Check CLAMP01 define).</p>
 <p>If time is greater than the duration the transition is over so now set currentTransition to none and set active to false if needed.</p>
+
 ```
 if (!doingTransition)
 	{
