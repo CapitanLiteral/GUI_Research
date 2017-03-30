@@ -41,9 +41,9 @@
 <p>This would be easily integrated with the UI data driven explained before by Capitan Literal so we encourage you to do it and save in an xml the animations you want for all elements.</p>
 <p>In order to add those animations and transitions in this guide we will start from the UI system done by Capitan Literal (link) and will modify the GUIElement class base for all the rest of UI classes such as Image, label, button, etc.</p>
 <p>If you execute the TODO's solution you will see these:</p>
-<img src="nonDebugImage.png"></img>
+<img src="nonDebugImage.png"/>
 <p>and if you press F1 to enter debug mode:</p>
-<img src="debugImage.png"></img>
+<img src="debugImage.png"/>
 <p>but these gui elements do nothing. At the end of the guide all those elements will be animated as the text over each one says.</p>
 
 <h2>Let's start.</h2>
