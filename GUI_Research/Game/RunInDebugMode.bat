@@ -1,1 +1,1 @@
-"GangBug AoE.exe" -debug
+GUI_Research.exe -debug
