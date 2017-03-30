@@ -56,21 +56,21 @@ to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NE
 		Here goes an example of a button template
 		<pre>
 			<code class="xml">
-			<&zwj;button type_name="button" have_animations="0">
-				<&zwj;sections>
-					<&zwj;section type="standBy" x="0" y="110" w="230" h="71" />
-					<&zwj;section type="hover" x="411" y="166" w="230" h="71" />
-					<&zwj;section type="clicked" x="642" y="166" w="230" h="71" />
-				<&zwj;/sections>
-			<&zwj;/button>
+<&zwj;button type_name="button" have_animations="0">
+	<&zwj;sections>
+		<&zwj;section type="standBy" x="0" y="110" w="230" h="71" />
+		<&zwj;section type="hover" x="411" y="166" w="230" h="71" />
+		<&zwj;section type="clicked" x="642" y="166" w="230" h="71" />
+	<&zwj;/sections>
+<&zwj;/button>
 			</code>
 		</pre>
 		Here goes an example of an image template
 		<pre>
 			<code class="xml">
-			<&zwj;img type_name="space_ship" have_animations="0">
-				<&zwj;section type="standBy" x="485" y="829" w="328" h="103" />
-			<&zwj;/img>
+<&zwj;img type_name="space_ship" have_animations="0">
+	<&zwj;section type="standBy" x="485" y="829" w="328" h="103" />
+<&zwj;/img>
 			</code>
 		</pre>
 		<p>Templates are done, so go to make some layout elements</p>
@@ -84,19 +84,19 @@ to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NE
 		Here goes a button example
 		<pre>
 			<code class="xml">
-				<&zwj;button type="button" name="btn2" text="btn2">
-					<&zwj;position x="33" y="107" />
-					<&zwj;size w="200" h="100" />
-				<&zwj;/button>
+<&zwj;button type="button" name="btn2" text="btn2">
+	<&zwj;position x="33" y="107" />
+	<&zwj;size w="200" h="100" />
+<&zwj;/button>
 			</code>
 		</pre>
 		And here an image example, its basically the same as the button but without text
 		<pre>
 			<code class="xml">
-				<&zwj;img type="window" name="image_test_animation_transition1">
-					<&zwj;position x="160" y="452" />
-					<&zwj;size w="484" h="512" />
-				<&zwj;/img>
+<&zwj;img type="window" name="image_test_animation_transition1">
+	<&zwj;position x="160" y="452" />
+	<&zwj;size w="484" h="512" />
+<&zwj;/img>
 			</code>
 		</pre>
 		<p>Now lets put some sause here, create a button with some specific event, this is needed to interact with our App</p>
@@ -116,16 +116,16 @@ to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NE
 		<p>Here the example of a button to close the App</p>
 		<pre>
 			<code class="xml">
-				<&zwj;button type="button" name="quit" text="Quit">
-					<&zwj;events>
-						<&zwj;event action="32768" origin="16" />
-					<&zwj;/events>
-					<&zwj;listeners>
-						<&zwj;event name="window" />
-					<&zwj;/listeners>
-					<&zwj;position x="1816" y="4" />
-					<&zwj;size w="100" h="100" />
-				<&zwj;/button>
+<&zwj;button type="button" name="quit" text="Quit">
+	<&zwj;events>
+		<&zwj;event action="32768" origin="16" />
+	<&zwj;/events>
+	<&zwj;listeners>
+		<&zwj;event name="window" />
+	<&zwj;/listeners>
+	<&zwj;position x="1816" y="4" />
+	<&zwj;size w="100" h="100" />
+<&zwj;/button>
 			</code>
 		</pre>
 	</li>
