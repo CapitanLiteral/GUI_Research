@@ -285,6 +285,83 @@ if (currentTransition != SAT_NONE)
 
 <p>Here we will explain how we have done some animations and transitions but take into account that you can adapt the number of animations and transitions to your needs.</p>
 
+<h2>About Methods.</h2>
+
+<p>All methods are different in the core of its functions but share a similar structure, the start and end of the animation or transition. The common part is related to the initialization where we set up the variables needed to allow the effect.
+</p>
+
+<p>At the begging of the method that we’ll define we initialize variables. Think of what does it need to reproduce one animation and what can happen if another method is called while the current isn’t over, at the same time. Remember that you can reproduce one animation and one transition at the same time but not two animations nor transitions. To solve that problem we have defined two Boolean bars inside GUI Element, doingAnimation and doingTransition which will be used to check the current state of the element. 
+</p>
+
+<p>We only want to start the animation if the bool doingAnimation is false, and if it’s the case we’ll initialize those vars: timer (start), reset currentAnimTime or currentTransTime and switch bool to true.</p>
+
+<p>Once the initial variables are set, the animation will start. If the animation is running, the current time will be needed so we read it from timer with Timer.read(). Since every animation have a duration, there will be to options, one if the current time is higher than the animTime and two if it’s less than it.
+If it’s less means that the animation is running and we have to modify the values to reproduce the expected effect. If it’s not is time to set off the animation and reset vars to original value, as we told you before be careful with currentStaticAnimatin and currentTransition or the method will be called every frame. </p>
+
+<p>The next step is defining the core functionality that will reproduce the animation. As mentioned previously, the methods in question are very similar to each other, the only suitable difference is in the parameters of the element to modify and how to modify them.
+</p>
+
+<p>If you take an overview of most used effects, you’ll be able to deduce similar behaviors between most items. The characteristics of the element that they change are mostly three of them: transparency, position and size. </p>
+
+<p>Now it’s time to know how to create this methods. First of all an advice, when you enable or disable one element they can have the same transition but not the same effect. For example the path used to move an element in and out of the screen are the same but with inverse values. The bool mustDisable will be used to know which event is called, if enable or disable and will let us swap the origin and destiny of the transition. </p>
+
+<p>The structure of the code to implement on each method will be slightly different according to the characteristics you want to modify and how you want to modify them.
+</p>
+
+<h3>Transparency</h3>
+
+<p>Let’s start by changing the visibility of an element. A well-known example of this kind of effect is the Fade, similar to Fade To Black function where you reduce or increase the alpha value of the texture from 0 to 255 or inverse before rendering. This provides an effect of transparency in the element and makes a smooth transition from seen to unseen or the other way, remember mustDisable.</p>
+
+<p>How can you make this type of effect using the code we told you before? At first you will see that we stored a variable Int called alpha in the base element, so the core of the function will be focused on changing its value as you want, remember it have 0 as minim value and 255 as maxim, unseen/seen, you should use the duration of the transition animTime and the current time too. This alpha will be send to a previously modified Blit where it might change the alpha of a texture with SDL_SetAlphaMod(), only if needed. </p>
+
+<p>Depending on the method you want to implement, you can do intervals where you reduce or increase the alpha with constant increments or reduction. In the end we’ll explain an easy way to make complex increments or decrements of values without hard code.
+ </p>
+
+<img src="Fade.gif" align="middle"/>
+
+<h3>Position</h3>
+
+<p>Finally we change the position of the element, is staging elements like an object that enters one side of the screen and stood in sight of the user. In this case you have to be careful when initializing variables and add a conditional transition to whether the item get out or in the stage. By swapping the positions of origin and destination as the transition and taking into account the size of the element will be enough to make the transition correct entry and exit. 
+
+In the methods for modifying the position we’ll change only the position of drawRect.
+</p>
+
+<img src="moveUp.gif" align="middle"/>
+
+<h3>Size</h3>
+
+<p>The second characteristic we’ll modify is the size of the elements. In methods focused on resizing the objective is to re size the area where the texture will be printed. To do that we created a new variable SDL_Rect called drawRect which is the modified rect where we Blit the texture of its original rect. The names used by the two rectangles are: rect and drawRect, also remember the mustDisable. </p>
+
+<p>Leaving the job of painting to the function Blit, the animation method will only change drawRect. Changing the size drawRect will be performed in various methods that want to scale something. An example of methods that expand or reduce the area where are painted are: drop, slide and scale. </p>
+
+<img src="Slide.gif" align="middle"/>
+
+<h2>Bezier Curve</h2>
+
+<p>So.. that’s all? Fifty-fifty. The methodology we use to change the value of these variables is what allows us to create some animation or transition effects that add value to the interface and allow a better interaction with users.
+</p>
+
+<p>Most of these modifications of characteristics have minimum and maximum values ​​that limit the reproduction of the effect like the origin and destination of a transition of movement, or the alpha from Fade. The value change of the display element oscillate between the minimum and maximum value but may be increased or reduced in many ways. The option explained here uses the beizier curves. Bezier curves are created from interpolation of points called pivots. In Cbezier.h and file .cpp we created few methods that can be used from the pointer Beiz at GUI module which give you access to the values of the curves and let you use them as increments or decrements of variables. With use of bezier curves we can manipulate smoothly the variables we want to set and do almost every effect we want. </p>
+
+<p>In the modified methods One of the goals is to use smooth transitions to prevent the sudden appearance of elements in the middle of the screen and bother users. Therefore, even if you want to use constant increments of the value, we recommend you to use these curves.
+</p>
+
+<img src="http://learn.scannerlicker.net/wp-content/uploads/2014/04/bezier0011.png"/>
+
+<p>Accessing the pointer Beiz saved in the GUI and calling the method GetActualX() give us the float value of the actual time according to the curve used. The value returned uses the scale of the curve within (0,0) as origin and the destiny at (1,1), the actual X might be higher or lower than those values. The function GetActualX picks the animation time, the curren time and the type of Bezier curve, check the enum CBEZIER_TYPE inside bezier.h and returns the actual value in the Bezier curve timeline. Please note that this value is on the scale of the curve of the transition not the one we want for the animation. Multiplying this value by the maximum distance or the value for the variable to obtain the desired value. In some cases such as changes in the alpha we must set limits, 0 and 1, in cases such as transitions the value may be greater or smaller than limits. 
+</p>
+
+<p> Bezier interpolation stores 100 floats in a vector and give back the float stored int the current time related to the bezier curve time-line. You can define new curves by adding it to the enum, defining a vector of floats and updating the switch in the .cpp. To set the values of the curve we enter a vector of pivots into the method Bezier (std:: vector<fpoints/> pivots, CB_type enum, int destination). For cubic interpolation we set two pivots and it will take the origin and destination by itself.</p>
+
+<p>Advice: from cubic interpolation on we only used an approximation by adding pivots and adding cubic interpolations. 
+</p>
+
+<p>Here you have a link to function easing that shows the behavior of multiple bezier curves and a cubic pivot calculator.
+</p>
+
+<a href="http://cubic-bezier.com/#.17,.67,.83,.67"> Cubic Bezier Pivots  (Take a look) </a>
+
+<a href="http://easings.net/es" > Function Easing with Bezier Curve </a>
 
 
 
