@@ -228,8 +228,8 @@ void M_Window::GuiEvent(GUIElement * element, int64_t event)
 
 <h1 id="UI_A_T">UI-Animations and transitions.</h1>
 
-<p><a href="https://github.com/GUI-Research/GUI_Research/releases/tag/A%26T-Handout">Download the source code here with the solution folder and the TODO's folder.</a></p>
-<p><a href="https://github.com/GUI-Research/GUI_Research/releases/tag/A%26T_1.0v">Download the release solution here.</a></p>
+<p>Download the source code <a href="https://github.com/GUI-Research/GUI_Research/releases/tag/A%26T-Handout">here</a> with the solution folder and the TODO's folder.</p>
+<p>Download the release solution <a href="https://github.com/GUI-Research/GUI_Research/releases/tag/A%26T_1.0v">here.</a></p>
 
 <h2 id="UI_A_T_Intro">Introduction.</h2>
 <p>Hi there, we are Pere Rifà and Josep Casanovas, two students at CITM currently at second grade on Game development. During our project 2 subject we amust develop a solution to a given development problem or feature. In our case we had to create a system to provide animations and transitions to UI. Before we start we must thank <a href="https://github.com/CapitanLiteral">Capitan Literal</a> who programmed the UI system we will use as base project.</p>
