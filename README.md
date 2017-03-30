@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="/path/to/styles/default.css">
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 # GUI_Research
 
 Index
@@ -6,7 +10,7 @@ Index
 <ol>
 <li> <a href="#UI_D_D_Intro">Intro </a></li>
 <li> <a href="#UI_D_D_UML">UML </a></li>
-<li> <a href="#UI_D_D_Explanation">Explanation</a></li>UI_D_D_How
+<li> <a href="#UI_D_D_Explanation">Explanation</a></li>
 <li> <a href="#UI_D_D_How">How do we achieve this?</a></li>
 </ol>
 <li><a href="#UI_A_T">UI-Animations and transitions.</a></li>
@@ -35,14 +39,23 @@ You should implement a good event handler too. This should make things much more
 <p>A data driven system its a system that moves around data.</p>
 <p><b>Which data?</b></p>
 <p>Any data.</p>
-<p>For us, moving around data means that our UI its gonna be based on a permanent data stored in the hard disk. This will allow us<br/>
-to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NEED TO RECOMPILE AGAIN AND AGAIN EACH TIME YOU MAKE A CHANGE</b>, yeah, its something to celebrate.</p>
+<p>For us, moving around data means that our UI its gonna be based on a permanent data stored in the hard disk. This will allow us
+to load te UI layout without coding it inside our project. </p><p><b>YOU DONT NEED TO RECOMPILE AGAIN AND AGAIN EACH TIME YOU MAKE A CHANGE</b>. Yeah, its something to celebrate.</p>
 
 <h2 id="UI_D_D_How">How do we achieve this?</h2>
 <p>Followhing this simple steps</p>
 <ol>
 <li>
 <p>Decide a xml organization, how do we save things in there and which data is important to save and which not.</p>
+<pre><code class="xml">
+<button type_name="button" have_animations="0">
+				<sections>
+					<section type="standBy" x="0" y="110" w="230" h="71" />
+					<section type="hover" x="411" y="166" w="230" h="71" />
+					<section type="clicked" x="642" y="166" w="230" h="71" />
+				</sections>
+			</button>
+</code></pre>
 <p>Example here</p>
 </li>
 <li>
