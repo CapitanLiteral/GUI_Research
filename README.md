@@ -257,7 +257,7 @@ void M_Window::GuiEvent(GUIElement * element, int64_t event)
 
 <h2 id="UI_A_T_IntroSys">Introduction to the system.</h2>
 <p>As we have said before, we developed the animationa and transition system on a previous UI system so we will explain a few things you may need to know about it.</p>
-<p>The system is divided into two main parts, a class called M_Gui wich is the module that manage all the system. The second part is a class called GUIElement whichhh is a base class for all the UI elements such as GUIImage, GUILabel, etc. The module has a a list with all the elements created in thhe app and manages all of them. It manages all the events like mouse clicks, etc; updates all the elements and render them into thhhe screen.</p>
+<p>The system is divided into two main parts, a class called M_Gui wich is the module that manage all the system. The second part is a class called GUIElement whichhh is a base class for all the UI elements such as GUIImage, GUILabel, etc. The module has a a list with all the elements created in thhe app and manages all of them. It manages all the events like mouse clicks, etc; updates all the elements and render them into the screen.</p>
 <p>We will be working on the second part, the base class for all elements. This class contains some basic attributes like the type, a rectangle that defines the position and the size, a status and some more we will explain later used in our system. It also have some methods like setters and getters for the attributes, a method to recive events, an update, a virtual draw, and some more we don't really need to care about. Later we will focus on some we will use on animations and transitions</p>
 
 <h2 id="UI_A_T_Goal">Goal.</h2>
